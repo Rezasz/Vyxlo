@@ -26,7 +26,7 @@ const CORE_FEATURES = [
   },
   {
     icon: Brain,
-    title: 'AI That Works While You Don't',
+    title: "AI That Works While You Don't",
     body: 'Every uploaded document is automatically classified, summarized, and tagged. Keywords and entities are extracted. Semantic embeddings are generated. By the time you open a document, the AI has already done the reading.',
   },
   {
@@ -47,7 +47,7 @@ const CORE_FEATURES = [
   {
     icon: Users,
     title: 'Real-Time Collaboration',
-    body: 'See who's in a document right now. Threaded comments with @mentions. Lock sections to prevent conflicting edits. Secure share links with analytics.',
+    body: "See who's in a document right now. Threaded comments with @mentions. Lock sections to prevent conflicting edits. Secure share links with analytics.",
   },
 ];
 
@@ -101,7 +101,7 @@ const USE_CASES = [
   },
   {
     title: 'Agencies & Consultancies',
-    body: 'Per-client folder isolation. Password-protected share links with download tracking. No client ever sees another client's work.',
+    body: "Per-client folder isolation. Password-protected share links with download tracking. No client ever sees another client's work.",
     link: '/use-cases',
   },
 ];
@@ -206,12 +206,12 @@ const Home = () => {
                 {
                   icon: Zap,
                   title: 'Approvals that disappear into inboxes',
-                  body: 'Multi-step approvals are done over email. Steps are forgotten, deadlines missed, and there's no audit trail if something goes wrong.',
+                  body: "Multi-step approvals are done over email. Steps are forgotten, deadlines missed, and there's no audit trail if something goes wrong.",
                 },
                 {
                   icon: Activity,
                   title: 'Compliance is an afterthought',
-                  body: 'When the auditor asks who accessed what and when, you're piecing together logs from three different tools. That's not a process — it's a risk.',
+                  body: "When the auditor asks who accessed what and when, you're piecing together logs from three different tools. That's not a process — it's a risk.",
                 },
               ].map((item) => (
                 <div key={item.title} className="p-6 border border-charcoal-border rounded-lg">
