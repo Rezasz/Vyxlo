@@ -42,7 +42,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
               <a
                 href={getDocumentUrl(doc.id) || '#'}
                 download={doc.fileName}
-                className="inline-flex items-center text-blue-600 hover:text-blue-700"
+                className="inline-flex items-center text-gold hover:text-gold-dark"
                 title="Download document"
               >
                 <Download className="h-5 w-5" />

@@ -10,11 +10,11 @@ const DocumentHubLogo: React.FC<DocumentHubLogoProps> = ({ className = '', size 
   return (
     <div className={`relative inline-flex items-center ${className}`}>
       <FileStack 
-        className={`h-${size} w-${size} text-blue-600`} 
+        className={`h-${size} w-${size} text-gold`}
         strokeWidth={1.5}
       />
       <CircleDot 
-        className={`absolute -top-1 -right-1 h-${Math.max(3, size-5)} w-${Math.max(3, size-5)} text-blue-400`}
+        className={`absolute -top-1 -right-1 h-${Math.max(3, size-5)} w-${Math.max(3, size-5)} text-gold-dark`}
         strokeWidth={2}
       />
     </div>

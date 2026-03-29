@@ -39,7 +39,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
         </div>
         <button 
           onClick={() => setIsExpanded(!isExpanded)}
-          className="inline-flex items-center text-blue-600 hover:text-blue-700"
+          className="inline-flex items-center text-gold hover:text-gold-dark"
         >
           {isExpanded ? 'Show Less' : 'Read More'}
           {isExpanded ? (

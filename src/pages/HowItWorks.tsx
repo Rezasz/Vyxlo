@@ -139,15 +139,15 @@ const HowItWorks = () => {
 
   return (
     <>
-      <SEO 
+      <SEO
         title="How Vyxlo Works"
         description="Discover the advanced technology and processes behind Vyxlo's intelligent financial data and communication platform"
         canonical="/how-it-works"
       />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-24">
-        <div className="absolute inset-0 opacity-10">
+      <section className="relative bg-charcoal text-white py-24">
+        <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOGM5Ljk0MSAwIDE4LTguMDU5IDE4LTE4cy04LjA1OS0xOC0xOC0xOHptMCAyNGMtMy4zMTQgMC02LTIuNjg2LTYtNnMyLjY4Ni02IDYtNiA2IDIuNjg2IDYgNi0yLjY4NiA2LTYgNnoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvZz48L3N2Zz4=')] bg-repeat"></div>
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -161,11 +161,11 @@ const HowItWorks = () => {
       </section>
 
       {/* Data Workflow */}
-      <section className="py-20">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">How Vyxlo Works</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-charcoal">How Vyxlo Works</h2>
+            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
               Our platform follows a sophisticated workflow to ensure secure and efficient data processing.
             </p>
           </div>
@@ -177,8 +177,8 @@ const HowItWorks = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Key Features</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-charcoal">Key Features</h2>
+            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
               Explore the powerful features that make Vyxlo the leading solution for financial data management.
             </p>
           </div>
@@ -186,17 +186,17 @@ const HowItWorks = () => {
             {keyFeatures.map((feature, index) => (
               <div key={index} className="bg-white p-8 rounded-xl shadow-lg">
                 <div className="flex items-center space-x-4 mb-6">
-                  <div className="p-3 bg-blue-100 rounded-lg">
-                    <feature.icon className="h-8 w-8 text-blue-600" />
+                  <div className="p-3 bg-gold-100 rounded-lg">
+                    <feature.icon className="h-8 w-8 text-gold" />
                   </div>
-                  <h3 className="text-xl font-bold">{feature.title}</h3>
+                  <h3 className="text-xl font-bold text-charcoal">{feature.title}</h3>
                 </div>
-                <p className="text-gray-600 mb-6">{feature.description}</p>
+                <p className="text-charcoal-muted mb-6">{feature.description}</p>
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <ul className="space-y-2">
                     {feature.details.map((detail, idx) => (
                       <li key={idx} className="flex items-start">
-                        <ChevronRight className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0" />
+                        <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
                         <span className="text-gray-700">{detail}</span>
                       </li>
                     ))}
@@ -209,23 +209,23 @@ const HowItWorks = () => {
       </section>
 
       {/* Architecture */}
-      <section className="py-20">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Technical Architecture</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-charcoal">Technical Architecture</h2>
+            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
               Built on a modern, scalable architecture designed for enterprise performance.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {architectureComponents.map((component, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-lg">
+              <div key={index} className="bg-white p-6 rounded-lg shadow-lg border-b-4 border-gold">
                 <div className="flex items-center space-x-3 mb-4">
-                  <component.icon className="h-8 w-8 text-blue-600" />
-                  <h3 className="text-lg font-semibold">{component.title}</h3>
+                  <component.icon className="h-8 w-8 text-gold" />
+                  <h3 className="text-lg font-semibold text-charcoal">{component.title}</h3>
                 </div>
-                <p className="text-gray-600 mb-4">{component.description}</p>
-                <div className="text-sm font-medium text-blue-600">{component.metrics}</div>
+                <p className="text-charcoal-muted mb-4">{component.description}</p>
+                <div className="text-sm font-medium text-gold">{component.metrics}</div>
               </div>
             ))}
           </div>
@@ -236,8 +236,8 @@ const HowItWorks = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Implementation Process</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-charcoal">Implementation Process</h2>
+            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
               Our structured approach ensures a smooth transition and successful deployment.
             </p>
           </div>
@@ -246,7 +246,7 @@ const HowItWorks = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-blue-600 text-white py-16">
+      <section className="bg-charcoal text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Financial Operations?</h2>
           <p className="text-xl opacity-90 mb-8">
@@ -255,7 +255,7 @@ const HowItWorks = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/request-access"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
             >
               Get Started
               <ArrowRight className="ml-2 h-5 w-5" />

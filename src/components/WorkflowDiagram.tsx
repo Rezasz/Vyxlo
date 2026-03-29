@@ -10,14 +10,14 @@ interface WorkflowStepProps {
 const WorkflowStep: React.FC<WorkflowStepProps> = ({ title, description, isLast }) => (
   <div className="flex items-center">
     <div className="flex-1">
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h4 className="font-semibold mb-2">{title}</h4>
-        <p className="text-sm text-gray-600">{description}</p>
+      <div className="bg-white p-6 rounded-lg shadow-md border-t-2 border-gold">
+        <h4 className="font-semibold mb-2 text-charcoal">{title}</h4>
+        <p className="text-sm text-charcoal-muted">{description}</p>
       </div>
     </div>
     {!isLast && (
       <div className="flex-shrink-0 mx-4">
-        <ArrowRight className="h-6 w-6 text-blue-600" />
+        <ArrowRight className="h-6 w-6 text-gold" />
       </div>
     )}
   </div>

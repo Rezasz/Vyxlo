@@ -11,16 +11,16 @@ interface ProcessStepProps {
 const ProcessStep: React.FC<ProcessStepProps> = ({ number, title, description, isLast }) => (
   <div className="relative flex items-start">
     <div className="flex h-16 items-center">
-      <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white">
+      <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-gold text-charcoal-900">
         <span className="text-lg font-semibold">{number}</span>
       </div>
       {!isLast && (
-        <div className="absolute top-12 left-6 -ml-px h-full w-0.5 bg-blue-200" aria-hidden="true" />
+        <div className="absolute top-12 left-6 -ml-px h-full w-0.5 bg-gold-200" aria-hidden="true" />
       )}
     </div>
     <div className="ml-6 pb-8">
-      <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
-      <p className="mt-2 text-gray-600">{description}</p>
+      <h3 className="text-xl font-semibold text-charcoal">{title}</h3>
+      <p className="mt-2 text-charcoal-muted">{description}</p>
     </div>
   </div>
 );

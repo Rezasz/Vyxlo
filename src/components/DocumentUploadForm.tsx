@@ -40,7 +40,7 @@ const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({ onUpload, isUpl
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold"
             required
           />
         </div>
@@ -49,7 +49,7 @@ const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({ onUpload, isUpl
           <textarea
             value={brief}
             onChange={(e) => setBrief(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold"
             rows={3}
             required
           />
@@ -67,7 +67,7 @@ const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({ onUpload, isUpl
         <button
           type="submit"
           disabled={isUploading}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-charcoal-900 bg-gold hover:bg-gold-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold"
         >
           <Upload className="h-4 w-4 mr-2" />
           {isUploading ? 'Uploading...' : 'Upload Document'}

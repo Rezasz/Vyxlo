@@ -7,14 +7,14 @@ import SEO from '../components/SEO';
 const About = () => {
   return (
     <>
-      <SEO 
+      <SEO
         title="About Us"
         description="Learn about Vyxlo.com's mission to revolutionize document management in the financial industry through the power of artificial intelligence."
         canonical="/about"
       />
       <div>
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-20">
+        <section className="bg-charcoal text-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
               <EditableContent
@@ -32,11 +32,11 @@ const About = () => {
         </section>
 
         {/* Mission & Vision Section */}
-        <section className="py-20">
+        <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div className="space-y-6">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 text-primary-600">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gold-100 text-gold">
                   <Target className="h-6 w-6" />
                 </div>
                 <EditableContent
@@ -51,7 +51,7 @@ const About = () => {
                 />
               </div>
               <div className="space-y-6">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 text-primary-600">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gold-100 text-gold">
                   <Award className="h-6 w-6" />
                 </div>
                 <EditableContent
@@ -70,7 +70,7 @@ const About = () => {
         </section>
 
         {/* Values Section */}
-        <section className="bg-neutral-50 py-20">
+        <section className="bg-gray-50 py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <EditableContent
@@ -86,7 +86,7 @@ const About = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-8 rounded-lg shadow-lg">
+              <div className="bg-white p-8 rounded-lg shadow-lg border-t-4 border-gold">
                 <EditableContent
                   id="about-value-1-title"
                   defaultContent="Innovation"
@@ -98,7 +98,7 @@ const About = () => {
                   type="paragraph"
                 />
               </div>
-              <div className="bg-white p-8 rounded-lg shadow-lg">
+              <div className="bg-white p-8 rounded-lg shadow-lg border-t-4 border-gold">
                 <EditableContent
                   id="about-value-2-title"
                   defaultContent="Security"
@@ -110,7 +110,7 @@ const About = () => {
                   type="paragraph"
                 />
               </div>
-              <div className="bg-white p-8 rounded-lg shadow-lg">
+              <div className="bg-white p-8 rounded-lg shadow-lg border-t-4 border-gold">
                 <EditableContent
                   id="about-value-3-title"
                   defaultContent="Excellence"
@@ -127,7 +127,7 @@ const About = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-primary-600 text-white py-16">
+        <section className="bg-charcoal text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <EditableContent
               id="about-cta-title"
@@ -141,7 +141,7 @@ const About = () => {
             />
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-white hover:bg-neutral-50 transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
             >
               <EditableContent
                 id="about-cta-button"

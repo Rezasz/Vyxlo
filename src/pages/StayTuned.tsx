@@ -12,7 +12,7 @@ const StayTuned = () => {
         canonical="/stay-tuned"
       />
       
-      <div className="min-h-screen bg-gradient-to-r from-blue-600 to-blue-800 py-24">
+      <div className="min-h-screen bg-charcoal py-24">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="flex justify-center mb-6">

@@ -14,7 +14,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setIsHidden(true);
       } else {
@@ -48,26 +48,26 @@ const Navbar = () => {
   };
 
   return (
-    <nav 
+    <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isHidden ? '-translate-y-full' : 'translate-y-0'
       } ${
-        isScrolled 
-          ? 'bg-white/95 backdrop-blur-sm shadow-lg' 
-          : 'bg-white border-b border-neutral-100'
+        isScrolled
+          ? 'bg-white/95 backdrop-blur-sm shadow-lg'
+          : 'bg-white border-b border-gray-200'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex items-center">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="flex items-center group hover:opacity-90 transition-opacity"
             >
               <div className="w-10 h-10 relative">
-                <Logo size={8} className="text-primary-600" />
+                <Logo size={8} className="text-gold" />
               </div>
-              <span className="ml-3 text-2xl font-extrabold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
+              <span className="ml-3 text-2xl font-extrabold text-charcoal">
                 Vyxlo.com
               </span>
             </Link>
@@ -80,17 +80,17 @@ const Navbar = () => {
                 to={item.path}
                 className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
                   isActive(item.path)
-                    ? 'text-primary-600 bg-primary-50/80'
-                    : 'text-neutral-600 hover:text-primary-600 hover:bg-neutral-50'
+                    ? 'text-gold bg-gold-50'
+                    : 'text-charcoal-muted hover:text-gold hover:bg-gray-50'
                 }`}
               >
                 {item.name}
               </Link>
             ))}
 
-            <button 
+            <button
               onClick={handleTryFree}
-              className="ml-4 px-5 py-2 bg-accent-500 text-white text-sm font-semibold rounded-md hover:bg-accent-600 transform hover:-translate-y-0.5 transition-all duration-200 shadow-sm hover:shadow"
+              className="ml-4 px-5 py-2 bg-gold text-charcoal-900 text-sm font-semibold rounded-md hover:bg-gold-dark transform hover:-translate-y-0.5 transition-all duration-200 shadow-sm hover:shadow"
             >
               Try Free
             </button>
@@ -99,7 +99,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-neutral-600 hover:text-primary-600 hover:bg-neutral-50 focus:outline-none transition-colors"
+              className="inline-flex items-center justify-center p-2 rounded-md text-charcoal-muted hover:text-gold hover:bg-gray-50 focus:outline-none transition-colors"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -110,7 +110,7 @@ const Navbar = () => {
       <div
         className={`md:hidden transition-all duration-300 ease-in-out ${
           isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
-        } absolute top-20 inset-x-0 bg-white border-b border-neutral-100 shadow-lg`}
+        } absolute top-20 inset-x-0 bg-white border-b border-gray-200 shadow-lg`}
       >
         <div className="px-4 py-3 space-y-1">
           {navItems.map((item) => (
@@ -119,8 +119,8 @@ const Navbar = () => {
               to={item.path}
               className={`block px-4 py-2 rounded-md text-sm font-semibold transition-colors ${
                 isActive(item.path)
-                  ? 'text-primary-600 bg-primary-50/80'
-                  : 'text-neutral-600 hover:text-primary-600 hover:bg-neutral-50'
+                  ? 'text-gold bg-gold-50'
+                  : 'text-charcoal-muted hover:text-gold hover:bg-gray-50'
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -133,7 +133,7 @@ const Navbar = () => {
               handleTryFree();
               setIsOpen(false);
             }}
-            className="w-full mt-2 px-4 py-2 bg-accent-500 text-white text-sm font-semibold rounded-md hover:bg-accent-600 transition-colors"
+            className="w-full mt-2 px-4 py-2 bg-gold text-charcoal-900 text-sm font-semibold rounded-md hover:bg-gold-dark transition-colors"
           >
             Try Free
           </button>

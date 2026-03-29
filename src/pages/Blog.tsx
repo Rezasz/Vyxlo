@@ -33,7 +33,7 @@ const Blog = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+      <section className="bg-charcoal text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <EditableContent
@@ -84,7 +84,7 @@ const Blog = () => {
                       defaultContent={post.author}
                     />
                   </div>
-                  <button className="inline-flex items-center text-blue-600 hover:text-blue-700">
+                  <button className="inline-flex items-center text-gold hover:text-gold-dark">
                     <EditableContent
                       id={`blog-post-${post.id}-cta`}
                       defaultContent="Read More"

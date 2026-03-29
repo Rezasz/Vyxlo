@@ -13,14 +13,14 @@ const Home = () => {
 
   return (
     <>
-      <SEO 
+      <SEO
         title="SecureVault - AI driven Content Service platform"
         description="Vyxlo.com is your trusted partner for AI-driven document management, tailored specifically for the complexities of the financial industry. Introducing SecureVault—a flagship product from Vyxlo, a subsidiary of Kanz.ai."
         canonical="/"
       />
       <div>
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+        <section className="relative bg-charcoal-900 text-white">
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-black opacity-50"></div>
             <img
@@ -29,7 +29,7 @@ const Home = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          
+
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
             <div className="max-w-3xl">
               <EditableContent
@@ -45,7 +45,7 @@ const Home = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   to="/how-it-works"
-                  className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
                 >
                   <EditableContent
                     id="home-hero-cta"
@@ -85,7 +85,7 @@ const Home = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                <Brain className="h-12 w-12 text-blue-600 mb-4" />
+                <Brain className="h-12 w-12 text-gold mb-4" />
                 <EditableContent
                   id="home-feature-1-title"
                   defaultContent="AI-Powered Automation"
@@ -98,7 +98,7 @@ const Home = () => {
                 />
                 <Link
                   to="/features/ai-automation"
-                  className="inline-flex items-center mt-4 text-blue-600 hover:text-blue-700"
+                  className="inline-flex items-center mt-4 text-gold hover:text-gold-dark"
                 >
                   Read More
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -106,7 +106,7 @@ const Home = () => {
               </div>
 
               <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                <Shield className="h-12 w-12 text-blue-600 mb-4" />
+                <Shield className="h-12 w-12 text-gold mb-4" />
                 <EditableContent
                   id="home-feature-2-title"
                   defaultContent="Secure & Scalable"
@@ -119,7 +119,7 @@ const Home = () => {
                 />
                 <Link
                   to="/features/security"
-                  className="inline-flex items-center mt-4 text-blue-600 hover:text-blue-700"
+                  className="inline-flex items-center mt-4 text-gold hover:text-gold-dark"
                 >
                   Read More
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -127,7 +127,7 @@ const Home = () => {
               </div>
 
               <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                <Zap className="h-12 w-12 text-blue-600 mb-4" />
+                <Zap className="h-12 w-12 text-gold mb-4" />
                 <EditableContent
                   id="home-feature-3-title"
                   defaultContent="Custom Integrations"
@@ -140,7 +140,7 @@ const Home = () => {
                 />
                 <Link
                   to="/features/integrations"
-                  className="inline-flex items-center mt-4 text-blue-600 hover:text-blue-700"
+                  className="inline-flex items-center mt-4 text-gold hover:text-gold-dark"
                 >
                   Read More
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -151,7 +151,7 @@ const Home = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-blue-600 text-white py-16">
+        <section className="bg-charcoal text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <EditableContent
               id="home-cta-title"
@@ -165,7 +165,7 @@ const Home = () => {
             />
             <button
               onClick={handleTryFree}
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
             >
               <EditableContent
                 id="home-cta-button"

@@ -50,7 +50,7 @@ const HubSpotForm = () => {
   return (
     <div id="hubspotForm" className="hubspot-form-container">
       <div className="text-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold mx-auto"></div>
         <p className="mt-4 text-gray-600">Loading form...</p>
       </div>
     </div>

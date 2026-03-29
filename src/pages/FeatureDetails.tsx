@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { 
+import {
   Brain, Shield, Zap, ArrowLeft, Check, Users, LineChart, Scale,
   Layers, Workflow, Database, Lock, Cloud, Zap as Lightning,
   FileSearch, Settings, Bell, ChevronRight, ArrowRight,
@@ -364,11 +364,11 @@ const FeatureDetails = () => {
 
   if (!feature) {
     return (
-      <div className="min-h-screen bg-neutral-50 py-12">
+      <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-neutral-900">Feature not found</h1>
-            <Link to="/features" className="mt-4 inline-flex items-center text-primary-600 hover:text-primary-700">
+            <h1 className="text-3xl font-bold text-charcoal">Feature not found</h1>
+            <Link to="/features" className="mt-4 inline-flex items-center text-gold hover:text-gold-dark">
               <ArrowLeft className="h-5 w-5 mr-2" />
               Return to features
             </Link>
@@ -382,22 +382,22 @@ const FeatureDetails = () => {
 
   return (
     <>
-      <SEO 
+      <SEO
         title={feature.title}
         description={feature.description}
         canonical={`/features/${featureId}`}
       />
-      
+
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-primary-600 to-primary-800 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+      <div className="relative bg-charcoal text-white overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOGM5Ljk0MSAwIDE4LTguMDU5IDE4LTE4cy04LjA1OS0xOC0xOC0xOHptMCAyNGMtMy4zMTQgMC02LTIuNjg2LTYtNnMyLjY4Ni02IDYtNiA2IDIuNjg2IDYgNi0yLjY4NiA2LTYgNnoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvZz48L3N2Zz4=')] bg-repeat"></div>
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <div className="flex items-center justify-center mb-8">
-              <div className="p-4 bg-white/10 rounded-2xl backdrop-blur-sm">
-                <Icon className="h-16 w-16" />
+              <div className="p-4 bg-gold/20 rounded-2xl backdrop-blur-sm">
+                <Icon className="h-16 w-16 text-gold" />
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">{feature.title}</h1>
@@ -407,27 +407,27 @@ const FeatureDetails = () => {
       </div>
 
       {/* Main Content */}
-      <div className="bg-neutral-50">
+      <div className="bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           {/* Overview Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-6">Overview</h2>
-            <p className="text-lg text-neutral-600 mb-8">{feature.longDescription}</p>
-            
+            <h2 className="text-3xl font-bold mb-6 text-charcoal">Overview</h2>
+            <p className="text-lg text-charcoal-muted mb-8">{feature.longDescription}</p>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {feature.features.map((subFeature, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
                 >
                   <div className="flex items-center space-x-4 mb-4">
-                    <div className="p-3 bg-primary-50 rounded-lg">
-                      <subFeature.icon className="h-6 w-6 text-primary-600" />
+                    <div className="p-3 bg-gold-50 rounded-lg">
+                      <subFeature.icon className="h-6 w-6 text-gold" />
                     </div>
-                    <h3 className="text-xl font-bold text-neutral-900">{subFeature.title}</h3>
+                    <h3 className="text-xl font-bold text-charcoal">{subFeature.title}</h3>
                   </div>
-                  <p className="text-neutral-600 mb-4">{subFeature.description}</p>
-                  <div className="text-sm font-medium text-primary-600">{subFeature.stats}</div>
+                  <p className="text-charcoal-muted mb-4">{subFeature.description}</p>
+                  <div className="text-sm font-medium text-gold">{subFeature.stats}</div>
                 </div>
               ))}
             </div>
@@ -435,15 +435,15 @@ const FeatureDetails = () => {
 
           {/* Benefits Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-8">Key Benefits</h2>
+            <h2 className="text-3xl font-bold mb-8 text-charcoal">Key Benefits</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {feature.benefits.map((benefit, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="flex items-start p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
-                  <Check className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-neutral-700">{benefit}</span>
+                  <Check className="h-6 w-6 text-gold mr-3 flex-shrink-0" />
+                  <span className="text-gray-700">{benefit}</span>
                 </div>
               ))}
             </div>
@@ -451,13 +451,13 @@ const FeatureDetails = () => {
 
           {/* Technical Specifications */}
           <div>
-            <h2 className="text-3xl font-bold mb-8">Technical Specifications</h2>
+            <h2 className="text-3xl font-bold mb-8 text-charcoal">Technical Specifications</h2>
             <div className="bg-white rounded-xl shadow-lg p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {feature.techSpecs.map((spec, index) => (
                   <div key={index} className="flex items-center space-x-3">
-                    <ChevronRight className="h-5 w-5 text-primary-600" />
-                    <span className="text-neutral-700">{spec}</span>
+                    <ChevronRight className="h-5 w-5 text-gold" />
+                    <span className="text-gray-700">{spec}</span>
                   </div>
                 ))}
               </div>
@@ -466,14 +466,14 @@ const FeatureDetails = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="bg-primary-600 text-white py-16">
+        <div className="bg-charcoal text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-xl opacity-90 mb-8">Experience the power of {feature.title} today.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/request-access"
-                className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-white hover:bg-neutral-50 transition-colors"
+                className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
               >
                 Get Started
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -490,9 +490,9 @@ const FeatureDetails = () => {
 
         {/* Navigation */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Link 
-            to="/features" 
-            className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
+          <Link
+            to="/features"
+            className="inline-flex items-center text-gold hover:text-gold-dark font-medium"
           >
             <ArrowLeft className="h-5 w-5 mr-2" />
             Back to Features

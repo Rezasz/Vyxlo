@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Brain, Shield, Zap, Search, Workflow, Globe, 
+import {
+  Brain, Shield, Zap, Search, Workflow, Globe,
   MessageSquare, Wrench, FileBox, Network, Building,
   Users, Lock, Cloud, Headphones, ChevronRight,
   ArrowRight, LineChart, Scale, Cpu, Database,
@@ -167,15 +167,15 @@ const Features = () => {
 
   return (
     <>
-      <SEO 
+      <SEO
         title="Features"
         description="Explore Vyxlo's comprehensive suite of AI-driven document management features designed for modern enterprises."
         canonical="/features"
       />
-      
+
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-24 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+      <section className="relative bg-charcoal text-white py-24 overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOGM5Ljk0MSAwIDE4LTguMDU5IDE4LTE4cy04LjA1OS0xOC0xOC0xOHptMCAyNGMtMy4zMTQgMC02LTIuNjg2LTYtNnMyLjY4Ni02IDYtNiA2IDIuNjg2IDYgNi0yLjY4NiA2LTYgNnoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvZz48L3N2Zz4=')] bg-repeat"></div>
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -194,8 +194,8 @@ const Features = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Core Features</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-charcoal">Core Features</h2>
+            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
               Our platform combines advanced AI, enterprise-grade security, and seamless integrations to deliver a complete document management solution.
             </p>
           </div>
@@ -204,26 +204,26 @@ const Features = () => {
             {mainFeatures.map((feature) => {
               const Icon = feature.icon;
               return (
-                <div 
+                <div
                   key={feature.id}
                   className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
                 >
                   <div className="p-8">
                     <div className="flex items-center space-x-4 mb-6">
-                      <div className="p-3 bg-blue-100 rounded-lg">
-                        <Icon className="h-8 w-8 text-blue-600" />
+                      <div className="p-3 bg-gold-100 rounded-lg">
+                        <Icon className="h-8 w-8 text-gold" />
                       </div>
-                      <h3 className="text-2xl font-bold">{feature.title}</h3>
+                      <h3 className="text-2xl font-bold text-charcoal">{feature.title}</h3>
                     </div>
-                    
-                    <p className="text-gray-600 mb-6">{feature.description}</p>
-                    
+
+                    <p className="text-charcoal-muted mb-6">{feature.description}</p>
+
                     <div className="bg-gray-50 p-6 rounded-lg mb-6">
-                      <h4 className="font-semibold mb-4">Key Benefits:</h4>
+                      <h4 className="font-semibold mb-4 text-charcoal">Key Benefits:</h4>
                       <ul className="space-y-3">
                         {feature.benefits.map((benefit, index) => (
                           <li key={index} className="flex items-start">
-                            <ChevronRight className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0" />
+                            <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
                             <span className="text-gray-700">{benefit}</span>
                           </li>
                         ))}
@@ -232,18 +232,18 @@ const Features = () => {
 
                     <div className="grid grid-cols-2 gap-4 mb-6">
                       {Object.entries(feature.metrics).map(([key, value]) => (
-                        <div key={key} className="text-center p-4 bg-blue-50 rounded-lg">
-                          <div className="text-2xl font-bold text-blue-600">{value}</div>
-                          <div className="text-sm text-gray-600 capitalize">{key}</div>
+                        <div key={key} className="text-center p-4 bg-gold-50 rounded-lg">
+                          <div className="text-2xl font-bold text-gold">{value}</div>
+                          <div className="text-sm text-charcoal-muted capitalize">{key}</div>
                         </div>
                       ))}
                     </div>
 
                     <div className="border-t pt-6">
-                      <h4 className="font-semibold mb-4">Technology Stack:</h4>
+                      <h4 className="font-semibold mb-4 text-charcoal">Technology Stack:</h4>
                       <div className="flex flex-wrap gap-2">
                         {feature.techStack.map((tech, index) => (
-                          <span 
+                          <span
                             key={index}
                             className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
                           >
@@ -255,7 +255,7 @@ const Features = () => {
 
                     <Link
                       to={`/features/${feature.id}`}
-                      className="mt-6 inline-flex items-center text-blue-600 hover:text-blue-700 font-medium group"
+                      className="mt-6 inline-flex items-center text-gold hover:text-gold-dark font-medium group"
                     >
                       Learn More
                       <ArrowRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
@@ -272,8 +272,8 @@ const Features = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Technical Capabilities</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-charcoal">Technical Capabilities</h2>
+            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
               Built on cutting-edge technology to deliver unmatched performance and reliability.
             </p>
           </div>
@@ -282,16 +282,16 @@ const Features = () => {
             {technicalFeatures.map((feature, index) => (
               <div key={index} className="bg-white p-8 rounded-xl shadow-lg">
                 <div className="flex items-center space-x-4 mb-6">
-                  <div className="p-3 bg-blue-100 rounded-lg">
-                    <feature.icon className="h-6 w-6 text-blue-600" />
+                  <div className="p-3 bg-gold-100 rounded-lg">
+                    <feature.icon className="h-6 w-6 text-gold" />
                   </div>
-                  <h3 className="text-xl font-bold">{feature.title}</h3>
+                  <h3 className="text-xl font-bold text-charcoal">{feature.title}</h3>
                 </div>
-                <p className="text-gray-600 mb-6">{feature.description}</p>
+                <p className="text-charcoal-muted mb-6">{feature.description}</p>
                 <ul className="space-y-3">
                   {feature.capabilities.map((capability, capIndex) => (
                     <li key={capIndex} className="flex items-start">
-                      <ChevronRight className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0" />
+                      <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
                       <span className="text-gray-700">{capability}</span>
                     </li>
                   ))}
@@ -306,28 +306,28 @@ const Features = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Enterprise-Grade Features</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-charcoal">Enterprise-Grade Features</h2>
+            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
               Built to meet the demanding needs of modern enterprises with scalability and security in mind.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {enterpriseFeatures.map((feature, index) => (
-              <div key={index} className="bg-gray-50 p-8 rounded-xl">
+              <div key={index} className="bg-gray-50 p-8 rounded-xl border-l-4 border-gold">
                 <div className="flex items-center space-x-4 mb-6">
-                  <div className="p-3 bg-blue-100 rounded-lg">
-                    <feature.icon className="h-6 w-6 text-blue-600" />
+                  <div className="p-3 bg-gold-100 rounded-lg">
+                    <feature.icon className="h-6 w-6 text-gold" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold">{feature.title}</h3>
-                    <p className="text-gray-600">{feature.description}</p>
+                    <h3 className="text-xl font-bold text-charcoal">{feature.title}</h3>
+                    <p className="text-charcoal-muted">{feature.description}</p>
                   </div>
                 </div>
                 <ul className="space-y-3">
                   {feature.points.map((point, pointIndex) => (
                     <li key={pointIndex} className="flex items-start">
-                      <ChevronRight className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0" />
+                      <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
                       <span className="text-gray-700">{point}</span>
                     </li>
                   ))}
@@ -339,7 +339,7 @@ const Features = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-blue-600 text-white py-16">
+      <section className="bg-charcoal text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Document Management?</h2>
           <p className="text-xl opacity-90 mb-8">
@@ -348,7 +348,7 @@ const Features = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
             >
               Get Started
               <ArrowRight className="ml-2 h-5 w-5" />

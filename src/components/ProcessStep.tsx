@@ -12,7 +12,7 @@ const ProcessStep: React.FC<ProcessStepProps> = ({ icon: Icon, title, descriptio
   return (
     <div className="relative flex items-start">
       <div className="flex h-16 items-center">
-        <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white">
+        <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-gold text-charcoal-900">
           <Icon className="h-6 w-6" />
         </div>
         {!isLast && (

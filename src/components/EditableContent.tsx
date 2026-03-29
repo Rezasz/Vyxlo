@@ -37,7 +37,7 @@ const EditableContent: React.FC<EditableContentProps> = ({ id, defaultContent, t
         onClick={() => setIsEditing(true)}
         className="absolute -right-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
       >
-        <Edit2 className="h-4 w-4 text-blue-600" />
+        <Edit2 className="h-4 w-4 text-gold" />
       </div>
     );
 

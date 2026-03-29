@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
+import {
   Building2, FileText, Briefcase, Scale, ArrowRight,
   Globe, Database, Shield, Users, ChevronRight, Factory
 } from 'lucide-react';
@@ -99,15 +99,15 @@ export { industries };
 const Industries = () => {
   return (
     <>
-      <SEO 
+      <SEO
         title="Verticals"
         description="Discover how Vyxlo's SecureVault platform transforms document management across different verticals"
         canonical="/verticals"
       />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-24">
-        <div className="absolute inset-0 opacity-10">
+      <section className="relative bg-charcoal text-white py-24">
+        <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOGM5Ljk0MSAwIDE4LTguMDU5IDE4LTE4cy04LjA1OS0xOC0xOC0xOHptMCAyNGMtMy4zMTQgMC02LTIuNjg2LTYtNnMyLjY4Ni02IDYtNiA2IDIuNjg2IDYgNi0yLjY4NiA2LTYgNnoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvZz48L3N2Zz4=')] bg-repeat"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -121,31 +121,31 @@ const Industries = () => {
       </section>
 
       {/* Industries Grid */}
-      <section className="py-20">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {industries.map((industry) => {
               const Icon = industry.icon;
               return (
-                <div 
+                <div
                   key={industry.id}
                   className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <div className="flex items-center space-x-4 mb-6">
-                    <div className="p-3 bg-blue-100 rounded-lg">
-                      <Icon className="h-8 w-8 text-blue-600" />
+                    <div className="p-3 bg-gold-100 rounded-lg">
+                      <Icon className="h-8 w-8 text-gold" />
                     </div>
-                    <h3 className="text-2xl font-bold">{industry.title}</h3>
+                    <h3 className="text-2xl font-bold text-charcoal">{industry.title}</h3>
                   </div>
-                  
-                  <p className="text-gray-600 mb-6">{industry.description}</p>
-                  
+
+                  <p className="text-charcoal-muted mb-6">{industry.description}</p>
+
                   <div className="bg-gray-50 p-6 rounded-lg mb-6">
-                    <h4 className="font-semibold mb-4">Key Benefits:</h4>
+                    <h4 className="font-semibold mb-4 text-charcoal">Key Benefits:</h4>
                     <ul className="space-y-3">
                       {industry.benefits.map((benefit, index) => (
                         <li key={index} className="flex items-start">
-                          <ChevronRight className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0" />
+                          <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
                           <span className="text-gray-700">{benefit}</span>
                         </li>
                       ))}
@@ -155,15 +155,15 @@ const Industries = () => {
                   <div className="grid grid-cols-3 gap-4 mb-6">
                     {Object.entries(industry.metrics).map(([key, value]) => (
                       <div key={key} className="text-center">
-                        <div className="text-2xl font-bold text-blue-600">{value}</div>
-                        <div className="text-sm text-gray-600 capitalize">{key}</div>
+                        <div className="text-2xl font-bold text-gold">{value}</div>
+                        <div className="text-sm text-charcoal-muted capitalize">{key}</div>
                       </div>
                     ))}
                   </div>
 
                   <Link
                     to={`/verticals/${industry.id}`}
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium group"
+                    className="inline-flex items-center text-gold hover:text-gold-dark font-medium group"
                   >
                     Learn More
                     <ArrowRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
@@ -176,7 +176,7 @@ const Industries = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-blue-600 text-white py-16">
+      <section className="bg-charcoal text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Industry?</h2>
           <p className="text-xl opacity-90 mb-8">
@@ -185,7 +185,7 @@ const Industries = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
             >
               Get Started
               <ArrowRight className="ml-2 h-5 w-5" />
