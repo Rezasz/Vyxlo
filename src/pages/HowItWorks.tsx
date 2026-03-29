@@ -1,274 +1,234 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Database, Brain, Zap, Shield, Scale, ArrowRightCircle,
-  Settings, RefreshCcw, Lock, MessageSquare, FileText, Users,
-  Cloud, Search, ChevronRight, ArrowRight, Code, Globe,
-  Layers, Workflow, Bell, LineChart, Cpu, Network,
-  Key, Boxes, GitMerge, Repeat
+  Upload, Brain, FolderOpen, Users, GitBranch, Activity,
+  ArrowRight, CheckCircle, ChevronRight,
 } from 'lucide-react';
 import SEO from '../components/SEO';
-import WorkflowDiagram from '../components/WorkflowDiagram';
-import ProcessFlow from '../components/ProcessFlow';
+
+const STEPS = [
+  {
+    n: '01',
+    icon: Upload,
+    title: 'Upload',
+    subtitle: 'Drop it in. We\'ll handle the rest.',
+    body: 'Upload any file from the browser, drag-and-drop, or via the REST API. VyXlo stores the file in your S3-compatible storage (MinIO, AWS S3, or compatible), creates a version record, and immediately queues it for AI processing.',
+    details: [
+      'Supported: PDF, DOCX, XLSX, PPTX, images, and more',
+      'Every upload creates an immutable version record',
+      'REST API available for automated ingestion pipelines',
+      'File stored in your S3-compatible object storage',
+    ],
+  },
+  {
+    n: '02',
+    icon: Brain,
+    title: 'AI Processing',
+    subtitle: 'The AI reads it so your team doesn\'t have to.',
+    body: 'Within 5 minutes, the AI pipeline classifies your document, extracts keywords and named entities, generates a plain-language summary, and builds a semantic embedding. All of this is stored alongside the document and immediately available in search.',
+    details: [
+      'Classification into 10 categories with confidence score',
+      'Entity extraction: people, organizations, dates, monetary amounts',
+      'Plain-language summary (3 sentences)',
+      'Semantic embedding for similarity search',
+    ],
+  },
+  {
+    n: '03',
+    icon: FolderOpen,
+    title: 'Organize',
+    subtitle: 'Put it where it belongs.',
+    body: 'Assign the document to a folder, tag it, and set its status. Apply permissions to control who can view, download, comment, or edit. Documents inherit folder-level permissions automatically.',
+    details: [
+      'Unlimited folder hierarchy with materialized path queries',
+      'Tag system with organization-scoped namespaces',
+      'Status: DRAFT → IN_REVIEW → PENDING_APPROVAL → APPROVED → PUBLISHED → ARCHIVED',
+      'Permissions inherited from folder or set directly',
+    ],
+  },
+  {
+    n: '04',
+    icon: Users,
+    title: 'Collaborate',
+    subtitle: 'Work on it together.',
+    body: 'Share the document with your team. Leave threaded comments with @mentions. See who else is in the document right now via live presence indicators. Lock a section if you need to work without interruption.',
+    details: [
+      'Live presence: see who is in the document right now',
+      'Threaded comments with unlimited nesting and @mentions',
+      'Document locking to prevent conflicting edits',
+      'Secure share links with optional password, expiry, and email allowlist',
+    ],
+  },
+  {
+    n: '05',
+    icon: GitBranch,
+    title: 'Approve',
+    subtitle: 'Route it for sign-off.',
+    body: 'Start an approval workflow. The document moves through sequential and parallel steps automatically. Each approver receives a notification, takes action, and the document advances. When the last step is approved, the document status updates automatically.',
+    details: [
+      'Sequential and parallel approval steps',
+      'Per-step deadlines with escalation logic',
+      'Each decision captured in the audit log',
+      'Automatic status promotion on final approval',
+    ],
+  },
+  {
+    n: '06',
+    icon: Activity,
+    title: 'Audit',
+    subtitle: 'Prove everything that happened.',
+    body: 'Every action — upload, view, download, permission change, approval, share — is written to an immutable audit log with full context. Filter by user, document, or date. Export to CSV. Answer auditor questions in seconds.',
+    details: [
+      'Immutable log: no updates, no deletes, ever',
+      'Before/after state stored as JSONB',
+      'SHA-256 tamper-evident checksums',
+      'CSV export (async, returns download URL)',
+    ],
+  },
+];
 
 const HowItWorks = () => {
-  const productOverview = {
-    title: "Vyxlo.com Product Overview",
-    description: "An advanced Integrated Financial Data and Communication Platform (IFDCP) designed to streamline financial data management, ensure compliance, and enhance communication across financial institutions."
-  };
-
-  const dataWorkflow = [
-    {
-      title: "Data Aggregation",
-      description: "Extract and normalize data from multiple sources through standard APIs"
-    },
-    {
-      title: "Security Layer",
-      description: "Apply encryption, access controls, and automated compliance checks"
-    },
-    {
-      title: "AI Processing",
-      description: "Utilize AI for predictive insights and risk management"
-    },
-    {
-      title: "Communication",
-      description: "Enable secure messaging and real-time collaboration"
-    }
-  ];
-
-  const keyFeatures = [
-    {
-      icon: Database,
-      title: "Unified Financial Data Integration",
-      description: "Consolidate financial data from diverse sources with built-in normalization and accuracy checks.",
-      details: [
-        "Multi-source data integration",
-        "Automated data normalization",
-        "Real-time synchronization",
-        "Data quality assurance"
-      ]
-    },
-    {
-      icon: Shield,
-      title: "Advanced Compliance & Security",
-      description: "Comprehensive security measures with built-in compliance management for GDPR, PSD2, and Basel III.",
-      details: [
-        "Multi-factor authentication",
-        "End-to-end encryption",
-        "Automated compliance checks",
-        "Complete audit trails"
-      ]
-    },
-    {
-      icon: Brain,
-      title: "AI-Powered Analytics",
-      description: "Advanced analytics and reporting capabilities powered by artificial intelligence.",
-      details: [
-        "Predictive risk assessment",
-        "Real-time data processing",
-        "Custom dashboards",
-        "Automated reporting"
-      ]
-    },
-    {
-      icon: Key,
-      title: "Secure API Management",
-      description: "Comprehensive API management with robust security controls.",
-      details: [
-        "RESTful API support",
-        "GraphQL integration",
-        "Role-based access",
-        "API monitoring"
-      ]
-    }
-  ];
-
-  const architectureComponents = [
-    {
-      icon: Boxes,
-      title: "Microservices Architecture",
-      description: "Cloud-native design with independent, scalable services",
-      metrics: "99.99% uptime"
-    },
-    {
-      icon: GitMerge,
-      title: "Integration Framework",
-      description: "Flexible integration with existing systems",
-      metrics: "100+ connectors"
-    },
-    {
-      icon: Shield,
-      title: "Security Layer",
-      description: "Multi-layered security architecture",
-      metrics: "Military-grade"
-    },
-    {
-      icon: Repeat,
-      title: "Continuous Processing",
-      description: "Real-time data processing and updates",
-      metrics: "<100ms latency"
-    }
-  ];
-
-  const implementationSteps = [
-    {
-      title: "Requirements Analysis",
-      description: "Detailed assessment of your organization's needs and existing systems"
-    },
-    {
-      title: "Platform Configuration",
-      description: "Custom setup and configuration based on your requirements"
-    },
-    {
-      title: "Data Migration",
-      description: "Secure transfer and validation of existing data"
-    },
-    {
-      title: "Integration Setup",
-      description: "Connection with your existing systems and workflows"
-    },
-    {
-      title: "Testing & Validation",
-      description: "Comprehensive testing of all features and integrations"
-    },
-    {
-      title: "Training & Deployment",
-      description: "User training and phased production rollout"
-    }
-  ];
-
   return (
     <>
       <SEO
-        title="How Vyxlo Works"
-        description="Discover the advanced technology and processes behind Vyxlo's intelligent financial data and communication platform"
+        title="How It Works — VyXlo DMS"
+        description="From upload to insight in under five minutes. Six steps: Upload, AI Processing, Organize, Collaborate, Approve, Audit."
         canonical="/how-it-works"
       />
+      <div className="pt-20">
 
-      {/* Hero Section */}
-      <section className="relative bg-charcoal text-white py-24">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOGM5Ljk0MSAwIDE4LTguMDU5IDE4LTE4cy04LjA1OS0xOC0xOC0xOHptMCAyNGMtMy4zMTQgMC02LTIuNjg2LTYtNnMyLjY4Ni02IDYtNiA2IDIuNjg2IDYgNi0yLjY4NiA2LTYgNnoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvZz48L3N2Zz4=')] bg-repeat"></div>
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{productOverview.title}</h1>
-            <p className="text-xl opacity-90 max-w-3xl mx-auto">
-              {productOverview.description}
-            </p>
+        {/* HERO */}
+        <section className="bg-charcoal text-white py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <h1 className="text-4xl md:text-5xl font-bold mb-5">
+                From upload to insight in under five minutes.
+              </h1>
+              <p className="text-lg text-white/70 leading-relaxed">
+                Six steps that cover the entire lifecycle of a document — from the moment it lands in VyXlo to the moment an auditor asks what happened to it.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Data Workflow */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-charcoal">How Vyxlo Works</h2>
-            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
-              Our platform follows a sophisticated workflow to ensure secure and efficient data processing.
-            </p>
+        {/* STEP PROGRESS BAR */}
+        <section className="bg-white border-b border-charcoal-border sticky top-20 z-40 hidden md:block">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex">
+              {STEPS.map((step, i) => (
+                <a
+                  key={step.n}
+                  href={`#step-${step.n}`}
+                  className="flex-1 flex items-center justify-center gap-2 py-4 text-sm font-medium text-charcoal-muted hover:text-gold transition-colors border-r border-charcoal-border last:border-r-0 hover:bg-gold-50"
+                >
+                  <span className="text-gold font-bold">{step.n}</span>
+                  <span>{step.title}</span>
+                </a>
+              ))}
+            </div>
           </div>
-          <WorkflowDiagram steps={dataWorkflow} />
-        </div>
-      </section>
+        </section>
 
-      {/* Key Features */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-charcoal">Key Features</h2>
-            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
-              Explore the powerful features that make Vyxlo the leading solution for financial data management.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {keyFeatures.map((feature, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg">
-                <div className="flex items-center space-x-4 mb-6">
-                  <div className="p-3 bg-gold-100 rounded-lg">
-                    <feature.icon className="h-8 w-8 text-gold" />
+        {/* STEPS */}
+        <section className="py-4 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {STEPS.map((step, i) => (
+              <div
+                key={step.n}
+                id={`step-${step.n}`}
+                className={`py-16 ${i < STEPS.length - 1 ? 'border-b border-charcoal-border' : ''}`}
+              >
+                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+                  {/* Text */}
+                  <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="text-5xl font-black text-charcoal-50 select-none">{step.n}</span>
+                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gold-100 text-gold">
+                        <step.icon className="h-5 w-5" />
+                      </div>
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-charcoal mb-2">{step.title}</h2>
+                    <p className="text-gold font-medium mb-4">{step.subtitle}</p>
+                    <p className="text-charcoal-muted leading-relaxed mb-6">{step.body}</p>
                   </div>
-                  <h3 className="text-xl font-bold text-charcoal">{feature.title}</h3>
-                </div>
-                <p className="text-charcoal-muted mb-6">{feature.description}</p>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <ul className="space-y-2">
-                    {feature.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
-                        <span className="text-gray-700">{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {/* Details card */}
+                  <div className={`bg-charcoal-50 rounded-xl p-6 border border-charcoal-border ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+                    <p className="text-xs font-semibold uppercase tracking-widest text-charcoal-muted mb-4">What happens</p>
+                    <ul className="space-y-3">
+                      {step.details.map((d) => (
+                        <li key={d} className="flex items-start gap-3">
+                          <CheckCircle className="h-4 w-4 text-gold mt-0.5 flex-shrink-0" />
+                          <span className="text-sm text-charcoal leading-relaxed">{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Architecture */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-charcoal">Technical Architecture</h2>
-            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
-              Built on a modern, scalable architecture designed for enterprise performance.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {architectureComponents.map((component, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-lg border-b-4 border-gold">
-                <div className="flex items-center space-x-3 mb-4">
-                  <component.icon className="h-8 w-8 text-gold" />
-                  <h3 className="text-lg font-semibold text-charcoal">{component.title}</h3>
+        {/* ARCHITECTURE SUMMARY */}
+        <section className="py-16 bg-charcoal-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <h2 className="text-2xl font-bold text-charcoal">How the platform is wired together</h2>
+              <p className="text-charcoal-muted mt-2">All six steps run on a single, coherent platform — no stitching required.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {[
+                {
+                  title: 'API Layer',
+                  body: 'FastAPI on Python 3.12. Every action — upload, query, approve, share — goes through typed, validated endpoints. Swagger UI at /docs.',
+                  sub: '< 300ms p95 response time',
+                },
+                {
+                  title: 'Background Workers',
+                  body: 'Celery workers handle AI processing, email dispatch, audit export, and file operations asynchronously — without blocking your requests.',
+                  sub: '< 5 min AI processing per document',
+                },
+                {
+                  title: 'Storage',
+                  body: 'Files stored in MinIO (S3-compatible). Database in PostgreSQL 16 with pgvector for semantic embeddings. Redis for caching and task queue.',
+                  sub: 'Bring your own infrastructure',
+                },
+              ].map((item) => (
+                <div key={item.title} className="bg-white border border-charcoal-border rounded-lg p-6">
+                  <h3 className="font-semibold text-charcoal mb-2">{item.title}</h3>
+                  <p className="text-sm text-charcoal-muted leading-relaxed mb-3">{item.body}</p>
+                  <span className="inline-block text-xs font-medium text-gold bg-gold-50 border border-gold/20 rounded-full px-3 py-1">{item.sub}</span>
                 </div>
-                <p className="text-charcoal-muted mb-4">{component.description}</p>
-                <div className="text-sm font-medium text-gold">{component.metrics}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Implementation Process */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-charcoal">Implementation Process</h2>
-            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
-              Our structured approach ensures a smooth transition and successful deployment.
+        {/* CTA */}
+        <section className="py-20 bg-charcoal-900 text-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl font-bold mb-4">Ready to see it for yourself?</h2>
+            <p className="text-white/70 mb-8">
+              Request early access or read the full feature list.
             </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link
+                to="/request-access"
+                className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 font-semibold rounded-md hover:bg-gold-dark transition-colors"
+              >
+                Request Early Access <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link
+                to="/features"
+                className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
+              >
+                Full Feature List <ChevronRight className="ml-1 h-5 w-5" />
+              </Link>
+            </div>
           </div>
-          <ProcessFlow steps={implementationSteps} />
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="bg-charcoal text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Financial Operations?</h2>
-          <p className="text-xl opacity-90 mb-8">
-            Experience the power of intelligent financial data management.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/request-access"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
-            >
-              Get Started
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white/10 transition-colors"
-            >
-              Contact Sales
-            </Link>
-          </div>
-        </div>
-      </section>
+      </div>
     </>
   );
 };

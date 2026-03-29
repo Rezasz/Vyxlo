@@ -1,367 +1,319 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Brain, Shield, Zap, Search, Workflow, Globe,
-  MessageSquare, Wrench, FileBox, Network, Building,
-  Users, Lock, Cloud, Headphones, ChevronRight,
-  ArrowRight, LineChart, Scale, Cpu, Database,
-  FileText, Settings, Bell, Code, GitMerge
+  CheckCircle, ArrowRight, FolderTree, Brain, Search, GitBranch,
+  ShieldCheck, Users, Share2, Bell, Settings, FileText,
 } from 'lucide-react';
 import SEO from '../components/SEO';
 
+type FeatureGroup = {
+  id: string;
+  icon: React.ElementType;
+  label: string;
+  items: string[];
+};
+
+const FEATURE_GROUPS: FeatureGroup[] = [
+  {
+    id: 'document-management',
+    icon: FileText,
+    label: 'Document Management',
+    items: [
+      'Unlimited file types — PDF, DOCX, XLSX, PPTX, images, and more',
+      'Configurable max file size per organization',
+      'Status lifecycle: DRAFT → IN_REVIEW → PENDING_APPROVAL → APPROVED → PUBLISHED → ARCHIVED',
+      'Full version history — every upload creates a version; any version can be restored',
+      'Document duplication (metadata + file copy)',
+      'Move documents between folders',
+      'Soft delete with admin recovery',
+      'View count and download count tracking',
+      'Document locking (auto-expires after 1 hour)',
+    ],
+  },
+  {
+    id: 'search',
+    icon: Search,
+    label: 'Organization & Search',
+    items: [
+      'Unlimited folder hierarchy',
+      'Materialized path for efficient tree queries',
+      'Folder-level permissions inherited by documents',
+      'Full-text search (PostgreSQL tsvector)',
+      'Semantic search (pgvector, cosine similarity)',
+      'Search filters: folder, type, status, owner, date range, tags, AI classification',
+      'Autocomplete suggestions',
+      'Tag system with organization-scoped namespaces and color coding',
+    ],
+  },
+  {
+    id: 'ai',
+    icon: Brain,
+    label: 'AI Processing',
+    items: [
+      'Automatic classification into 10 categories: INVOICE, CONTRACT, REPORT, POLICY, MEMO, LETTER, FORM, PRESENTATION, MANUAL, OTHER',
+      'Keyword and entity extraction — people, organizations, dates, monetary amounts',
+      'AI-generated document summaries',
+      'Semantic embedding generation for similarity search',
+      'Content moderation flag',
+      'Re-process any document on demand',
+      'Works with OpenAI, Azure OpenAI, Anthropic Claude, Gemini, or Ollama',
+    ],
+  },
+  {
+    id: 'access-control',
+    icon: ShieldCheck,
+    label: 'Access Control',
+    items: [
+      '8-level permission system: NONE · READ · DOWNLOAD · COMMENT · CONTRIBUTOR · WRITE · EDITOR · ADMIN',
+      'Apply to individual users or entire departments',
+      'Permission expiration dates',
+      'Effective permission = maximum across all applicable grants',
+      'Document owner always has ADMIN access regardless of explicit records',
+      'Public documents visible to all authenticated users in the organization',
+    ],
+  },
+  {
+    id: 'workflows',
+    icon: GitBranch,
+    label: 'Workflow Engine',
+    items: [
+      'Multi-step approval chains with configurable step order',
+      'Sequential and parallel step execution',
+      'Per-step deadline tracking',
+      'Workflow hold, resume, and escalation for overdue steps',
+      'Full workflow state history',
+    ],
+  },
+  {
+    id: 'sharing',
+    icon: Share2,
+    label: 'Sharing',
+    items: [
+      'Secure share links with cryptographically random tokens (≥32 bytes entropy)',
+      'Optional expiry date, access count limit, password protection, email allowlist',
+      'Per-link access analytics (access count, last accessed)',
+      'One-click revoke',
+    ],
+  },
+  {
+    id: 'collaboration',
+    icon: Users,
+    label: 'Collaboration',
+    items: [
+      'Live presence indicators — who is viewing this document right now',
+      'Threaded comments with unlimited nesting',
+      '@mentions with instant notifications',
+      'Comment editing within 15 minutes of posting',
+      'Comment resolution by document owner or ADMIN',
+      'Emoji reactions',
+      'Inline annotation support (page + position coordinates)',
+      'WebSocket with automatic reconnection and exponential backoff',
+    ],
+  },
+  {
+    id: 'notifications',
+    icon: Bell,
+    label: 'Notifications',
+    items: [
+      'In-app notifications with real-time WebSocket delivery',
+      'Email notifications (async, within 2 minutes)',
+      'Daily digest email for unread notifications',
+      'Per-channel preferences (in-app, email, digest) per notification type',
+      '8 notification event types',
+      'Notification read/unread state management',
+    ],
+  },
+  {
+    id: 'audit',
+    icon: FolderTree,
+    label: 'Audit & Compliance',
+    items: [
+      'Immutable audit log for every action type',
+      'Before/after state stored as JSONB',
+      'Tamper-evident SHA-256 checksums',
+      'CSV export (async, returns download URL)',
+      'Configurable retention periods with automatic purge',
+      'Two-factor authentication (TOTP) with recovery codes',
+      'Active session management with remote revoke',
+    ],
+  },
+  {
+    id: 'admin',
+    icon: Settings,
+    label: 'Administration',
+    items: [
+      'Organization settings: name, logo, timezone, storage quota, feature flags',
+      'User invitation and role management',
+      'Department management',
+      'Storage usage dashboard',
+      'Platform-level admin for managing organizations (SUPER_ADMIN)',
+    ],
+  },
+];
+
 const Features = () => {
-  const mainFeatures = [
-    {
-      id: 'ai-automation',
-      icon: Brain,
-      title: 'AI-Powered Automation',
-      description: 'Transform your document workflows with advanced AI automation powered by cutting-edge machine learning models.',
-      benefits: [
-        'Reduce manual processing by 90%',
-        'Achieve 99.9% accuracy',
-        'Automate complex workflows',
-        'Real-time processing'
-      ],
-      metrics: {
-        accuracy: '99.9%',
-        speed: '<1s',
-        reduction: '90%'
-      },
-      techStack: [
-        'TensorFlow',
-        'PyTorch',
-        'BERT NLP',
-        'Computer Vision'
-      ]
-    },
-    {
-      id: 'security',
-      icon: Shield,
-      title: 'Enterprise Security',
-      description: 'Bank-grade security measures ensuring your documents are protected with the highest standards of data protection.',
-      benefits: [
-        'Military-grade encryption',
-        'Zero-trust security model',
-        'Complete audit trails',
-        '24/7 monitoring'
-      ],
-      metrics: {
-        encryption: '256-bit',
-        compliance: '100%',
-        monitoring: '24/7'
-      },
-      techStack: [
-        'AES-256',
-        'TLS 1.3',
-        'FIPS 140-2',
-        'OAuth 2.0'
-      ]
-    },
-    {
-      id: 'integrations',
-      icon: Network,
-      title: 'Seamless Integrations',
-      description: 'Connect with your existing tools and systems through our comprehensive integration capabilities.',
-      benefits: [
-        'API-first architecture',
-        'Pre-built connectors',
-        'Custom integration support',
-        'Real-time synchronization'
-      ],
-      metrics: {
-        apis: '100+',
-        uptime: '99.99%',
-        sync: 'Real-time'
-      },
-      techStack: [
-        'RESTful APIs',
-        'GraphQL',
-        'WebSockets',
-        'OAuth'
-      ]
-    }
-  ];
-
-  const technicalFeatures = [
-    {
-      icon: Cpu,
-      title: 'Advanced Processing',
-      description: 'High-performance document processing engine',
-      capabilities: [
-        'Multi-threaded processing',
-        'GPU acceleration',
-        'Distributed computing',
-        'Load balancing'
-      ]
-    },
-    {
-      icon: Database,
-      title: 'Smart Storage',
-      description: 'Intelligent document storage and retrieval',
-      capabilities: [
-        'Content-based indexing',
-        'Full-text search',
-        'Version control',
-        'Automated backups'
-      ]
-    },
-    {
-      icon: Code,
-      title: 'Developer Tools',
-      description: 'Comprehensive development resources',
-      capabilities: [
-        'REST API',
-        'SDKs',
-        'Webhooks',
-        'Documentation'
-      ]
-    },
-    {
-      icon: GitMerge,
-      title: 'Workflow Engine',
-      description: 'Customizable workflow automation',
-      capabilities: [
-        'Visual workflow builder',
-        'Custom rules',
-        'Conditional routing',
-        'Status tracking'
-      ]
-    }
-  ];
-
-  const enterpriseFeatures = [
-    {
-      icon: Building,
-      title: 'Enterprise Ready',
-      description: 'Built for large-scale deployments',
-      points: [
-        'High availability',
-        'Disaster recovery',
-        'SLA guarantees',
-        'Enterprise support'
-      ]
-    },
-    {
-      icon: Users,
-      title: 'Team Collaboration',
-      description: 'Enhanced team productivity tools',
-      points: [
-        'Role-based access',
-        'Team workspaces',
-        'Activity tracking',
-        'Audit logs'
-      ]
-    },
-    {
-      icon: LineChart,
-      title: 'Analytics & Insights',
-      description: 'Comprehensive reporting and analytics',
-      points: [
-        'Custom dashboards',
-        'Usage metrics',
-        'Performance analytics',
-        'Trend analysis'
-      ]
-    }
-  ];
+  const [activeGroup, setActiveGroup] = useState<string>('document-management');
+  const current = FEATURE_GROUPS.find((g) => g.id === activeGroup) ?? FEATURE_GROUPS[0];
 
   return (
     <>
       <SEO
-        title="Features"
-        description="Explore Vyxlo's comprehensive suite of AI-driven document management features designed for modern enterprises."
+        title="Features — VyXlo DMS"
+        description="Every feature a document management platform needs. AI processing, multi-step workflows, immutable audit logs, fine-grained permissions, real-time collaboration, and more."
         canonical="/features"
       />
+      <div className="pt-20">
 
-      {/* Hero Section */}
-      <section className="relative bg-charcoal text-white py-24 overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOGM5Ljk0MSAwIDE4LTguMDU5IDE4LTE4cy04LjA1OS0xOC0xOC0xOHptMCAyNGMtMy4zMTQgMC02LTIuNjg2LTYtNnMyLjY4Ni02IDYtNiA2IDIuNjg2IDYgNi0yLjY4NiA2LTYgNnoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvZz48L3N2Zz4=')] bg-repeat"></div>
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Enterprise-Grade Features
-            </h1>
-            <p className="text-xl opacity-90">
-              Experience the power of AI-driven document management with our comprehensive feature set designed for modern enterprises.
-            </p>
+        {/* HERO */}
+        <section className="bg-charcoal text-white py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <h1 className="text-4xl md:text-5xl font-bold mb-5">
+                Every feature a document management platform needs. Nothing it doesn't.
+              </h1>
+              <p className="text-lg text-white/70 leading-relaxed">
+                VyXlo is purpose-built for organizations that need structure, control, and intelligence — not another shared drive.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Main Features */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-charcoal">Core Features</h2>
-            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
-              Our platform combines advanced AI, enterprise-grade security, and seamless integrations to deliver a complete document management solution.
-            </p>
-          </div>
+        {/* FEATURE BROWSER */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row gap-8">
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {mainFeatures.map((feature) => {
-              const Icon = feature.icon;
-              return (
-                <div
-                  key={feature.id}
-                  className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
-                >
-                  <div className="p-8">
-                    <div className="flex items-center space-x-4 mb-6">
-                      <div className="p-3 bg-gold-100 rounded-lg">
-                        <Icon className="h-8 w-8 text-gold" />
-                      </div>
-                      <h3 className="text-2xl font-bold text-charcoal">{feature.title}</h3>
-                    </div>
-
-                    <p className="text-charcoal-muted mb-6">{feature.description}</p>
-
-                    <div className="bg-gray-50 p-6 rounded-lg mb-6">
-                      <h4 className="font-semibold mb-4 text-charcoal">Key Benefits:</h4>
-                      <ul className="space-y-3">
-                        {feature.benefits.map((benefit, index) => (
-                          <li key={index} className="flex items-start">
-                            <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
-                            <span className="text-gray-700">{benefit}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                      {Object.entries(feature.metrics).map(([key, value]) => (
-                        <div key={key} className="text-center p-4 bg-gold-50 rounded-lg">
-                          <div className="text-2xl font-bold text-gold">{value}</div>
-                          <div className="text-sm text-charcoal-muted capitalize">{key}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="border-t pt-6">
-                      <h4 className="font-semibold mb-4 text-charcoal">Technology Stack:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {feature.techStack.map((tech, index) => (
-                          <span
-                            key={index}
-                            className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <Link
-                      to={`/features/${feature.id}`}
-                      className="mt-6 inline-flex items-center text-gold hover:text-gold-dark font-medium group"
+              {/* Sidebar */}
+              <div className="lg:w-64 flex-shrink-0">
+                <p className="text-xs font-semibold uppercase tracking-widest text-charcoal-muted mb-3 px-3">Categories</p>
+                <nav className="space-y-1">
+                  {FEATURE_GROUPS.map((g) => (
+                    <button
+                      key={g.id}
+                      onClick={() => setActiveGroup(g.id)}
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors text-left ${
+                        activeGroup === g.id
+                          ? 'bg-gold-50 text-gold border border-gold/30'
+                          : 'text-charcoal-muted hover:bg-gray-50 hover:text-charcoal'
+                      }`}
                     >
-                      Learn More
-                      <ArrowRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Technical Features */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-charcoal">Technical Capabilities</h2>
-            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
-              Built on cutting-edge technology to deliver unmatched performance and reliability.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {technicalFeatures.map((feature, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg">
-                <div className="flex items-center space-x-4 mb-6">
-                  <div className="p-3 bg-gold-100 rounded-lg">
-                    <feature.icon className="h-6 w-6 text-gold" />
-                  </div>
-                  <h3 className="text-xl font-bold text-charcoal">{feature.title}</h3>
-                </div>
-                <p className="text-charcoal-muted mb-6">{feature.description}</p>
-                <ul className="space-y-3">
-                  {feature.capabilities.map((capability, capIndex) => (
-                    <li key={capIndex} className="flex items-start">
-                      <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
-                      <span className="text-gray-700">{capability}</span>
-                    </li>
+                      <g.icon className="h-4 w-4 flex-shrink-0" />
+                      {g.label}
+                      <span className="ml-auto text-xs text-charcoal-muted">{g.items.length}</span>
+                    </button>
                   ))}
-                </ul>
+                </nav>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Enterprise Features */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-charcoal">Enterprise-Grade Features</h2>
-            <p className="text-xl text-charcoal-muted max-w-3xl mx-auto">
-              Built to meet the demanding needs of modern enterprises with scalability and security in mind.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {enterpriseFeatures.map((feature, index) => (
-              <div key={index} className="bg-gray-50 p-8 rounded-xl border-l-4 border-gold">
-                <div className="flex items-center space-x-4 mb-6">
-                  <div className="p-3 bg-gold-100 rounded-lg">
-                    <feature.icon className="h-6 w-6 text-gold" />
+              {/* Content */}
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gold-100 text-gold">
+                    <current.icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-charcoal">{feature.title}</h3>
-                    <p className="text-charcoal-muted">{feature.description}</p>
+                    <h2 className="text-xl font-bold text-charcoal">{current.label}</h2>
+                    <p className="text-sm text-charcoal-muted">{current.items.length} features</p>
                   </div>
                 </div>
-                <ul className="space-y-3">
-                  {feature.points.map((point, pointIndex) => (
-                    <li key={pointIndex} className="flex items-start">
-                      <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
-                      <span className="text-gray-700">{point}</span>
-                    </li>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {current.items.map((item) => (
+                    <div key={item} className="flex items-start gap-3 p-4 rounded-lg border border-charcoal-border bg-white hover:border-gold/40 transition-colors">
+                      <CheckCircle className="h-4 w-4 text-gold mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-charcoal leading-relaxed">{item}</span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="bg-charcoal text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Document Management?</h2>
-          <p className="text-xl opacity-90 mb-8">
-            Contact us to learn how our features can be tailored to your specific needs.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
-            >
-              Get Started
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white/10 transition-colors"
-            >
-              Contact Sales
-            </Link>
+        {/* AT A GLANCE */}
+        <section className="py-16 bg-charcoal-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-charcoal text-center mb-10">All capability areas</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {FEATURE_GROUPS.map((g) => (
+                <button
+                  key={g.id}
+                  onClick={() => { setActiveGroup(g.id); window.scrollTo({ top: 320, behavior: 'smooth' }); }}
+                  className="bg-white border border-charcoal-border rounded-lg p-4 text-left hover:border-gold hover:shadow-sm transition-all group"
+                >
+                  <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gold-100 text-gold mb-3 group-hover:bg-gold group-hover:text-charcoal-900 transition-colors">
+                    <g.icon className="h-4 w-4" />
+                  </div>
+                  <p className="text-sm font-semibold text-charcoal">{g.label}</p>
+                  <p className="text-xs text-charcoal-muted mt-1">{g.items.length} features</p>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* DEEP DIVES */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-charcoal text-center mb-2">Deep dives</h2>
+            <p className="text-charcoal-muted text-center mb-8">Detailed breakdowns of key capability areas</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto">
+              <Link
+                to="/features/ai-automation"
+                className="flex items-start gap-4 p-6 border border-charcoal-border rounded-lg hover:border-gold hover:shadow-md transition-all group"
+              >
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gold-100 text-gold flex-shrink-0 group-hover:bg-gold group-hover:text-charcoal-900 transition-colors">
+                  <Brain className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-charcoal group-hover:text-gold transition-colors">AI Automation</h3>
+                  <p className="text-sm text-charcoal-muted mt-1 leading-relaxed">Classification, extraction, summarization, semantic search, and multi-provider support.</p>
+                  <span className="inline-flex items-center mt-3 text-gold text-sm font-medium">
+                    Read more <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                  </span>
+                </div>
+              </Link>
+              <Link
+                to="/features/collaboration"
+                className="flex items-start gap-4 p-6 border border-charcoal-border rounded-lg hover:border-gold hover:shadow-md transition-all group"
+              >
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gold-100 text-gold flex-shrink-0 group-hover:bg-gold group-hover:text-charcoal-900 transition-colors">
+                  <Users className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-charcoal group-hover:text-gold transition-colors">Collaboration</h3>
+                  <p className="text-sm text-charcoal-muted mt-1 leading-relaxed">Live presence, threaded comments, @mentions, annotations, and real-time WebSocket notifications.</p>
+                  <span className="inline-flex items-center mt-3 text-gold text-sm font-medium">
+                    Read more <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                  </span>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-20 bg-charcoal-900 text-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl font-bold mb-4">See VyXlo in action.</h2>
+            <p className="text-white/70 mb-8">Request early access or spin up the self-hosted version in under 10 minutes.</p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link
+                to="/request-access"
+                className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 font-semibold rounded-md hover:bg-gold-dark transition-colors"
+              >
+                Request Early Access <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link
+                to="/how-it-works"
+                className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
+              >
+                How It Works
+              </Link>
+            </div>
+          </div>
+        </section>
+
+      </div>
     </>
   );
 };

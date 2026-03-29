@@ -1,180 +1,530 @@
 import React from 'react';
-import { ArrowRight, Brain, Shield, Zap } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import EditableContent from '../components/EditableContent';
+import { Link } from 'react-router-dom';
+import {
+  ArrowRight, FolderTree, Brain, Search, GitBranch, ShieldCheck, Users,
+  CheckCircle, Shield, Database, Cloud, Code2, Network, ChevronRight,
+  FileText, Zap, Lock, Key, Activity,
+} from 'lucide-react';
 import SEO from '../components/SEO';
 
+const METRICS = [
+  { value: '327', label: 'Automated tests', sub: '≥72% coverage' },
+  { value: '8', label: 'Permission levels', sub: 'per document' },
+  { value: '4', label: 'AI providers', sub: 'OpenAI · Claude · Gemini · Ollama' },
+  { value: '7', label: 'Docker services', sub: 'single compose up' },
+  { value: '<300ms', label: 'p95 API response', sub: 'target' },
+  { value: '<5 min', label: 'AI processing', sub: 'per document' },
+  { value: '500', label: 'Concurrent users', sub: 'per organization' },
+  { value: '∞', label: 'Version history', sub: 'preserved forever' },
+];
+
+const CORE_FEATURES = [
+  {
+    icon: FolderTree,
+    title: 'Organized by Design',
+    body: 'Build an unlimited folder hierarchy. Move documents, set folder-level permissions, and let structure enforce clarity — not hope.',
+  },
+  {
+    icon: Brain,
+    title: 'AI That Works While You Don't',
+    body: 'Every uploaded document is automatically classified, summarized, and tagged. Keywords and entities are extracted. Semantic embeddings are generated. By the time you open a document, the AI has already done the reading.',
+  },
+  {
+    icon: Search,
+    title: 'Find Anything, Instantly',
+    body: 'Two search modes in one interface. Full-text search finds exact matches. Semantic search finds what you meant, not just what you typed. Both respect permissions.',
+  },
+  {
+    icon: GitBranch,
+    title: 'Approval Workflows That Actually Work',
+    body: 'Multi-step approval chains with sequential and parallel steps, assignees, deadlines, and escalation logic. Each step is tracked, every decision logged.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Compliance You Can Prove',
+    body: 'Every action produces an immutable audit log entry with before/after state and a tamper-evident SHA-256 checksum. Export to CSV for regulators.',
+  },
+  {
+    icon: Users,
+    title: 'Real-Time Collaboration',
+    body: 'See who's in a document right now. Threaded comments with @mentions. Lock sections to prevent conflicting edits. Secure share links with analytics.',
+  },
+];
+
+const AI_SUBFEATURES = [
+  {
+    title: 'AI Classification',
+    body: 'Documents categorized as INVOICE, CONTRACT, REPORT, POLICY, MEMO, LETTER, FORM, PRESENTATION, MANUAL, or OTHER — with a confidence score.',
+  },
+  {
+    title: 'Entity Extraction',
+    body: 'People, organizations, dates, and monetary amounts extracted automatically. Know who signed, when, for how much — without opening the file.',
+  },
+  {
+    title: 'Semantic Search',
+    body: 'pgvector stores 1536-dimensional embeddings. "Supplier agreements from last quarter" finds the right contracts even if they say "vendor contract."',
+  },
+  {
+    title: 'Multi-Provider Support',
+    body: 'OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, or Ollama (local/private). Switch providers without re-architecture.',
+  },
+];
+
+const WORKFLOW_STEPS = [
+  { n: '1', title: 'Initiate', body: 'Any user with WRITE permission starts a workflow against one or more documents.' },
+  { n: '2', title: 'Route', body: 'Documents flow through sequential steps; parallel steps activate simultaneously and can require any one or all approvers.' },
+  { n: '3', title: 'Approve or Reject', body: 'Each assignee reviews and responds with an optional comment. Rejection immediately terminates the workflow.' },
+  { n: '4', title: 'Complete', body: 'Approved documents are automatically promoted to APPROVED status. The audit log captures the full decision chain.' },
+  { n: '5', title: 'Notify', body: 'Every transition triggers real-time in-app and email notifications to relevant users.' },
+];
+
+const USE_CASES = [
+  {
+    title: 'Legal & Compliance',
+    body: 'Contracts, NDAs, and policies with full version history and immutable audit trails. Multi-step legal review workflows. One-click audit export for regulators.',
+    link: '/use-cases',
+  },
+  {
+    title: 'Finance & Operations',
+    body: 'AI-powered classification of invoices, POs, and reports. Parallel sign-off from multiple stakeholders. Retention policies that purge automatically.',
+    link: '/use-cases',
+  },
+  {
+    title: 'HR & People',
+    body: 'Employee documents visible only to authorized people. Onboarding workflows for signature and acknowledgment. Employment law retention compliance.',
+    link: '/use-cases',
+  },
+  {
+    title: 'Product & Engineering',
+    body: 'Specs, RFCs, runbooks, and design docs. Semantic search: "incident response procedure" returns the right doc even if titled "On-Call Handbook."',
+    link: '/use-cases',
+  },
+  {
+    title: 'Agencies & Consultancies',
+    body: 'Per-client folder isolation. Password-protected share links with download tracking. No client ever sees another client's work.',
+    link: '/use-cases',
+  },
+];
+
+const PRICING = [
+  {
+    name: 'Self-Hosted',
+    target: 'Engineering teams who want full control',
+    price: 'Free',
+    sub: 'Bring your own infrastructure',
+    highlight: false,
+  },
+  {
+    name: 'Cloud Starter',
+    target: 'Small teams up to 25 users',
+    price: 'Contact us',
+    sub: 'Managed, no ops burden',
+    highlight: false,
+  },
+  {
+    name: 'Cloud Business',
+    target: 'Up to 250 users, SLA, managed backups',
+    price: 'Contact us',
+    sub: 'SLA + priority support',
+    highlight: true,
+  },
+  {
+    name: 'Enterprise',
+    target: 'Unlimited users, SSO, dedicated support',
+    price: 'Contact us',
+    sub: 'Custom deployment options',
+    highlight: false,
+  },
+];
+
 const Home = () => {
-  const navigate = useNavigate();
-
-  const handleTryFree = () => {
-    window.open('https://91.107.255.176:8080/', '_blank');
-  };
-
   return (
     <>
       <SEO
-        title="SecureVault - AI driven Content Service platform"
-        description="Vyxlo.com is your trusted partner for AI-driven document management, tailored specifically for the complexities of the financial industry. Introducing SecureVault—a flagship product from Vyxlo, a subsidiary of Kanz.ai."
+        title="VyXlo DMS — Document Intelligence for Modern Teams"
+        description="VyXlo is a cloud-native document management system with AI-powered classification, multi-step approval workflows, fine-grained permissions, immutable audit logs, and real-time collaboration. Self-hostable with Docker."
         canonical="/"
       />
       <div>
-        {/* Hero Section */}
-        <section className="relative bg-charcoal-900 text-white">
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-black opacity-50"></div>
-            <img
-              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80"
-              alt="Hero background"
-              className="w-full h-full object-cover"
-            />
-          </div>
 
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+        {/* ── HERO ─────────────────────────────────────────────────── */}
+        <section className="relative bg-charcoal-900 text-white overflow-hidden">
+          {/* Subtle dot grid */}
+          <div
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: 'radial-gradient(circle, #EBBB4A 1px, transparent 1px)',
+              backgroundSize: '32px 32px',
+            }}
+          />
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-36">
             <div className="max-w-3xl">
-              <EditableContent
-                id="home-hero-title"
-                defaultContent="SecureVault - AI driven Content Service platform"
-                type="heading"
-              />
-              <EditableContent
-                id="home-hero-description"
-                defaultContent="Vyxlo.com is your trusted partner for AI-driven document management, tailored specifically for the complexities of the financial industry. Introducing SecureVault—a flagship product from Vyxlo, a subsidiary of Kanz.ai."
-                type="paragraph"
-              />
+              <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 rounded-full px-4 py-1.5 mb-6">
+                <span className="w-2 h-2 bg-gold rounded-full" />
+                <span className="text-gold text-sm font-medium">Document Intelligence Platform</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+                The Document Intelligence Platform Built for Teams That Can't Afford to Lose Control
+              </h1>
+              <p className="text-xl text-white/80 mb-8 leading-relaxed">
+                VyXlo replaces scattered drives, fragile approvals, and manual compliance with a single intelligent system. Upload, organize, collaborate, and audit — with AI doing the heavy lifting.
+              </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  to="/how-it-works"
-                  className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
+                  to="/request-access"
+                  className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 text-base font-semibold rounded-md hover:bg-gold-dark transition-colors shadow-lg"
                 >
-                  <EditableContent
-                    id="home-hero-cta"
-                    defaultContent="Get Started"
-                  />
+                  Request Early Access
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
                 <Link
-                  to="/features"
-                  className="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white/10 transition-colors"
+                  to="/how-it-works"
+                  className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white text-base font-semibold rounded-md hover:bg-white/10 transition-colors"
                 >
-                  <EditableContent
-                    id="home-hero-secondary-cta"
-                    defaultContent="Learn More"
-                  />
+                  See How It Works
+                  <ChevronRight className="ml-2 h-5 w-5" />
                 </Link>
               </div>
+              <p className="mt-8 text-white/40 text-sm">
+                Trusted by teams who treat documents as infrastructure.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Features Section */}
+        {/* ── PROBLEM STATEMENT ────────────────────────────────────── */}
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <EditableContent
-                id="home-features-title"
-                defaultContent="Why Choose Vyxlo.com?"
-                type="heading"
-              />
-              <EditableContent
-                id="home-features-description"
-                defaultContent="Experience the power of AI-driven document management designed specifically for financial institutions."
-                type="paragraph"
-              />
+            <p className="text-gold text-sm font-semibold uppercase tracking-widest text-center mb-4">Why teams outgrow their current tools</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+              {[
+                {
+                  icon: FileText,
+                  title: 'Files everywhere, context nowhere',
+                  body: 'Your team uses shared drives, email attachments, Slack threads, and Notion pages to manage the same document. Nobody knows which version is current or who approved it.',
+                },
+                {
+                  icon: Zap,
+                  title: 'Approvals that disappear into inboxes',
+                  body: 'Multi-step approvals are done over email. Steps are forgotten, deadlines missed, and there's no audit trail if something goes wrong.',
+                },
+                {
+                  icon: Activity,
+                  title: 'Compliance is an afterthought',
+                  body: 'When the auditor asks who accessed what and when, you're piecing together logs from three different tools. That's not a process — it's a risk.',
+                },
+              ].map((item) => (
+                <div key={item.title} className="p-6 border border-charcoal-border rounded-lg">
+                  <item.icon className="h-8 w-8 text-gold mb-4" />
+                  <h3 className="text-lg font-semibold text-charcoal mb-2">{item.title}</h3>
+                  <p className="text-charcoal-muted text-sm leading-relaxed">{item.body}</p>
+                </div>
+              ))}
             </div>
+          </div>
+        </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                <Brain className="h-12 w-12 text-gold mb-4" />
-                <EditableContent
-                  id="home-feature-1-title"
-                  defaultContent="AI-Powered Automation"
-                  type="heading"
-                />
-                <EditableContent
-                  id="home-feature-1-description"
-                  defaultContent="Automate document classification, tagging, and retrieval with advanced machine learning algorithms."
-                  type="paragraph"
-                />
-                <Link
-                  to="/features/ai-automation"
-                  className="inline-flex items-center mt-4 text-gold hover:text-gold-dark"
-                >
-                  Read More
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
+        {/* ── PRODUCT OVERVIEW ─────────────────────────────────────── */}
+        <section className="py-20 bg-charcoal-50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-6">
+              One platform. Every document. Every action. Every audit.
+            </h2>
+            <p className="text-lg text-charcoal-muted leading-relaxed">
+              VyXlo is a cloud-native document management system that combines structured storage, AI-powered processing, multi-step workflow automation, and immutable audit logging in a single platform. Your documents don't just live here — they work here.
+            </p>
+          </div>
+        </section>
+
+        {/* ── CORE FEATURES ────────────────────────────────────────── */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">What VyXlo does</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal">Every capability. In one system.</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {CORE_FEATURES.map((f) => (
+                <div key={f.title} className="p-6 bg-white border border-charcoal-border rounded-lg hover:shadow-md transition-shadow group">
+                  <div className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-gold-100 text-gold mb-4 group-hover:bg-gold group-hover:text-charcoal-900 transition-colors">
+                    <f.icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-charcoal mb-2">{f.title}</h3>
+                  <p className="text-charcoal-muted text-sm leading-relaxed">{f.body}</p>
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-10">
+              <Link to="/features" className="inline-flex items-center text-gold font-semibold hover:text-gold-dark transition-colors">
+                See the full feature list
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ── AI DEEP DIVE ─────────────────────────────────────────── */}
+        <section className="py-24 bg-charcoal-900 text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mb-14">
+              <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Powered by AI</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-5">Your documents are processed before you even open them.</h2>
+              <p className="text-white/70 text-lg leading-relaxed">
+                Upload a contract at 9am. By 9:05am, VyXlo has read it. The AI has identified it as a contract, extracted key dates and parties, written a 3-sentence summary, tagged it with relevant topics, and generated a semantic embedding so it surfaces in searches — even searches that don't use the exact words inside it.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+              {AI_SUBFEATURES.map((f) => (
+                <div key={f.title} className="bg-white/5 border border-white/10 rounded-lg p-5 hover:border-gold/40 transition-colors">
+                  <h3 className="text-base font-semibold text-gold mb-2">{f.title}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed">{f.body}</p>
+                </div>
+              ))}
+            </div>
+            <Link to="/features" className="inline-flex items-center text-gold font-semibold hover:text-gold-dark transition-colors">
+              See all AI features
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </div>
+        </section>
+
+        {/* ── WORKFLOW ENGINE ───────────────────────────────────────── */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+              <div>
+                <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Workflow Engine</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-5">Approvals that enforce themselves.</h2>
+                <p className="text-charcoal-muted text-lg leading-relaxed mb-6">
+                  Define a workflow once. Assign steps to individuals or entire departments. Set deadlines. VyXlo handles routing, reminders, escalations, and decision recording automatically.
+                </p>
+                <div className="text-sm text-charcoal-muted bg-charcoal-50 rounded-lg p-4 border border-charcoal-border">
+                  <p className="font-semibold text-charcoal mb-2">Supported scenarios</p>
+                  <ul className="space-y-1">
+                    <li>Legal review → Finance sign-off → Executive approval</li>
+                    <li>HR onboarding with parallel department heads</li>
+                    <li>Policy publication requiring all-hands sign-off</li>
+                  </ul>
+                </div>
               </div>
-
-              <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                <Shield className="h-12 w-12 text-gold mb-4" />
-                <EditableContent
-                  id="home-feature-2-title"
-                  defaultContent="Secure & Scalable"
-                  type="heading"
-                />
-                <EditableContent
-                  id="home-feature-2-description"
-                  defaultContent="Built with Go and ReactJS for performance and security, scaling effortlessly with your enterprise needs."
-                  type="paragraph"
-                />
-                <Link
-                  to="/features/security"
-                  className="inline-flex items-center mt-4 text-gold hover:text-gold-dark"
-                >
-                  Read More
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </div>
-
-              <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                <Zap className="h-12 w-12 text-gold mb-4" />
-                <EditableContent
-                  id="home-feature-3-title"
-                  defaultContent="Custom Integrations"
-                  type="heading"
-                />
-                <EditableContent
-                  id="home-feature-3-description"
-                  defaultContent="Seamlessly integrate with MinIO, IRIS OCR SDK, and Pydio for a complete document management solution."
-                  type="paragraph"
-                />
-                <Link
-                  to="/features/integrations"
-                  className="inline-flex items-center mt-4 text-gold hover:text-gold-dark"
-                >
-                  Read More
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
+              <div className="space-y-3">
+                {WORKFLOW_STEPS.map((step) => (
+                  <div key={step.n} className="flex gap-4 p-4 rounded-lg border border-charcoal-border hover:border-gold/40 transition-colors">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gold text-charcoal-900 flex items-center justify-center text-sm font-bold">
+                      {step.n}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-charcoal text-sm mb-0.5">{step.title}</p>
+                      <p className="text-charcoal-muted text-sm leading-relaxed">{step.body}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="bg-charcoal text-white py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <EditableContent
-              id="home-cta-title"
-              defaultContent="Ready to Transform Your Document Management?"
-              type="heading"
-            />
-            <EditableContent
-              id="home-cta-description"
-              defaultContent="Join leading financial institutions who trust Vyxlo.com for their document management needs."
-              type="paragraph"
-            />
-            <button
-              onClick={handleTryFree}
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
-            >
-              <EditableContent
-                id="home-cta-button"
-                defaultContent="Start Free Trial"
-              />
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </button>
+        {/* ── SECURITY SUMMARY ─────────────────────────────────────── */}
+        <section className="py-20 bg-charcoal-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Built for regulated environments</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal">Fine-grained control. Immutable records. Nothing hidden.</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Key,
+                  title: '8 Permission Levels',
+                  body: 'NONE · READ · DOWNLOAD · COMMENT · CONTRIBUTOR · WRITE · EDITOR · ADMIN — per document and per folder, with expiration dates.',
+                },
+                {
+                  icon: Lock,
+                  title: 'Immutable Audit Log',
+                  body: 'Every action logged with before/after state as JSONB. SHA-256 tamper-evident checksums. No updates, no deletes — ever. CSV export for regulators.',
+                },
+                {
+                  icon: Shield,
+                  title: 'ZITADEL Identity',
+                  body: 'OIDC/PKCE · SAML · LDAP · social login · TOTP 2FA. VyXlo never stores passwords. JWTs validated against JWKS using RS256.',
+                },
+              ].map((item) => (
+                <div key={item.title} className="bg-white rounded-lg p-6 border border-charcoal-border">
+                  <div className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-gold-100 text-gold mb-4">
+                    <item.icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-charcoal mb-2">{item.title}</h3>
+                  <p className="text-charcoal-muted text-sm leading-relaxed">{item.body}</p>
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Link to="/security" className="inline-flex items-center text-gold font-semibold hover:text-gold-dark transition-colors">
+                Read the full security model
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </section>
+
+        {/* ── METRICS ──────────────────────────────────────────────── */}
+        <section className="py-20 bg-charcoal-900 text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-center mb-14">Built to handle serious workloads.</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+              {METRICS.map((m) => (
+                <div key={m.label} className="text-center p-5 border border-white/10 rounded-lg hover:border-gold/40 transition-colors">
+                  <p className="text-3xl font-bold text-gold mb-1">{m.value}</p>
+                  <p className="text-sm font-medium text-white/80">{m.label}</p>
+                  <p className="text-xs text-white/40 mt-1">{m.sub}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── USE CASES ────────────────────────────────────────────── */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Who uses VyXlo</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal">Built for the teams that can't afford to lose control.</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {USE_CASES.map((uc) => (
+                <Link
+                  key={uc.title}
+                  to={uc.link}
+                  className="block p-6 border border-charcoal-border rounded-lg hover:border-gold hover:shadow-md transition-all group"
+                >
+                  <h3 className="text-lg font-semibold text-charcoal mb-2 group-hover:text-gold transition-colors">{uc.title}</h3>
+                  <p className="text-charcoal-muted text-sm leading-relaxed">{uc.body}</p>
+                  <span className="inline-flex items-center mt-4 text-gold text-sm font-medium">
+                    Learn more <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── TECH STACK ───────────────────────────────────────────── */}
+        <section className="py-16 bg-charcoal-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Open stack, no lock-in</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-charcoal">Built on standards you already know.</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
+              {[
+                {
+                  icon: Code2,
+                  label: 'Backend',
+                  stack: 'FastAPI · Python 3.12 · PostgreSQL 16 + pgvector · Redis 7 · Celery · MinIO',
+                },
+                {
+                  icon: Activity,
+                  label: 'Frontend',
+                  stack: 'Next.js · React 19 · TypeScript · TanStack Query · Zustand · Tailwind CSS',
+                },
+                {
+                  icon: Key,
+                  label: 'Identity',
+                  stack: 'ZITADEL — OIDC, PKCE, SAML, LDAP, social login, TOTP 2FA',
+                },
+                {
+                  icon: Brain,
+                  label: 'AI',
+                  stack: 'OpenAI · Azure OpenAI · Anthropic Claude · Google Gemini · Ollama',
+                },
+                {
+                  icon: Cloud,
+                  label: 'Deployment',
+                  stack: 'Docker Compose · Kubernetes-ready · Bring your own Postgres + Redis + S3',
+                },
+              ].map((t) => (
+                <div key={t.label} className="bg-white p-5 rounded-lg border border-charcoal-border">
+                  <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gold-100 text-gold mb-3">
+                    <t.icon className="h-4 w-4" />
+                  </div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-charcoal-muted mb-1">{t.label}</p>
+                  <p className="text-sm text-charcoal leading-relaxed">{t.stack}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── PRICING ──────────────────────────────────────────────── */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Pricing</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">Simple pricing. No per-feature gates.</h2>
+              <p className="text-charcoal-muted text-lg max-w-2xl mx-auto">
+                All plans include the full feature set — AI, workflows, audit log, real-time collaboration, and multi-tenancy.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              {PRICING.map((plan) => (
+                <div
+                  key={plan.name}
+                  className={`rounded-lg p-6 border-2 flex flex-col ${
+                    plan.highlight
+                      ? 'border-gold bg-gold-50'
+                      : 'border-charcoal-border bg-white'
+                  }`}
+                >
+                  {plan.highlight && (
+                    <span className="text-xs font-bold uppercase tracking-wider text-gold bg-gold/10 border border-gold/20 rounded-full px-3 py-1 self-start mb-3">
+                      Most popular
+                    </span>
+                  )}
+                  <h3 className="text-lg font-bold text-charcoal mb-1">{plan.name}</h3>
+                  <p className="text-sm text-charcoal-muted mb-4 leading-snug">{plan.target}</p>
+                  <p className="text-2xl font-bold text-charcoal mt-auto mb-1">{plan.price}</p>
+                  <p className="text-xs text-charcoal-muted mb-5">{plan.sub}</p>
+                  <Link
+                    to="/contact"
+                    className={`text-center text-sm font-semibold py-2 px-4 rounded-md transition-colors ${
+                      plan.highlight
+                        ? 'bg-gold text-charcoal-900 hover:bg-gold-dark'
+                        : 'bg-charcoal text-white hover:bg-charcoal-900'
+                    }`}
+                  >
+                    {plan.price === 'Free' ? 'View on GitHub' : 'Talk to us'}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── FINAL CTA ────────────────────────────────────────────── */}
+        <section className="py-24 bg-charcoal-900 text-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-5">Ready to put your documents to work?</h2>
+            <p className="text-white/70 text-lg mb-8 leading-relaxed">
+              VyXlo is open source and self-hostable. Run the full stack on your own infrastructure in under 10 minutes with Docker Compose. Or let us host it for you.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link
+                to="/request-access"
+                className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 text-base font-semibold rounded-md hover:bg-gold-dark transition-colors shadow-lg"
+              >
+                Request Early Access
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link
+                to="/how-it-works"
+                className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white text-base font-semibold rounded-md hover:bg-white/10 transition-colors"
+              >
+                See How It Works
+              </Link>
+            </div>
+          </div>
+        </section>
+
       </div>
     </>
   );

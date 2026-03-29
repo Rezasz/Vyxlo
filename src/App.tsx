@@ -15,6 +15,7 @@ import UseCaseDetails from './pages/UseCaseDetails';
 import Industries from './pages/Industries';
 import IndustryDetails from './pages/IndustryDetails';
 import KnowledgeBase from './pages/KnowledgeBase';
+import Security from './pages/Security';
 import Contact from './pages/Contact';
 import RequestAccess from './pages/RequestAccess';
 import AIAutomation from './pages/features/AIAutomation';
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/use-cases/:industryId" element={<UseCaseDetails />} />
                 <Route path="/verticals" element={<Industries />} />
                 <Route path="/verticals/:industryId" element={<IndustryDetails />} />
+                <Route path="/security" element={<Security />} />
                 <Route path="/knowledge-base" element={<KnowledgeBase />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/request-access" element={<RequestAccess />} />
