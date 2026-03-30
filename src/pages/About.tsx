@@ -1,29 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Target, Eye, Shield, Brain, Globe, Lock, ArrowRight, ChevronRight } from 'lucide-react';
+import { Shield, Zap, CheckCircle, Users, Building2, ArrowRight, Brain } from 'lucide-react';
 import SEO from '../components/SEO';
 
-const VALUES = [
-  {
-    icon: Lock,
-    title: 'Control',
-    body: 'Fine-grained permissions and immutable records because trust should be verifiable, not assumed. Every access, every decision — logged and provable.',
-  },
-  {
-    icon: Brain,
-    title: 'Intelligence',
-    body: 'AI that works on every document automatically, without configuration. Classification, extraction, summarization, and semantic search — by the time you open a file, the work is done.',
-  },
-  {
-    icon: Globe,
-    title: 'Openness',
-    body: 'Open source core, self-hostable with a single docker compose up, no per-seat callbacks to our servers. Your data stays where you put it.',
-  },
+const PRINCIPLES = [
   {
     icon: Shield,
-    title: 'Precision',
-    body: 'Specific features with exact constraints and real numbers. No vague promises. "Tamper-evident SHA-256 checksums" is better than "robust audit capabilities."',
+    title: 'Security First',
+    body: 'Every feature is designed with security as a constraint, not an afterthought. Access control, audit logging, and encryption are core infrastructure.',
   },
+  {
+    icon: Zap,
+    title: 'No Lock-In',
+    body: 'VyXlo works with any AI provider — OpenAI, Azure, Anthropic, Gemini, or your own Ollama instance. Switch without losing data.',
+  },
+  {
+    icon: CheckCircle,
+    title: 'Production Ready',
+    body: '327 automated tests. Docker Compose deployment. Real monitoring. VyXlo ships as production software, not a prototype.',
+  },
+  {
+    icon: Users,
+    title: 'Team-Scale',
+    body: 'Built for teams of 10 to 500+. Permissions, departments, and workflows scale without configuration bloat.',
+  },
+];
+
+const STATS = [
+  { value: '327', label: 'Automated tests' },
+  { value: '7', label: 'Docker services in production stack' },
+  { value: '8', label: 'Permission levels' },
+  { value: '< 5 min', label: 'AI processing time per document' },
 ];
 
 const About = () => {
@@ -31,116 +38,143 @@ const About = () => {
     <>
       <SEO
         title="About — VyXlo DMS"
-        description="VyXlo DMS is built for organizations that treat documents as infrastructure. A Kanz.ai product, built in Dubai."
+        description="VyXlo DMS is an AI-powered document management platform built by Kanz.ai in Dubai. Learn about our mission, principles, and the team."
         canonical="/about"
       />
       <div className="pt-20">
 
         {/* HERO */}
-        <section className="bg-charcoal text-white py-20">
+        <section className="bg-charcoal-900 text-white py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-5">
-                Built for organizations that treat documents as infrastructure.
+              <div className="inline-flex items-center gap-2 bg-white/10 text-gold text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+                <Brain className="h-4 w-4" />
+                About VyXlo
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                Document Intelligence for Modern Teams
               </h1>
-              <p className="text-lg text-white/70 leading-relaxed">
-                VyXlo DMS is the document platform for teams that need control, auditability, and intelligence — not another tool to wrangle.
+              <p className="text-lg text-white/70 leading-relaxed max-w-2xl">
+                VyXlo DMS is an AI-powered document management platform built to give teams complete control over their documents {"—"} from upload to archive.
               </p>
             </div>
           </div>
         </section>
 
-        {/* MISSION & VISION */}
+        {/* MISSION */}
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div>
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gold-100 text-gold mb-5">
-                  <Target className="h-6 w-6" />
-                </div>
-                <h2 className="text-2xl font-bold text-charcoal mb-4">Our Mission</h2>
-                <p className="text-charcoal-muted leading-relaxed">
-                  To give organizations complete control over their documents — structured storage, intelligent processing, and a complete audit trail — in a single system that doesn't require three tools and an intern to hold together.
-                </p>
-                <p className="text-charcoal-muted leading-relaxed mt-4">
-                  We believe compliance should be built-in, not bolted-on. That AI should handle the reading so humans can focus on the deciding. That every action on every document should be known, auditable, and recoverable.
-                </p>
-              </div>
-              <div>
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gold-100 text-gold mb-5">
-                  <Eye className="h-6 w-6" />
-                </div>
-                <h2 className="text-2xl font-bold text-charcoal mb-4">Our Vision</h2>
-                <p className="text-charcoal-muted leading-relaxed">
-                  A world where every organization has a document platform that's as reliable as their database and as transparent as their code history. Where "where is that file?" and "who approved this?" are questions that answer themselves.
-                </p>
-                <p className="text-charcoal-muted leading-relaxed mt-4">
-                  We're building VyXlo to be the platform that organizations trust not because they have to, but because it earns it — with immutable records, verifiable permissions, and AI that does what it says.
-                </p>
+            <div className="max-w-3xl">
+              <p className="text-xs font-semibold tracking-widest text-gold uppercase mb-3">
+                OUR MISSION
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal-900 mb-6">
+                Built by Engineers Who Needed This Themselves
+              </h2>
+              <p className="text-lg text-charcoal-muted leading-relaxed mb-6">
+                VyXlo started as an internal tool at Kanz.ai. We needed a document management system that could handle real compliance requirements, work with any AI provider, and actually integrate with how engineering teams work. We {"couldn't"} find one. So we built it.
+              </p>
+              <div className="inline-flex items-center gap-2 text-sm text-charcoal-muted bg-charcoal-50 border border-charcoal-border px-4 py-2 rounded-md">
+                <Building2 className="h-4 w-4 text-charcoal-muted shrink-0" />
+                VyXlo is a product of Kanz.ai, based in Dubai.
               </div>
             </div>
           </div>
         </section>
 
-        {/* VALUES */}
+        {/* PRODUCT VALUES */}
         <section className="py-20 bg-charcoal-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-charcoal mb-3">What we build toward</h2>
-              <p className="text-charcoal-muted">Four principles that guide every product decision we make.</p>
+            <div className="mb-12">
+              <p className="text-xs font-semibold tracking-widest text-gold uppercase mb-3">
+                HOW WE BUILD
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal-900">
+                Our Product Principles
+              </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-              {VALUES.map((v) => (
-                <div key={v.title} className="bg-white p-6 rounded-lg border border-charcoal-border border-t-4 border-t-gold hover:shadow-md transition-shadow">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {PRINCIPLES.map((p) => (
+                <div
+                  key={p.title}
+                  className="bg-white p-6 rounded-lg border border-charcoal-border border-t-4 border-t-gold hover:shadow-md transition-shadow"
+                >
                   <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gold-100 text-gold mb-4">
-                    <v.icon className="h-5 w-5" />
+                    <p.icon className="h-5 w-5" />
                   </div>
-                  <h3 className="text-lg font-bold text-charcoal mb-2">{v.title}</h3>
-                  <p className="text-sm text-charcoal-muted leading-relaxed">{v.body}</p>
+                  <h3 className="text-lg font-bold text-charcoal-900 mb-2">{p.title}</h3>
+                  <p className="text-sm text-charcoal-muted leading-relaxed">{p.body}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ABOUT THE COMPANY */}
+        {/* TECHNICAL HONESTY */}
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-2xl font-bold text-charcoal mb-5">About Vyxlo.com</h2>
-              <p className="text-charcoal-muted leading-relaxed mb-4">
-                VyXlo DMS is a product of <strong className="text-charcoal">Vyxlo.com</strong>, a subsidiary of <strong className="text-charcoal">Kanz.ai</strong>, based in Dubai, UAE. We build enterprise software for organizations that operate in complex, regulated environments.
+            <div className="mb-12 max-w-2xl">
+              <p className="text-xs font-semibold tracking-widest text-gold uppercase mb-3">
+                BY THE NUMBERS
               </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal-900 mb-4">
+                What 327 Tests Actually Cover
+              </h2>
               <p className="text-charcoal-muted leading-relaxed">
-                Our team combines expertise in enterprise architecture, applied AI, and regulated-industry software. We build in the open — the VyXlo backend is open source and designed to be auditable, not just functional.
+                We publish our test coverage because we believe in transparency about what the platform can and cannot do.
               </p>
-              <div className="mt-8 p-5 bg-charcoal-50 rounded-lg border border-charcoal-border text-sm text-left inline-block">
-                <p className="font-semibold text-charcoal mb-2">Contact</p>
-                <p className="text-charcoal-muted">contact@vyxlo.com</p>
-                <p className="text-charcoal-muted">+971-42327866</p>
-                <p className="text-charcoal-muted">702 Opal Tower, Business Bay, Dubai, UAE</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {STATS.map((s) => (
+                <div
+                  key={s.label}
+                  className="bg-charcoal-50 border border-charcoal-border rounded-lg p-6"
+                >
+                  <p className="text-4xl font-bold text-gold mb-2">{s.value}</p>
+                  <p className="text-sm text-charcoal-muted">{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* TEAM */}
+        <section className="py-20 bg-charcoal-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <p className="text-xs font-semibold tracking-widest text-gold uppercase mb-3">
+                THE TEAM
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal-900 mb-6">
+                A Small Team, Serious Software
+              </h2>
+              <p className="text-lg text-charcoal-muted leading-relaxed mb-6">
+                VyXlo is built by a focused team at Kanz.ai. We believe great software comes from small teams with clear ownership {"—"} not from large organizations with diffuse responsibility.
+              </p>
+              <div className="inline-flex items-center gap-2 text-sm text-charcoal-muted bg-white border border-charcoal-border px-4 py-2 rounded-md">
+                <Building2 className="h-4 w-4 text-charcoal-muted shrink-0" />
+                Kanz.ai is based in Dubai. VyXlo is our flagship product.
               </div>
             </div>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="py-16 bg-charcoal text-white">
+        <section className="py-20 bg-charcoal-900 text-white">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-2xl font-bold mb-3">Work with us</h2>
-            <p className="text-white/70 mb-6">Questions, partnerships, or enterprise inquiries — reach out.</p>
+            <h2 className="text-3xl font-bold mb-8">Want to Work Together?</h2>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
                 to="/contact"
                 className="inline-flex items-center justify-center px-6 py-3 bg-gold text-charcoal-900 font-semibold rounded-md hover:bg-gold-dark transition-colors"
               >
-                Get in Touch <ChevronRight className="ml-2 h-5 w-5" />
+                Get in Touch <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
               <Link
                 to="/request-access"
                 className="inline-flex items-center justify-center px-6 py-3 border border-white/30 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
               >
-                Request Early Access <ArrowRight className="ml-2 h-5 w-5" />
+                Request Access
               </Link>
             </div>
           </div>
