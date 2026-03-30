@@ -212,8 +212,7 @@ const Home = () => {
 
         {/* ── HERO ─────────────────────────────────────────────────── */}
         <section className="relative bg-charcoal-900 text-white overflow-hidden">
-          {/* Subtle dot grid */}
-          <div className="absolute inset-0 opacity-10 bg-gold" />
+
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-36">
             <div className="max-w-3xl">
               {/* Badge */}
@@ -239,7 +238,8 @@ const Home = () => {
                   to="/how-it-works"
                   className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
                 >
-                  See How It Works →
+                  See How It Works
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </div>
               <p className="mt-8 text-white/40 text-sm">
@@ -391,7 +391,7 @@ const Home = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
               {METRICS.map((m) => (
                 <div key={m.label} className="text-center p-5 border border-white/10 rounded-lg hover:border-gold/40 transition-colors">
-                  <p className="text-3xl font-bold text-gold mb-1">{m.value}</p>
+                  <p className="text-4xl font-bold text-gold mb-1">{m.value}</p>
                   <p className="text-sm font-medium text-white/80">{m.label}</p>
                   <p className="text-xs text-white/40 mt-1">{m.sub}</p>
                 </div>
@@ -405,6 +405,7 @@ const Home = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Who uses VyXlo</p>
+              <h2 className="text-3xl font-bold text-charcoal mb-4">The teams that rely on VyXlo</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {USE_CASES.map((uc) => (
@@ -477,16 +478,27 @@ const Home = () => {
                   <p className="text-sm text-charcoal-muted mb-4 leading-snug">{plan.target}</p>
                   <p className="text-2xl font-bold text-charcoal mt-auto mb-1">{plan.price}</p>
                   <p className="text-xs text-charcoal-muted mb-5">{plan.sub}</p>
-                  <Link
-                    to="/contact"
-                    className={`text-center text-sm font-semibold py-2 px-4 rounded-md transition-colors ${
-                      plan.highlight
-                        ? 'bg-gold text-charcoal-900 hover:bg-gold-dark'
-                        : 'bg-charcoal text-white hover:bg-charcoal-900'
-                    }`}
-                  >
-                    {plan.price === 'Free' ? 'View on GitHub' : 'Talk to us'}
-                  </Link>
+                  {plan.price === 'Free' ? (
+                    <a
+                      href="https://github.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-center text-sm font-semibold py-2 px-4 rounded-md transition-colors bg-charcoal text-white hover:bg-charcoal-900"
+                    >
+                      View on GitHub
+                    </a>
+                  ) : (
+                    <Link
+                      to="/contact"
+                      className={`text-center text-sm font-semibold py-2 px-4 rounded-md transition-colors ${
+                        plan.highlight
+                          ? 'bg-gold text-charcoal-900 hover:bg-gold-dark'
+                          : 'bg-charcoal text-white hover:bg-charcoal-900'
+                      }`}
+                    >
+                      Talk to us
+                    </Link>
+                  )}
                 </div>
               ))}
             </div>
