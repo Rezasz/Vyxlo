@@ -213,13 +213,7 @@ const Home = () => {
         {/* ── HERO ─────────────────────────────────────────────────── */}
         <section className="relative bg-charcoal-900 text-white overflow-hidden">
           {/* Subtle dot grid */}
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: 'radial-gradient(circle, #EBBB4A 1px, transparent 1px)',
-              backgroundSize: '32px 32px',
-            }}
-          />
+          <div className="absolute inset-0 opacity-10 bg-gold" />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-36">
             <div className="max-w-3xl">
               {/* Badge */}
