@@ -36,10 +36,6 @@ const Navbar = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const handleTryFree = () => {
-    window.open('https://91.107.255.176:8080/', '_blank');
-  };
-
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -72,7 +68,7 @@ const Navbar = () => {
                 className={`px-3 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
                   isActive(item.path)
                     ? 'text-gold bg-gold-50'
-                    : 'text-charcoal-muted hover:text-gold hover:bg-gray-50'
+                    : 'text-charcoal-muted hover:text-gold hover:bg-charcoal-50'
                 }`}
               >
                 {item.name}
@@ -86,19 +82,19 @@ const Navbar = () => {
               Request Early Access
             </Link>
 
-            <button
-              onClick={handleTryFree}
+            <Link
+              to="/request-access"
               className="ml-2 px-4 py-2 bg-gold text-charcoal-900 text-sm font-semibold rounded-md hover:bg-gold-dark transform hover:-translate-y-0.5 transition-all duration-200 shadow-sm hover:shadow"
             >
               Try Free
-            </button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-charcoal-muted hover:text-gold hover:bg-gray-50 focus:outline-none transition-colors"
+              className="inline-flex items-center justify-center p-2 rounded-md text-charcoal-muted hover:text-gold hover:bg-charcoal-50 focus:outline-none transition-colors"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -120,7 +116,7 @@ const Navbar = () => {
               className={`block px-4 py-2 rounded-md text-sm font-semibold transition-colors ${
                 isActive(item.path)
                   ? 'text-gold bg-gold-50'
-                  : 'text-charcoal-muted hover:text-gold hover:bg-gray-50'
+                  : 'text-charcoal-muted hover:text-gold hover:bg-charcoal-50'
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -134,12 +130,13 @@ const Navbar = () => {
           >
             Request Early Access
           </Link>
-          <button
-            onClick={() => { handleTryFree(); setIsOpen(false); }}
-            className="w-full mt-1 px-4 py-2 bg-gold text-charcoal-900 text-sm font-semibold rounded-md hover:bg-gold-dark transition-colors"
+          <Link
+            to="/request-access"
+            className="block w-full mt-1 px-4 py-2 bg-gold text-charcoal-900 text-sm font-semibold rounded-md hover:bg-gold-dark transition-colors text-center"
+            onClick={() => setIsOpen(false)}
           >
             Try Free
-          </button>
+          </Link>
         </div>
       </div>
     </nav>
