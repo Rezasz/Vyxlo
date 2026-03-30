@@ -6,7 +6,6 @@ import {
   Users,
   Archive,
   Search,
-  Shield,
   Server,
   Cloud,
   Building2,
@@ -214,7 +213,7 @@ const HowItWorks = () => {
                   </p>
                 </div>
                 {i < STATUS_STAGES.length - 1 && (
-                  <div className="flex items-center justify-center px-1 py-2 md:py-0 text-charcoal-border">
+                  <div aria-hidden="true" className="flex items-center justify-center px-1 py-2 md:py-0 text-charcoal-border">
                     <ArrowRight className="h-4 w-4 rotate-90 md:rotate-0" />
                   </div>
                 )}
