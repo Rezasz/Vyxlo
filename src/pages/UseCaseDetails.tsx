@@ -188,9 +188,9 @@ const UseCaseDetails: React.FC = () => {
             {"What teams deal with before VyXlo."}
           </p>
           <ul className="space-y-4">
-            {detail.challenges.map((challenge, index) => (
+            {detail.challenges.map((challenge) => (
               <li
-                key={index}
+                key={challenge}
                 className="flex items-start gap-3 bg-charcoal-50 border border-charcoal-border rounded-xl px-6 py-5"
               >
                 <AlertCircle className="h-4 w-4 text-charcoal-muted flex-shrink-0 mt-0.5" />
@@ -209,9 +209,9 @@ const UseCaseDetails: React.FC = () => {
             {"Purpose-built features that solve each pain point."}
           </p>
           <ul className="space-y-4">
-            {detail.capabilities.map((capability, index) => (
+            {detail.capabilities.map((capability) => (
               <li
-                key={index}
+                key={capability}
                 className="flex items-start gap-3 bg-white border border-charcoal-border rounded-xl px-6 py-5"
               >
                 <Check className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
@@ -237,11 +237,10 @@ const UseCaseDetails: React.FC = () => {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              to="/use-cases"
+              to="/contact"
               className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg border border-white/30 text-white font-semibold hover:bg-white/10 transition-colors"
             >
-              <ChevronLeft className="h-4 w-4" />
-              All Use Cases
+              Talk to Our Team
             </Link>
           </div>
         </div>
