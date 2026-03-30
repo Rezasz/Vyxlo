@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ArrowRight, CheckCircle, Shield, Zap, FlaskConical } from 'lucide-react';
 import SEO from '../components/SEO';
 import HubSpotForm from '../components/HubSpotForm';
