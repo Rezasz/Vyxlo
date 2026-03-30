@@ -1,389 +1,252 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
-  Building2, FileText, Briefcase, Scale, ArrowLeft,
-  ChevronRight, ArrowRight, Shield, Clock, Users,
-  FileCheck, Database, Lock, Cloud, Settings
+  Scale, ShieldCheck, DollarSign, Users, Code,
+  Check, ChevronLeft, ArrowRight, AlertCircle,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import SEO from '../components/SEO';
 
-const useCases = {
-  'banking-finance': {
-    title: 'Banking & Finance',
-    icon: Building2,
-    description: 'Transform document management in the banking and financial sector with AI-powered automation and security.',
-    challenges: [
-      'High volume of sensitive documents',
-      'Complex regulatory requirements',
-      'Time-consuming manual processes',
-      'Risk of human error',
-      'Data security concerns'
-    ],
-    solutions: [
-      {
-        title: 'Automated Document Processing',
-        description: 'AI-powered system for processing loan applications, KYC documents, and financial reports.',
-        icon: FileCheck
-      },
-      {
-        title: 'Compliance Management',
-        description: 'Automated compliance checks and regulatory reporting capabilities.',
-        icon: Shield
-      },
-      {
-        title: 'Secure Document Storage',
-        description: 'Bank-grade security for storing and managing sensitive financial documents.',
-        icon: Lock
-      }
-    ],
-    benefits: [
-      '90% reduction in processing time',
-      '99.9% accuracy in document classification',
-      'Enhanced regulatory compliance',
-      'Improved customer experience',
-      'Reduced operational costs'
-    ],
-    features: [
-      {
-        title: 'Real-time Processing',
-        description: 'Process documents instantly with AI-powered automation',
-        icon: Clock
-      },
-      {
-        title: 'Advanced Security',
-        description: 'Military-grade encryption and access controls',
-        icon: Shield
-      },
-      {
-        title: 'Integration Ready',
-        description: 'Connect with existing banking systems seamlessly',
-        icon: Settings
-      }
-    ]
-  },
-  'legal-services': {
-    title: 'Legal Services',
+interface UseCaseDetail {
+  id: string;
+  title: string;
+  tagline: string;
+  description: string;
+  icon: LucideIcon;
+  challenges: string[];
+  capabilities: string[];
+  outcome: string;
+}
+
+const USE_CASE_DETAILS: Record<string, UseCaseDetail> = {
+  legal: {
+    id: 'legal',
+    title: 'Legal Teams',
+    tagline: 'Contracts that sign themselves off. Almost.',
+    description: 'VyXlo gives legal teams full control over the contract lifecycle — from first draft through final execution — with version-controlled documents, parallel approval chains, and a tamper-proof audit trail.',
     icon: Scale,
-    description: 'Streamline legal document management with intelligent organization and secure collaboration tools.',
     challenges: [
-      'Complex document organization',
-      'Time-consuming document review',
-      'Secure client collaboration',
-      'Version control issues',
-      'Compliance requirements'
+      'Contracts emailed back and forth with no clear version of record',
+      'Approval chains managed in spreadsheets or Slack threads',
+      'No audit trail when regulators ask what changed and when',
     ],
-    solutions: [
-      {
-        title: 'Smart Document Organization',
-        description: 'AI-powered categorization and intelligent search capabilities.',
-        icon: Database
-      },
-      {
-        title: 'Secure Collaboration',
-        description: 'Protected sharing and real-time collaboration features.',
-        icon: Users
-      },
-      {
-        title: 'Version Control',
-        description: 'Advanced version tracking and document history.',
-        icon: Clock
-      }
+    capabilities: [
+      'Version history on every contract — any version can be restored in one click',
+      'Parallel and sequential approval chains with per-step deadlines',
+      'Immutable audit log with SHA-256 checksums for every action',
+      'Document locking prevents conflicting edits during review',
+      'Secure share links with expiry for external counsel',
     ],
-    benefits: [
-      'Reduced document search time',
-      'Enhanced client collaboration',
-      'Improved document accuracy',
-      'Better case management',
-      'Streamlined workflows'
-    ],
-    features: [
-      {
-        title: 'Document Analytics',
-        description: 'Gain insights from legal document analysis',
-        icon: FileCheck
-      },
-      {
-        title: 'Secure Access',
-        description: 'Role-based access control and audit trails',
-        icon: Lock
-      },
-      {
-        title: 'Cloud Storage',
-        description: 'Secure cloud-based document storage',
-        icon: Cloud
-      }
-    ]
+    outcome: 'Legal teams close deals faster and prove compliance without hunting for the right version.',
   },
-  'insurance': {
-    title: 'Insurance',
-    icon: Briefcase,
-    description: 'Accelerate insurance processes with automated document handling and intelligent claims processing.',
+  compliance: {
+    id: 'compliance',
+    title: 'Compliance & Audit',
+    tagline: 'Prove everything. Explain nothing twice.',
+    description: 'Compliance teams use VyXlo to maintain audit-ready documentation at all times — with SHA-256-verified records, CSV export, and configurable retention policies that meet regulatory requirements.',
+    icon: ShieldCheck,
     challenges: [
-      'High volume of claims documents',
-      'Manual data extraction',
-      'Policy management complexity',
-      'Customer communication',
-      'Fraud detection'
+      'Audit requests require hours of manual document collection',
+      'No centralized record of who approved what and when',
+      'Retention policies enforced manually — files deleted or kept inconsistently',
     ],
-    solutions: [
-      {
-        title: 'Claims Automation',
-        description: 'Automated claims processing and validation system.',
-        icon: FileCheck
-      },
-      {
-        title: 'Policy Management',
-        description: 'Centralized policy document management and tracking.',
-        icon: Database
-      },
-      {
-        title: 'Customer Portal',
-        description: 'Self-service document submission and tracking.',
-        icon: Users
-      }
+    capabilities: [
+      'Every action logged with before/after state and SHA-256 checksum',
+      'CSV export for regulatory submission, available on demand',
+      'Configurable retention periods with automatic purge',
+      'Two-factor authentication and active session management',
+      'AI classification makes document discovery instant during audits',
     ],
-    benefits: [
-      'Faster claims processing',
-      'Reduced operational costs',
-      'Improved customer satisfaction',
-      'Better fraud detection',
-      'Streamlined workflows'
-    ],
-    features: [
-      {
-        title: 'Smart Processing',
-        description: 'AI-powered document analysis and extraction',
-        icon: Settings
-      },
-      {
-        title: 'Secure Storage',
-        description: 'Encrypted document storage and backup',
-        icon: Lock
-      },
-      {
-        title: 'Integration',
-        description: 'Connect with existing insurance systems',
-        icon: Cloud
-      }
-    ]
+    outcome: 'Compliance teams walk into audits prepared, not scrambling.',
   },
-  'government': {
-    title: 'Government',
-    icon: FileText,
-    description: 'Modernize government document management with secure, efficient, and transparent solutions.',
+  finance: {
+    id: 'finance',
+    title: 'Finance & Accounting',
+    tagline: 'Every invoice, accounted for.',
+    description: 'Finance teams use VyXlo to eliminate manual document routing — invoices are classified on upload, approval workflows run automatically, and every financial document is searchable and version-tracked.',
+    icon: DollarSign,
     challenges: [
-      'Large-scale document management',
-      'Security requirements',
-      'Public accessibility needs',
-      'Legacy system integration',
-      'Compliance mandates'
+      'Invoices arrive by email and get lost before approval',
+      'No system of record for which invoices have been approved vs. pending',
+      'Manual routing causes payment delays and missed discount windows',
     ],
-    solutions: [
-      {
-        title: 'Digital Transformation',
-        description: 'Comprehensive digital document management system.',
-        icon: Cloud
-      },
-      {
-        title: 'Public Access Portal',
-        description: 'Secure public document access and request system.',
-        icon: Users
-      },
-      {
-        title: 'Workflow Automation',
-        description: 'Automated document routing and approval processes.',
-        icon: Settings
-      }
+    capabilities: [
+      'AI auto-classifies invoices and financial reports on upload',
+      'Automated approval routing with configurable step order',
+      'Full version history on every financial document',
+      'Search by type, status, date range, or amount-related entities',
+      'Notification on every approval action — no chasing approvers',
     ],
-    benefits: [
-      'Improved public service delivery',
-      'Enhanced transparency',
-      'Reduced processing times',
-      'Better resource utilization',
-      'Increased accessibility'
+    outcome: 'Finance teams process invoices faster and maintain a clean paper trail without manual overhead.',
+  },
+  hr: {
+    id: 'hr',
+    title: 'HR & People Ops',
+    tagline: 'Employee records that stay current.',
+    description: 'HR teams use VyXlo to manage the full employee document lifecycle — from offer letters to exit paperwork — with role-based access ensuring only the right people see sensitive records.',
+    icon: Users,
+    challenges: [
+      'Employee files scattered across shared drives with no access control',
+      'No audit trail for who accessed sensitive HR documents',
+      'Onboarding packets version-managed in email attachments',
     ],
-    features: [
-      {
-        title: 'Security',
-        description: 'Government-grade security protocols',
-        icon: Shield
-      },
-      {
-        title: 'Automation',
-        description: 'Streamlined document processing',
-        icon: Settings
-      },
-      {
-        title: 'Analytics',
-        description: 'Comprehensive reporting and insights',
-        icon: Database
-      }
-    ]
-  }
+    capabilities: [
+      'Role-based access at document, folder, and department level',
+      'Status lifecycle tracking from DRAFT through ARCHIVED',
+      'Immutable audit log for every access and change',
+      'Secure share links for onboarding packet delivery',
+      'AI classification automatically organizes uploaded HR documents',
+    ],
+    outcome: 'HR teams run onboarding and offboarding with confidence, knowing every document is in its right place.',
+  },
+  engineering: {
+    id: 'engineering',
+    title: 'IT & Engineering',
+    tagline: 'Technical docs your team will actually use.',
+    description: 'Engineering teams use VyXlo to keep runbooks, architecture documents, and incident reports discoverable and up to date — with semantic search and automatic versioning on every re-upload.',
+    icon: Code,
+    challenges: [
+      'Runbooks buried in wikis that nobody updates',
+      'Architecture docs overwritten with no version history',
+      'Incident reports scattered across ticketing systems and email',
+    ],
+    capabilities: [
+      'Semantic search finds relevant docs even without exact keyword matches',
+      'Auto-versioning on every re-upload — full diff history preserved',
+      'Department-scoped access control for sensitive architecture docs',
+      'AI classification and entity extraction for technical document metadata',
+      'Real-time collaboration with @mentions for incident post-mortems',
+    ],
+    outcome: 'Engineering teams spend time building, not searching for the doc they need.',
+  },
 };
 
-const UseCaseDetails = () => {
-  const { industryId } = useParams<{ industryId: string }>();
-  const useCase = useCases[industryId as keyof typeof useCases];
+const UseCaseDetails: React.FC = () => {
+  const { useCaseId } = useParams<{ useCaseId: string }>();
+  const detail = useCaseId ? USE_CASE_DETAILS[useCaseId] : undefined;
 
-  if (!useCase) {
+  if (!detail) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-charcoal">Use case not found</h1>
-            <Link to="/use-cases" className="mt-4 inline-flex items-center text-gold hover:text-gold-dark">
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Return to use cases
-            </Link>
-          </div>
+      <div className="pt-20 min-h-screen bg-charcoal-50 flex items-center justify-center">
+        <div className="text-center px-4">
+          <h1 className="text-3xl font-bold text-charcoal mb-4">Use case not found</h1>
+          <p className="text-charcoal-muted mb-8">
+            {"The use case you're looking for doesn't exist or has been moved."}
+          </p>
+          <Link
+            to="/use-cases"
+            className="inline-flex items-center gap-2 text-gold hover:text-gold-dark font-medium transition-colors"
+          >
+            <ChevronLeft className="h-5 w-5" />
+            Back to Use Cases
+          </Link>
         </div>
       </div>
     );
   }
 
-  const Icon = useCase.icon;
+  const Icon = detail.icon;
 
   return (
-    <>
+    <div className="pt-20">
       <SEO
-        title={`${useCase.title} Solutions`}
-        description={useCase.description}
-        canonical={`/use-cases/${industryId}`}
+        title={`${detail.title} — VyXlo DMS`}
+        description={detail.description}
+        canonical={`/use-cases/${detail.id}`}
       />
 
-      {/* Hero Section */}
-      <section className="relative bg-charcoal text-white py-24">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOGM5Ljk0MSAwIDE4LTguMDU5IDE4LTE4cy04LjA1OS0xOC0xOC0xOHptMCAyNGMtMy4zMTQgMC02LTIuNjg2LTYtNnMyLjY4Ni02IDYtNiA2IDIuNjg2IDYgNi0yLjY4NiA2LTYgNnoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvZz48L3N2Zz4=')] bg-repeat"></div>
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex items-center justify-center mb-8">
-              <div className="p-4 bg-gold/20 rounded-2xl backdrop-blur-sm">
-                <Icon className="h-16 w-16 text-gold" />
-              </div>
+      {/* Hero */}
+      <section className="bg-charcoal-900 text-white py-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link
+            to="/use-cases"
+            className="inline-flex items-center gap-1.5 text-gold hover:text-gold-dark font-medium transition-colors mb-10"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            All Use Cases
+          </Link>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+            <div className="w-14 h-14 bg-gold-100 text-gold rounded-xl flex items-center justify-center flex-shrink-0">
+              <Icon className="h-7 w-7" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{useCase.title}</h1>
-            <p className="text-xl opacity-90 max-w-3xl mx-auto">{useCase.description}</p>
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight">{detail.title}</h1>
+              <p className="mt-2 text-xl text-gold font-medium">{detail.tagline}</p>
+            </div>
           </div>
+          <p className="mt-8 text-lg text-white/80 max-w-3xl leading-relaxed">
+            {detail.description}
+          </p>
         </div>
       </section>
 
-      {/* Challenges Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-charcoal">Industry Challenges</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {useCase.challenges.map((challenge, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md border-l-4 border-gold-200">
-                <div className="flex items-start">
-                  <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0 mt-0.5" />
-                  <p className="text-gray-700">{challenge}</p>
-                </div>
-              </div>
+      {/* Challenges */}
+      <section className="bg-white py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-charcoal mb-2">The Problem</h2>
+          <p className="text-charcoal-muted mb-10">
+            {"What teams deal with before VyXlo."}
+          </p>
+          <ul className="space-y-4">
+            {detail.challenges.map((challenge, index) => (
+              <li
+                key={index}
+                className="flex items-start gap-3 bg-charcoal-50 border border-charcoal-border rounded-xl px-6 py-5"
+              >
+                <AlertCircle className="h-4 w-4 text-charcoal-muted flex-shrink-0 mt-0.5" />
+                <span className="text-charcoal leading-relaxed">{challenge}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* Solutions Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-charcoal">Our Solutions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {useCase.solutions.map((solution, index) => {
-              const SolutionIcon = solution.icon;
-              return (
-                <div key={index} className="bg-white p-8 rounded-lg shadow-lg">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gold-100 text-gold mb-4">
-                    <SolutionIcon className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4 text-charcoal">{solution.title}</h3>
-                  <p className="text-charcoal-muted">{solution.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-charcoal">Key Benefits</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {useCase.benefits.map((benefit, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md border-l-4 border-gold">
-                <div className="flex items-start">
-                  <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0 mt-0.5" />
-                  <p className="text-gray-700">{benefit}</p>
-                </div>
-              </div>
+      {/* Capabilities */}
+      <section className="bg-charcoal-50 py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-charcoal mb-2">How VyXlo Helps</h2>
+          <p className="text-charcoal-muted mb-10">
+            {"Purpose-built features that solve each pain point."}
+          </p>
+          <ul className="space-y-4">
+            {detail.capabilities.map((capability, index) => (
+              <li
+                key={index}
+                className="flex items-start gap-3 bg-white border border-charcoal-border rounded-xl px-6 py-5"
+              >
+                <Check className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-charcoal leading-relaxed">{capability}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-charcoal">Key Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {useCase.features.map((feature, index) => {
-              const FeatureIcon = feature.icon;
-              return (
-                <div key={index} className="bg-white p-8 rounded-lg shadow-lg">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gold-100 text-gold mb-4">
-                    <FeatureIcon className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4 text-charcoal">{feature.title}</h3>
-                  <p className="text-charcoal-muted">{feature.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-charcoal text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Transform Your {useCase.title} Operations?</h2>
-          <p className="text-xl opacity-90 mb-8">
-            Get started with our industry-leading document management solutions today.
+      {/* Outcome + CTA */}
+      <section className="bg-charcoal-900 text-white py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-xl md:text-2xl font-medium text-white/90 max-w-2xl mx-auto leading-relaxed mb-10">
+            {detail.outcome}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/request-access"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg bg-gold text-charcoal-900 font-semibold hover:bg-gold-dark transition-colors"
             >
-              Get Started
-              <ArrowRight className="ml-2 h-5 w-5" />
+              Get Early Access
+              <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              to="/contact"
-              className="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white/10 transition-colors"
+              to="/use-cases"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg border border-white/30 text-white font-semibold hover:bg-white/10 transition-colors"
             >
-              Contact Sales
+              <ChevronLeft className="h-4 w-4" />
+              All Use Cases
             </Link>
           </div>
         </div>
       </section>
-
-      {/* Navigation */}
-      <div className="bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Link
-            to="/use-cases"
-            className="inline-flex items-center text-gold hover:text-gold-dark font-medium"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Use Cases
-          </Link>
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 

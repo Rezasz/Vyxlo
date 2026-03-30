@@ -38,7 +38,7 @@ function App() {
                 <Route path="/features/collaboration" element={<Collaboration />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/use-cases" element={<UseCases />} />
-                <Route path="/use-cases/:industryId" element={<UseCaseDetails />} />
+                <Route path="/use-cases/:useCaseId" element={<UseCaseDetails />} />
                 <Route path="/verticals" element={<Industries />} />
                 <Route path="/verticals/:industryId" element={<IndustryDetails />} />
                 <Route path="/security" element={<Security />} />
