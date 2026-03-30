@@ -2,20 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, FolderTree, Brain, Search, GitBranch, ShieldCheck, Users,
-  CheckCircle, Shield, Database, Cloud, Code2, Network, ChevronRight,
-  FileText, Zap, Lock, Key, Activity,
+  Shield, Cloud, Code2, Network, FileText, Zap, Lock, Key, Activity, BarChart3,
 } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const METRICS = [
-  { value: '327', label: 'Automated tests', sub: '≥72% coverage' },
-  { value: '8', label: 'Permission levels', sub: 'per document' },
-  { value: '4', label: 'AI providers', sub: 'OpenAI · Claude · Gemini · Ollama' },
+  { value: '327', label: 'automated tests', sub: '≥72% coverage' },
+  { value: '8', label: 'permission levels', sub: 'per document' },
+  { value: '4', label: 'AI providers', sub: 'supported' },
   { value: '7', label: 'Docker services', sub: 'single compose up' },
-  { value: '<300ms', label: 'p95 API response', sub: 'target' },
+  { value: '<300ms', label: 'p95 API response', sub: 'time target' },
   { value: '<5 min', label: 'AI processing', sub: 'per document' },
-  { value: '500', label: 'Concurrent users', sub: 'per organization' },
-  { value: '∞', label: 'Version history', sub: 'preserved forever' },
+  { value: '500', label: 'concurrent users', sub: 'per organization' },
+  { value: '∞', label: 'version history', sub: 'preserved' },
 ];
 
 const CORE_FEATURES = [
@@ -54,19 +53,19 @@ const CORE_FEATURES = [
 const AI_SUBFEATURES = [
   {
     title: 'AI Classification',
-    body: 'Documents categorized as INVOICE, CONTRACT, REPORT, POLICY, MEMO, LETTER, FORM, PRESENTATION, MANUAL, or OTHER — with a confidence score.',
+    body: '10 categories with confidence score: INVOICE, CONTRACT, REPORT, POLICY, MEMO, LETTER, FORM, PRESENTATION, MANUAL, OTHER',
   },
   {
     title: 'Entity Extraction',
-    body: 'People, organizations, dates, and monetary amounts extracted automatically. Know who signed, when, for how much — without opening the file.',
+    body: 'People, organizations, dates, and monetary amounts extracted automatically.',
   },
   {
     title: 'Semantic Search',
-    body: 'pgvector stores 1536-dimensional embeddings. "Supplier agreements from last quarter" finds the right contracts even if they say "vendor contract."',
+    body: "pgvector 1536-dimensional embeddings. 'Supplier agreements from last quarter' finds the right contracts even if they say 'vendor contract.'",
   },
   {
     title: 'Multi-Provider Support',
-    body: 'OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, or Ollama (local/private). Switch providers without re-architecture.',
+    body: 'OpenAI · Azure OpenAI · Anthropic Claude · Google Gemini · Ollama (local/private). Switch providers without re-architecture.',
   },
 ];
 
@@ -78,31 +77,77 @@ const WORKFLOW_STEPS = [
   { n: '5', title: 'Notify', body: 'Every transition triggers real-time in-app and email notifications to relevant users.' },
 ];
 
+const SECURITY_POINTS = [
+  {
+    icon: Key,
+    title: '8 Permission Levels',
+    body: '8 permission levels per document and folder (NONE → READ → DOWNLOAD → COMMENT → CONTRIBUTOR → WRITE → EDITOR → ADMIN)',
+  },
+  {
+    icon: Lock,
+    title: 'Immutable Audit Log',
+    body: 'Immutable audit log — every action logged with before/after state and SHA-256 tamper-evident checksum',
+  },
+  {
+    icon: Shield,
+    title: 'ZITADEL Identity',
+    body: 'ZITADEL identity — OIDC/PKCE/SAML/LDAP/social login; passwords never touch VyXlo\'s servers',
+  },
+];
+
 const USE_CASES = [
   {
-    title: 'Legal & Compliance',
-    body: 'Contracts, NDAs, and policies with full version history and immutable audit trails. Multi-step legal review workflows. One-click audit export for regulators.',
-    link: '/use-cases',
+    icon: Shield,
+    title: 'Legal & Compliance Teams',
+    body: 'Contracts, NDAs, policies; multi-step review; share links for external parties; one-click audit export',
   },
   {
+    icon: BarChart3,
     title: 'Finance & Operations',
-    body: 'AI-powered classification of invoices, POs, and reports. Parallel sign-off from multiple stakeholders. Retention policies that purge automatically.',
-    link: '/use-cases',
+    body: 'AI classification of invoices/POs; parallel stakeholder sign-off; retention + auto-purge',
   },
   {
-    title: 'HR & People',
-    body: 'Employee documents visible only to authorized people. Onboarding workflows for signature and acknowledgment. Employment law retention compliance.',
-    link: '/use-cases',
+    icon: Users,
+    title: 'HR & People Teams',
+    body: 'Fine-grained permissions per employee; onboarding workflows; employment law retention',
   },
   {
-    title: 'Product & Engineering',
-    body: 'Specs, RFCs, runbooks, and design docs. Semantic search: "incident response procedure" returns the right doc even if titled "On-Call Handbook."',
-    link: '/use-cases',
+    icon: Code2,
+    title: 'Product & Engineering Teams',
+    body: "Specs, RFCs, runbooks; semantic search for 'incident response procedure' finds 'On-Call Handbook'",
   },
   {
+    icon: Network,
     title: 'Agencies & Consultancies',
-    body: "Per-client folder isolation. Password-protected share links with download tracking. No client ever sees another client's work.",
-    link: '/use-cases',
+    body: 'Per-client folder isolation; password-protected share links with download tracking',
+  },
+];
+
+const TECH_STACK = [
+  {
+    icon: Code2,
+    label: 'Backend',
+    stack: 'FastAPI · Python 3.12 · PostgreSQL 16 + pgvector · Redis 7 · Celery · MinIO · Alembic · Pydantic v2 · SQLAlchemy 2',
+  },
+  {
+    icon: Activity,
+    label: 'Frontend',
+    stack: 'Next.js 16 · React 19 · TypeScript · TanStack Query v5 · Zustand · TipTap · shadcn/ui · Tailwind CSS',
+  },
+  {
+    icon: Key,
+    label: 'Identity',
+    stack: 'ZITADEL (OIDC, PKCE, SAML, LDAP, social login, TOTP 2FA)',
+  },
+  {
+    icon: Brain,
+    label: 'AI',
+    stack: 'OpenAI · Azure OpenAI · Anthropic Claude · Google Gemini · Ollama',
+  },
+  {
+    icon: Cloud,
+    label: 'Deployment',
+    stack: 'Docker Compose · Kubernetes-ready · Bring your own Postgres + Redis + S3',
   },
 ];
 
@@ -111,7 +156,7 @@ const PRICING = [
     name: 'Self-Hosted',
     target: 'Engineering teams who want full control',
     price: 'Free',
-    sub: 'Bring your own infrastructure',
+    sub: 'bring your own infrastructure',
     highlight: false,
   },
   {
@@ -137,6 +182,24 @@ const PRICING = [
   },
 ];
 
+const PROBLEM_CARDS = [
+  {
+    icon: FileText,
+    title: 'Files everywhere, context nowhere',
+    body: 'Your team uses shared drives, email attachments, Slack threads, and Notion pages to manage the same document. Nobody knows which version is current or who approved it.',
+  },
+  {
+    icon: Zap,
+    title: 'Approvals that disappear into inboxes',
+    body: "Multi-step approvals are done over email. Steps are forgotten, deadlines missed, and there's no audit trail if something goes wrong.",
+  },
+  {
+    icon: Activity,
+    title: 'Compliance is an afterthought',
+    body: "When the auditor asks who accessed what and when, you're piecing together logs from three different tools. That's not a process — it's a risk.",
+  },
+];
+
 const Home = () => {
   return (
     <>
@@ -145,7 +208,7 @@ const Home = () => {
         description="VyXlo is a cloud-native document management system with AI-powered classification, multi-step approval workflows, fine-grained permissions, immutable audit logs, and real-time collaboration. Self-hostable with Docker."
         canonical="/"
       />
-      <div>
+      <div className="pt-20">
 
         {/* ── HERO ─────────────────────────────────────────────────── */}
         <section className="relative bg-charcoal-900 text-white overflow-hidden">
@@ -159,6 +222,7 @@ const Home = () => {
           />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-36">
             <div className="max-w-3xl">
+              {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 rounded-full px-4 py-1.5 mb-6">
                 <span className="w-2 h-2 bg-gold rounded-full" />
                 <span className="text-gold text-sm font-medium">Document Intelligence Platform</span>
@@ -172,17 +236,16 @@ const Home = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   to="/request-access"
-                  className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 text-base font-semibold rounded-md hover:bg-gold-dark transition-colors shadow-lg"
+                  className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 font-semibold rounded-md hover:bg-gold-dark transition-colors"
                 >
                   Request Early Access
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
                 <Link
                   to="/how-it-works"
-                  className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white text-base font-semibold rounded-md hover:bg-white/10 transition-colors"
+                  className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
                 >
-                  See How It Works
-                  <ChevronRight className="ml-2 h-5 w-5" />
+                  See How It Works →
                 </Link>
               </div>
               <p className="mt-8 text-white/40 text-sm">
@@ -197,25 +260,11 @@ const Home = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-gold text-sm font-semibold uppercase tracking-widest text-center mb-4">Why teams outgrow their current tools</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-              {[
-                {
-                  icon: FileText,
-                  title: 'Files everywhere, context nowhere',
-                  body: 'Your team uses shared drives, email attachments, Slack threads, and Notion pages to manage the same document. Nobody knows which version is current or who approved it.',
-                },
-                {
-                  icon: Zap,
-                  title: 'Approvals that disappear into inboxes',
-                  body: "Multi-step approvals are done over email. Steps are forgotten, deadlines missed, and there's no audit trail if something goes wrong.",
-                },
-                {
-                  icon: Activity,
-                  title: 'Compliance is an afterthought',
-                  body: "When the auditor asks who accessed what and when, you're piecing together logs from three different tools. That's not a process — it's a risk.",
-                },
-              ].map((item) => (
+              {PROBLEM_CARDS.map((item) => (
                 <div key={item.title} className="p-6 border border-charcoal-border rounded-lg">
-                  <item.icon className="h-8 w-8 text-gold mb-4" />
+                  <div className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-gold-100 text-gold mb-4">
+                    <item.icon className="h-5 w-5" />
+                  </div>
                   <h3 className="text-lg font-semibold text-charcoal mb-2">{item.title}</h3>
                   <p className="text-charcoal-muted text-sm leading-relaxed">{item.body}</p>
                 </div>
@@ -245,20 +294,20 @@ const Home = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {CORE_FEATURES.map((f) => (
-                <div key={f.title} className="p-6 bg-white border border-charcoal-border rounded-lg hover:shadow-md transition-shadow group">
+                <div key={f.title} className="p-6 bg-white border border-charcoal-border rounded-lg hover:shadow-md transition-shadow group flex flex-col">
                   <div className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-gold-100 text-gold mb-4 group-hover:bg-gold group-hover:text-charcoal-900 transition-colors">
                     <f.icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-lg font-semibold text-charcoal mb-2">{f.title}</h3>
-                  <p className="text-charcoal-muted text-sm leading-relaxed">{f.body}</p>
+                  <p className="text-charcoal-muted text-sm leading-relaxed flex-1">{f.body}</p>
+                  <Link
+                    to="/features"
+                    className="inline-flex items-center mt-4 text-gold text-sm font-semibold hover:text-gold-dark transition-colors"
+                  >
+                    Learn more <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                  </Link>
                 </div>
               ))}
-            </div>
-            <div className="text-center mt-10">
-              <Link to="/features" className="inline-flex items-center text-gold font-semibold hover:text-gold-dark transition-colors">
-                See the full feature list
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
             </div>
           </div>
         </section>
@@ -282,8 +331,7 @@ const Home = () => {
               ))}
             </div>
             <Link to="/features" className="inline-flex items-center text-gold font-semibold hover:text-gold-dark transition-colors">
-              See all AI features
-              <ArrowRight className="ml-2 h-4 w-4" />
+              See all AI features →
             </Link>
           </div>
         </section>
@@ -295,17 +343,9 @@ const Home = () => {
               <div>
                 <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Workflow Engine</p>
                 <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-5">Approvals that enforce themselves.</h2>
-                <p className="text-charcoal-muted text-lg leading-relaxed mb-6">
-                  Define a workflow once. Assign steps to individuals or entire departments. Set deadlines. VyXlo handles routing, reminders, escalations, and decision recording automatically.
+                <p className="text-charcoal-muted text-lg leading-relaxed">
+                  Define a workflow once. Assign steps to individuals or departments. Set deadlines. VyXlo handles routing, reminders, escalations, and decision recording.
                 </p>
-                <div className="text-sm text-charcoal-muted bg-charcoal-50 rounded-lg p-4 border border-charcoal-border">
-                  <p className="font-semibold text-charcoal mb-2">Supported scenarios</p>
-                  <ul className="space-y-1">
-                    <li>Legal review → Finance sign-off → Executive approval</li>
-                    <li>HR onboarding with parallel department heads</li>
-                    <li>Policy publication requiring all-hands sign-off</li>
-                  </ul>
-                </div>
               </div>
               <div className="space-y-3">
                 {WORKFLOW_STEPS.map((step) => (
@@ -332,23 +372,7 @@ const Home = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-charcoal">Fine-grained control. Immutable records. Nothing hidden.</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {
-                  icon: Key,
-                  title: '8 Permission Levels',
-                  body: 'NONE · READ · DOWNLOAD · COMMENT · CONTRIBUTOR · WRITE · EDITOR · ADMIN — per document and per folder, with expiration dates.',
-                },
-                {
-                  icon: Lock,
-                  title: 'Immutable Audit Log',
-                  body: 'Every action logged with before/after state as JSONB. SHA-256 tamper-evident checksums. No updates, no deletes — ever. CSV export for regulators.',
-                },
-                {
-                  icon: Shield,
-                  title: 'ZITADEL Identity',
-                  body: 'OIDC/PKCE · SAML · LDAP · social login · TOTP 2FA. VyXlo never stores passwords. JWTs validated against JWKS using RS256.',
-                },
-              ].map((item) => (
+              {SECURITY_POINTS.map((item) => (
                 <div key={item.title} className="bg-white rounded-lg p-6 border border-charcoal-border">
                   <div className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-gold-100 text-gold mb-4">
                     <item.icon className="h-5 w-5" />
@@ -360,8 +384,7 @@ const Home = () => {
             </div>
             <div className="text-center mt-8">
               <Link to="/security" className="inline-flex items-center text-gold font-semibold hover:text-gold-dark transition-colors">
-                Read the full security model
-                <ArrowRight className="ml-2 h-4 w-4" />
+                Read the full security model →
               </Link>
             </div>
           </div>
@@ -388,15 +411,17 @@ const Home = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Who uses VyXlo</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-charcoal">Built for the teams that can't afford to lose control.</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {USE_CASES.map((uc) => (
                 <Link
                   key={uc.title}
-                  to={uc.link}
+                  to="/use-cases"
                   className="block p-6 border border-charcoal-border rounded-lg hover:border-gold hover:shadow-md transition-all group"
                 >
+                  <div className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-gold-100 text-gold mb-4 group-hover:bg-gold group-hover:text-charcoal-900 transition-colors">
+                    <uc.icon className="h-5 w-5" />
+                  </div>
                   <h3 className="text-lg font-semibold text-charcoal mb-2 group-hover:text-gold transition-colors">{uc.title}</h3>
                   <p className="text-charcoal-muted text-sm leading-relaxed">{uc.body}</p>
                   <span className="inline-flex items-center mt-4 text-gold text-sm font-medium">
@@ -416,33 +441,7 @@ const Home = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-charcoal">Built on standards you already know.</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
-              {[
-                {
-                  icon: Code2,
-                  label: 'Backend',
-                  stack: 'FastAPI · Python 3.12 · PostgreSQL 16 + pgvector · Redis 7 · Celery · MinIO',
-                },
-                {
-                  icon: Activity,
-                  label: 'Frontend',
-                  stack: 'Next.js · React 19 · TypeScript · TanStack Query · Zustand · Tailwind CSS',
-                },
-                {
-                  icon: Key,
-                  label: 'Identity',
-                  stack: 'ZITADEL — OIDC, PKCE, SAML, LDAP, social login, TOTP 2FA',
-                },
-                {
-                  icon: Brain,
-                  label: 'AI',
-                  stack: 'OpenAI · Azure OpenAI · Anthropic Claude · Google Gemini · Ollama',
-                },
-                {
-                  icon: Cloud,
-                  label: 'Deployment',
-                  stack: 'Docker Compose · Kubernetes-ready · Bring your own Postgres + Redis + S3',
-                },
-              ].map((t) => (
+              {TECH_STACK.map((t) => (
                 <div key={t.label} className="bg-white p-5 rounded-lg border border-charcoal-border">
                   <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gold-100 text-gold mb-3">
                     <t.icon className="h-4 w-4" />
@@ -462,7 +461,7 @@ const Home = () => {
               <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Pricing</p>
               <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">Simple pricing. No per-feature gates.</h2>
               <p className="text-charcoal-muted text-lg max-w-2xl mx-auto">
-                All plans include the full feature set — AI, workflows, audit log, real-time collaboration, and multi-tenancy.
+                VyXlo is available as a self-hosted deployment or managed cloud service. All plans include the full feature set — AI, workflows, audit log, collaboration, and multi-tenancy.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -497,6 +496,11 @@ const Home = () => {
                 </div>
               ))}
             </div>
+            <div className="text-center mt-10">
+              <Link to="/contact" className="inline-flex items-center text-gold font-semibold hover:text-gold-dark transition-colors">
+                Talk to us about pricing →
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -510,14 +514,14 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
                 to="/request-access"
-                className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 text-base font-semibold rounded-md hover:bg-gold-dark transition-colors shadow-lg"
+                className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 font-semibold rounded-md hover:bg-gold-dark transition-colors"
               >
                 Request Early Access
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
               <Link
                 to="/how-it-works"
-                className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white text-base font-semibold rounded-md hover:bg-white/10 transition-colors"
+                className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
               >
                 See How It Works
               </Link>
