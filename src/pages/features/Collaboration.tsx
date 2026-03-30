@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Users,
-  MessageSquare,
   Lock,
   Share2,
   Eye,
@@ -113,11 +112,11 @@ const Collaboration = () => {
       <section className="bg-charcoal-900 text-white py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
-            to="/features/collaboration"
+            to="/features"
             className="inline-flex items-center text-gold hover:text-gold-dark font-medium mb-10 transition-colors"
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
-            Back to Collaboration
+            Back to Features
           </Link>
 
           <div className="max-w-3xl">
