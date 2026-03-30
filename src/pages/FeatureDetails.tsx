@@ -1,378 +1,191 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
-  Brain, Shield, Zap, ArrowLeft, Check, Users, LineChart, Scale,
-  Layers, Workflow, Database, Lock, Cloud, Zap as Lightning,
-  FileSearch, Settings, Bell, ChevronRight, ArrowRight,
-  Code, Globe, FileCheck, AlertTriangle, Clock, Repeat,
-  BarChart, PieChart, TrendingUp, FileText, UserCheck, Key
+  FileText, Search, Brain, Shield, GitBranch, Share2,
+  Users, Bell, ShieldCheck, Settings, Check, ArrowRight, ChevronLeft,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import SEO from '../components/SEO';
 
-const features = {
-  'ai-automation': {
-    title: 'AI-Powered Automation',
+interface FeatureDetail {
+  title: string;
+  subtitle: string;
+  description: string;
+  items: string[];
+  icon: LucideIcon;
+  deepDiveLink?: string;
+  deepDiveLabel?: string;
+}
+
+const FEATURE_DETAILS: Record<string, FeatureDetail> = {
+  'document-management': {
+    title: 'Document Management',
+    subtitle: 'Every file type. Every version. Every status.',
+    description: 'VyXlo handles the full lifecycle of documents from first upload through archival.',
+    icon: FileText,
+    items: [
+      'Unlimited file types (PDF, DOCX, XLSX, PPTX, images, and more)',
+      'Configurable max file size per organization',
+      'Status lifecycle: DRAFT \u2192 IN_REVIEW \u2192 PENDING_APPROVAL \u2192 APPROVED \u2192 PUBLISHED \u2192 ARCHIVED',
+      'Full version history \u2014 every upload creates a version; any version can be restored',
+      'Document duplication (metadata + file copy)',
+      'Move documents between folders',
+      'Soft delete with admin recovery',
+      'View count and download count tracking',
+      'Document locking (auto-expires after 1 hour)',
+    ],
+  },
+  'search': {
+    title: 'Search & Organization',
+    subtitle: 'Find anything. Organize everything.',
+    description: 'Full-text and semantic search with unlimited folder hierarchy and tag system.',
+    icon: Search,
+    items: [
+      'Unlimited folder hierarchy',
+      'Materialized path for efficient tree queries',
+      'Folder-level permissions inherited by documents',
+      'Full-text search (PostgreSQL tsvector)',
+      'Semantic search (pgvector, cosine similarity)',
+      'Search filters: folder, type, status, owner, date range, tags, AI classification',
+      'Autocomplete suggestions',
+      'Tag system with organization-scoped namespaces and color coding',
+    ],
+  },
+  'ai': {
+    title: 'AI Processing',
+    subtitle: 'Your documents are processed before you even open them.',
+    description: 'Every uploaded document is automatically classified, summarized, and made searchable.',
     icon: Brain,
-    description: 'Transform your document workflows with advanced AI automation powered by cutting-edge machine learning models.',
-    longDescription: `Our AI-powered automation platform represents the pinnacle of intelligent document processing. By leveraging state-of-the-art machine learning algorithms and neural networks, we deliver unparalleled automation capabilities that transform how organizations handle documents.
-
-    Our system continuously learns and adapts to your organization's specific needs, improving accuracy and efficiency over time. From intelligent document classification to automated data extraction and smart workflow routing, our AI automation streamlines every aspect of document management.`,
-    benefits: [
-      'Reduce manual processing time by up to 90%',
-      'Achieve 99.9% accuracy in document classification',
-      'Automate complex workflow decisions',
-      'Extract data with near-human accuracy',
-      'Scale processing capacity instantly',
-      'Eliminate manual data entry errors',
-      'Reduce operational costs significantly',
-      'Improve compliance and audit readiness'
+    deepDiveLink: '/features/ai-automation',
+    deepDiveLabel: 'AI Automation Deep Dive',
+    items: [
+      'Automatic classification into 10 categories',
+      'Keyword and entity extraction (people, organizations, dates, monetary amounts)',
+      'AI-generated document summaries',
+      'Semantic embedding generation for similarity search',
+      'Content moderation flag',
+      'Re-process any document on demand',
+      'Works with OpenAI, Azure OpenAI, Anthropic, Gemini, or Ollama',
     ],
-    features: [
-      {
-        title: 'Neural Document Processing',
-        description: 'Advanced neural networks analyze and understand document content with human-like comprehension.',
-        icon: Brain,
-        stats: '99.9% accuracy'
-      },
-      {
-        title: 'Intelligent Classification',
-        description: 'Automatically categorize and route documents based on content, context, and business rules.',
-        icon: FileCheck,
-        stats: '90% time saved'
-      },
-      {
-        title: 'Adaptive Learning',
-        description: 'System continuously learns from user interactions and feedback to improve accuracy.',
-        icon: Repeat,
-        stats: 'Self-improving'
-      },
-      {
-        title: 'Real-time Processing',
-        description: 'Process documents instantly as they arrive, with immediate data extraction and routing.',
-        icon: Clock,
-        stats: '<1s processing'
-      }
-    ],
-    techSpecs: [
-      'Built on TensorFlow and PyTorch',
-      'Natural Language Processing with BERT',
-      'Computer Vision with ResNet',
-      'Automated Machine Learning (AutoML)',
-      'GPU-accelerated processing',
-      'Distributed computing architecture',
-      'Real-time processing capabilities',
-      'Scalable microservices infrastructure'
-    ],
-    metrics: [
-      {
-        label: 'Processing Speed',
-        value: '< 1 second',
-        description: 'Average document processing time'
-      },
-      {
-        label: 'Accuracy',
-        value: '99.9%',
-        description: 'Document classification accuracy'
-      },
-      {
-        label: 'Time Saved',
-        value: '90%',
-        description: 'Reduction in manual processing'
-      },
-      {
-        label: 'Cost Reduction',
-        value: '75%',
-        description: 'Decrease in operational costs'
-      }
-    ],
-    useCases: [
-      {
-        title: 'Invoice Processing',
-        description: 'Automatically extract and validate invoice data, route for approval, and update accounting systems.',
-        icon: FileText
-      },
-      {
-        title: 'Contract Analysis',
-        description: 'Extract key terms, identify risks, and ensure compliance with company policies.',
-        icon: FileCheck
-      },
-      {
-        title: 'Customer Onboarding',
-        description: 'Process KYC documents, verify identity, and automate account setup.',
-        icon: UserCheck
-      }
-    ]
   },
-  'security': {
-    title: 'Enterprise Security',
+  'access-control': {
+    title: 'Access Control',
+    subtitle: 'Eight levels of precision.',
+    description: 'Fine-grained permissions at document, folder, and organization level.',
     icon: Shield,
-    description: 'Bank-grade security ensuring your documents are protected with the highest standards.',
-    longDescription: `Our enterprise security framework is built on the principle of defense in depth, implementing multiple layers of security controls to protect your sensitive documents and data. We combine advanced encryption, rigorous access controls, and continuous monitoring to ensure the highest level of security.
-
-    From military-grade encryption at rest and in transit to granular access controls and comprehensive audit logging, every aspect of our security architecture is designed to meet and exceed the most stringent security requirements.`,
-    benefits: [
-      'Military-grade encryption for all data',
-      'Granular role-based access control',
-      'Complete audit trail of all actions',
-      'Automated threat detection and response',
-      'Regular security assessments',
-      'Compliance with global standards',
-      'Zero-trust security model',
-      'Advanced DLP capabilities'
+    items: [
+      '8-level permission system: NONE \u00b7 READ \u00b7 DOWNLOAD \u00b7 COMMENT \u00b7 CONTRIBUTOR \u00b7 WRITE \u00b7 EDITOR \u00b7 ADMIN',
+      'Target individual users or entire departments',
+      'Permission expiration dates',
+      'Effective permission = max of all applicable grants',
+      'Document owner always has ADMIN access',
+      'Public documents visible to all authenticated users in the org',
     ],
-    features: [
-      {
-        title: 'Advanced Encryption',
-        description: 'AES-256 encryption for data at rest and in transit, with secure key management.',
-        icon: Lock,
-        stats: 'Military-grade'
-      },
-      {
-        title: 'Access Control',
-        description: 'Fine-grained permissions and role-based access management with MFA.',
-        icon: Key,
-        stats: 'Zero-trust model'
-      },
-      {
-        title: 'Threat Detection',
-        description: 'Real-time monitoring and automated response to security threats.',
-        icon: AlertTriangle,
-        stats: '24/7 monitoring'
-      },
-      {
-        title: 'Audit Logging',
-        description: 'Comprehensive logging and monitoring of all system activities.',
-        icon: FileCheck,
-        stats: 'Complete history'
-      }
-    ],
-    techSpecs: [
-      'AES-256 bit encryption',
-      'TLS 1.3 for data in transit',
-      'FIPS 140-2 compliant HSM',
-      'OAuth 2.0 and OIDC support',
-      'SAML 2.0 integration',
-      'Real-time threat monitoring',
-      'Automated backup encryption',
-      'Secure key rotation'
-    ],
-    metrics: [
-      {
-        label: 'Encryption',
-        value: '256-bit',
-        description: 'Military-grade encryption'
-      },
-      {
-        label: 'Compliance',
-        value: '100%',
-        description: 'Regulatory compliance'
-      },
-      {
-        label: 'Monitoring',
-        value: '24/7',
-        description: 'Security monitoring'
-      },
-      {
-        label: 'Response Time',
-        value: '< 15min',
-        description: 'Security incident response'
-      }
-    ],
-    useCases: [
-      {
-        title: 'Financial Services',
-        description: 'Secure handling of sensitive financial documents and customer data.',
-        icon: Lock
-      },
-      {
-        title: 'Healthcare',
-        description: 'HIPAA-compliant document management and patient data protection.',
-        icon: Shield
-      },
-      {
-        title: 'Legal',
-        description: 'Secure storage and sharing of confidential legal documents.',
-        icon: FileCheck
-      }
-    ]
   },
-  'integrations': {
-    title: 'Seamless Integrations',
-    icon: Zap,
-    description: 'Connect and extend your document management capabilities.',
-    longDescription: `Our platform seamlessly integrates with your existing tools and workflows through comprehensive APIs and pre-built connectors. Extend functionality and automate processes across your entire tech stack.`,
-    benefits: [
-      'Pre-built integrations with popular platforms',
-      'Custom API development support',
-      'Webhook support for real-time updates',
-      'Bi-directional data synchronization',
-      'Automated workflow triggers',
-      'Extended functionality through plugins'
+  'workflows': {
+    title: 'Workflow Engine',
+    subtitle: 'Approvals that enforce themselves.',
+    description: 'Multi-step approval chains with sequential and parallel execution, deadlines, and audit trails.',
+    icon: GitBranch,
+    items: [
+      'Multi-step approval chains with configurable step order',
+      'Sequential and parallel step execution',
+      'Per-step deadline tracking',
+      'Workflow hold, resume, and escalation',
+      'Full workflow state history',
     ],
-    features: [
-      {
-        title: 'API Integration',
-        description: 'RESTful APIs for seamless integration with existing systems.',
-        icon: Settings,
-        stats: '99.9% uptime'
-      },
-      {
-        title: 'Real-time Sync',
-        description: 'Instant data synchronization across all connected systems.',
-        icon: Lightning,
-        stats: '<100ms latency'
-      },
-      {
-        title: 'Notifications',
-        description: 'Configurable alerts and notifications for important events.',
-        icon: Bell,
-        stats: 'Real-time updates'
-      }
+  },
+  'sharing': {
+    title: 'Secure Sharing',
+    subtitle: 'Share with confidence.',
+    description: 'Cryptographically secure share links with expiry, passwords, and access analytics.',
+    icon: Share2,
+    items: [
+      'Secure share links (cryptographically random tokens, \u226532 bytes entropy)',
+      'Optional expiry date, access count limit, password protection, email allowlist',
+      'Per-link access analytics (access count, last accessed)',
+      'One-click revoke',
     ],
-    techSpecs: [
-      'RESTful API architecture',
-      'WebSocket support',
-      'OAuth 2.0 authentication',
-      'Rate limiting and throttling'
-    ]
   },
   'collaboration': {
-    title: 'Enhanced Collaboration',
+    title: 'Real-Time Collaboration',
+    subtitle: 'See who is there. Say what you mean.',
+    description: 'Live presence, threaded comments, and real-time WebSocket delivery.',
     icon: Users,
-    description: 'Foster teamwork with powerful collaboration features.',
-    longDescription: `Enable seamless collaboration across your organization with our comprehensive suite of team-focused features. Share, edit, and manage documents in real-time with advanced version control.`,
-    benefits: [
-      'Real-time document collaboration',
-      'Version control and history',
-      'Team workspaces',
-      'Document sharing and permissions',
-      'Comments and annotations',
-      'Activity tracking'
+    deepDiveLink: '/features/collaboration',
+    deepDiveLabel: 'Collaboration Deep Dive',
+    items: [
+      'Live presence indicators (who is viewing right now)',
+      'Threaded comments with unlimited nesting',
+      '@mentions with instant notifications',
+      'Comment editing within 15 minutes of posting',
+      'Comment resolution by document owner or ADMIN',
+      'Emoji reactions',
+      'Inline annotation support (page + position coordinates)',
+      'WebSocket with automatic reconnection and exponential backoff',
     ],
-    features: [
-      {
-        title: 'Real-time Editing',
-        description: 'Collaborate on documents simultaneously with team members.',
-        icon: Users,
-        stats: 'Zero latency'
-      },
-      {
-        title: 'Version Control',
-        description: 'Track changes and maintain document history.',
-        icon: Layers,
-        stats: 'Unlimited versions'
-      },
-      {
-        title: 'Team Spaces',
-        description: 'Organized workspaces for different teams and projects.',
-        icon: Database,
-        stats: 'Unlimited teams'
-      }
-    ],
-    techSpecs: [
-      'Operational Transform algorithm',
-      'Conflict resolution',
-      'Change tracking',
-      'Real-time collaboration'
-    ]
   },
-  'analytics': {
-    title: 'Advanced Analytics',
-    icon: LineChart,
-    description: 'Gain insights into your document workflows.',
-    longDescription: `Transform your document management with data-driven insights. Our analytics platform provides comprehensive visibility into document workflows, user behavior, and system performance.`,
-    benefits: [
-      'Custom dashboards and reports',
-      'Usage analytics and trends',
-      'Performance metrics',
-      'User behavior analysis',
-      'Document lifecycle tracking',
-      'ROI measurement'
+  'notifications': {
+    title: 'Notifications',
+    subtitle: 'Right person. Right message. Right time.',
+    description: 'Real-time in-app and async email notifications with per-channel preferences.',
+    icon: Bell,
+    items: [
+      'In-app notifications with real-time WebSocket delivery',
+      'Email notifications (async, within 2 minutes)',
+      'Daily digest email for unread notifications',
+      'Per-channel preferences per notification type',
+      '8 notification event types',
+      'Notification read/unread state management',
     ],
-    features: [
-      {
-        title: 'Custom Dashboards',
-        description: 'Build and customize analytics dashboards.',
-        icon: LineChart,
-        stats: 'Real-time metrics'
-      },
-      {
-        title: 'Performance Tracking',
-        description: 'Monitor system and user performance metrics.',
-        icon: Settings,
-        stats: 'Sub-second updates'
-      },
-      {
-        title: 'Export & Share',
-        description: 'Export and share reports in multiple formats.',
-        icon: Cloud,
-        stats: 'Multiple formats'
-      }
-    ],
-    techSpecs: [
-      'Real-time analytics',
-      'Custom report builder',
-      'Data visualization',
-      'Export capabilities'
-    ]
   },
-  'compliance': {
-    title: 'Compliance Management',
-    icon: Scale,
-    description: 'Stay compliant with industry regulations.',
-    longDescription: `Ensure compliance with industry regulations through our comprehensive compliance management tools. Automate compliance processes and maintain detailed audit trails.`,
-    benefits: [
-      'Automated compliance checks',
-      'Policy enforcement',
-      'Audit trail maintenance',
-      'Risk assessment',
-      'Regulatory reporting',
-      'Compliance monitoring'
+  'audit': {
+    title: 'Audit & Compliance',
+    subtitle: 'Compliance you can prove.',
+    description: 'Immutable audit log with tamper-evident checksums and CSV export.',
+    icon: ShieldCheck,
+    items: [
+      'Immutable audit log for every action type',
+      'Before/after state stored as JSONB',
+      'Tamper-evident SHA-256 checksums',
+      'CSV export (async, returns download URL)',
+      'Configurable retention periods with automatic purge',
+      'Two-factor authentication (TOTP) with recovery codes',
+      'Active session management with remote revoke',
     ],
-    features: [
-      {
-        title: 'Policy Management',
-        description: 'Create and enforce compliance policies.',
-        icon: Shield,
-        stats: 'Automated enforcement'
-      },
-      {
-        title: 'Audit Trails',
-        description: 'Maintain detailed records of all activities.',
-        icon: Database,
-        stats: 'Complete history'
-      },
-      {
-        title: 'Risk Management',
-        description: 'Identify and mitigate compliance risks.',
-        icon: Scale,
-        stats: 'Real-time monitoring'
-      }
+  },
+  'admin': {
+    title: 'Administration',
+    subtitle: 'Full control. Clean interface.',
+    description: 'Org settings, user management, departments, and storage dashboard.',
+    icon: Settings,
+    items: [
+      'Organization settings (name, logo, timezone, storage quota, feature flags)',
+      'User invitation and role management',
+      'Department management',
+      'Storage usage dashboard',
+      'Platform-level admin for managing organizations (SUPER_ADMIN)',
     ],
-    techSpecs: [
-      'Policy automation',
-      'Audit logging',
-      'Risk assessment',
-      'Compliance reporting'
-    ]
-  }
+  },
 };
 
-const FeatureDetails = () => {
+const FeatureDetails: React.FC = () => {
   const { featureId } = useParams<{ featureId: string }>();
-  const feature = features[featureId as keyof typeof features];
+  const feature = featureId ? FEATURE_DETAILS[featureId] : undefined;
 
   if (!feature) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-charcoal">Feature not found</h1>
-            <Link to="/features" className="mt-4 inline-flex items-center text-gold hover:text-gold-dark">
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Return to features
-            </Link>
-          </div>
+      <div className="pt-20 min-h-screen bg-charcoal-900 flex items-center justify-center">
+        <div className="text-center px-4">
+          <h1 className="text-3xl font-bold text-white mb-4">Feature not found</h1>
+          <p className="text-white/60 mb-8">The feature you are looking for does not exist.</p>
+          <Link
+            to="/features"
+            className="inline-flex items-center gap-2 text-gold hover:text-gold-dark transition-colors font-medium"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Back to All Features
+          </Link>
         </div>
       </div>
     );
@@ -383,120 +196,87 @@ const FeatureDetails = () => {
   return (
     <>
       <SEO
-        title={feature.title}
+        title={`${feature.title} \u2014 VyXlo DMS`}
         description={feature.description}
         canonical={`/features/${featureId}`}
       />
 
-      {/* Hero Section */}
-      <div className="relative bg-charcoal text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOGM5Ljk0MSAwIDE4LTguMDU5IDE4LTE4cy04LjA1OS0xOC0xOC0xOHptMCAyNGMtMy4zMTQgMC02LTIuNjg2LTYtNnMyLjY4Ni02IDYtNiA2IDIuNjg2IDYgNi0yLjY4NiA2LTYgNnoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvZz48L3N2Zz4=')] bg-repeat"></div>
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="text-center">
-            <div className="flex items-center justify-center mb-8">
-              <div className="p-4 bg-gold/20 rounded-2xl backdrop-blur-sm">
-                <Icon className="h-16 w-16 text-gold" />
-              </div>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{feature.title}</h1>
-            <p className="text-xl opacity-90 max-w-3xl mx-auto">{feature.description}</p>
+      {/* Hero */}
+      <div className="pt-20 bg-charcoal-900 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <Link
+            to="/features"
+            className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-10"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            All Features
+          </Link>
+
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gold-100 text-gold mb-6">
+            <Icon className="h-7 w-7" />
           </div>
+
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{feature.title}</h1>
+          <p className="text-xl text-white/70">{feature.subtitle}</p>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          {/* Overview Section */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-6 text-charcoal">Overview</h2>
-            <p className="text-lg text-charcoal-muted mb-8">{feature.longDescription}</p>
+      {/* Content */}
+      <div className="bg-white py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-lg text-charcoal-muted mb-10">{feature.description}</p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {feature.features.map((subFeature, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-                >
-                  <div className="flex items-center space-x-4 mb-4">
-                    <div className="p-3 bg-gold-50 rounded-lg">
-                      <subFeature.icon className="h-6 w-6 text-gold" />
-                    </div>
-                    <h3 className="text-xl font-bold text-charcoal">{subFeature.title}</h3>
-                  </div>
-                  <p className="text-charcoal-muted mb-4">{subFeature.description}</p>
-                  <div className="text-sm font-medium text-gold">{subFeature.stats}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <ul className="space-y-4 mb-12">
+            {feature.items.map((item, index) => (
+              <li key={index} className="flex items-start gap-3">
+                <Check className="h-4 w-4 text-gold flex-shrink-0 mt-1" />
+                <span className="text-charcoal">{item}</span>
+              </li>
+            ))}
+          </ul>
 
-          {/* Benefits Section */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-charcoal">Key Benefits</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {feature.benefits.map((benefit, index) => (
-                <div
-                  key={index}
-                  className="flex items-start p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
-                >
-                  <Check className="h-6 w-6 text-gold mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">{benefit}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Technical Specifications */}
-          <div>
-            <h2 className="text-3xl font-bold mb-8 text-charcoal">Technical Specifications</h2>
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {feature.techSpecs.map((spec, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <ChevronRight className="h-5 w-5 text-gold" />
-                    <span className="text-gray-700">{spec}</span>
-                  </div>
-                ))}
+          {feature.deepDiveLink && feature.deepDiveLabel && (
+            <div className="rounded-xl border border-charcoal-border bg-charcoal-50 p-6 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-charcoal-muted mb-1">
+                  Deep Dive
+                </p>
+                <p className="text-charcoal font-medium">{feature.deepDiveLabel}</p>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="bg-charcoal text-white py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-            <p className="text-xl opacity-90 mb-8">Experience the power of {feature.title} today.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/request-access"
-                className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
+                to={feature.deepDiveLink}
+                className="inline-flex items-center gap-2 bg-gold text-charcoal-900 font-semibold px-5 py-2.5 rounded-lg hover:bg-gold-dark transition-colors flex-shrink-0"
               >
-                Get Started
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white/10 transition-colors"
-              >
-                Contact Sales
+                Explore
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-          </div>
+          )}
         </div>
+      </div>
 
-        {/* Navigation */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Link
-            to="/features"
-            className="inline-flex items-center text-gold hover:text-gold-dark font-medium"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Features
-          </Link>
+      {/* CTA */}
+      <div className="bg-charcoal-900 text-white py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to get started?</h2>
+          <p className="text-white/60 mb-8">
+            See {feature.title} in action with a live demo or talk to the team.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/request-access"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg bg-gold text-charcoal-900 font-semibold hover:bg-gold-dark transition-colors"
+            >
+              Request Access
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center px-8 py-3 rounded-lg border border-white/30 text-white font-semibold hover:bg-white/10 transition-colors"
+            >
+              Contact Us
+            </Link>
+          </div>
         </div>
       </div>
     </>
