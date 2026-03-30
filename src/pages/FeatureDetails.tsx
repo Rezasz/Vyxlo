@@ -194,7 +194,7 @@ const FeatureDetails: React.FC = () => {
   const Icon = feature.icon;
 
   return (
-    <>
+    <div className="pt-20">
       <SEO
         title={`${feature.title} \u2014 VyXlo DMS`}
         description={feature.description}
@@ -202,7 +202,7 @@ const FeatureDetails: React.FC = () => {
       />
 
       {/* Hero */}
-      <div className="pt-20 bg-charcoal-900 text-white">
+      <div className="bg-charcoal-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <Link
             to="/features"
@@ -227,8 +227,8 @@ const FeatureDetails: React.FC = () => {
           <p className="text-lg text-charcoal-muted mb-10">{feature.description}</p>
 
           <ul className="space-y-4 mb-12">
-            {feature.items.map((item, index) => (
-              <li key={index} className="flex items-start gap-3">
+            {feature.items.map((item) => (
+              <li key={item} className="flex items-start gap-3">
                 <Check className="h-4 w-4 text-gold flex-shrink-0 mt-1" />
                 <span className="text-charcoal">{item}</span>
               </li>
@@ -236,7 +236,7 @@ const FeatureDetails: React.FC = () => {
           </ul>
 
           {feature.deepDiveLink && feature.deepDiveLabel && (
-            <div className="rounded-xl border border-charcoal-border bg-charcoal-50 p-6 flex items-center justify-between gap-4">
+            <div className="rounded-xl border border-charcoal-border bg-charcoal-50 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-widest text-charcoal-muted mb-1">
                   Deep Dive
@@ -279,7 +279,7 @@ const FeatureDetails: React.FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
