@@ -1,237 +1,337 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Shield, Key, Lock, Eye, Users, FileText, CheckCircle, ArrowRight, AlertTriangle, Server,
+  Shield,
+  ShieldCheck,
+  Lock,
+  Key,
+  Database,
+  Eye,
+  FileText,
+  Users,
+  AlertCircle,
+  CheckCircle,
+  ArrowRight,
+  Share2,
 } from 'lucide-react';
 import SEO from '../components/SEO';
 
-const SECURITY_SECTIONS = [
+const PERMISSION_LEVELS = [
+  { level: 'NONE', desc: 'Completely invisible to the user' },
+  { level: 'READ', desc: 'View document content in-browser' },
+  { level: 'DOWNLOAD', desc: 'Download the original file' },
+  { level: 'COMMENT', desc: 'Leave comments and annotations' },
+  { level: 'CONTRIBUTOR', desc: 'Upload new document versions' },
+  { level: 'WRITE', desc: 'Edit metadata, move to other folders' },
+  { level: 'EDITOR', desc: 'Full editing access' },
+  { level: 'ADMIN', desc: 'Manage permissions, lock/unlock' },
+];
+
+const AUDIT_FEATURES = [
   {
-    icon: Key,
-    title: 'Identity — ZITADEL',
-    body: 'Authentication is handled by ZITADEL, an enterprise-grade open-source identity platform. VyXlo never stores passwords. OIDC with PKCE is the default flow. SAML, LDAP, and social login are available out of the box. JWTs are validated against ZITADEL\'s JWKS endpoint using RS256 — VyXlo trusts no token it cannot verify.',
-    bullets: [
-      'OIDC with PKCE — industry-standard, no implicit flow',
-      'SAML 2.0 for enterprise SSO',
-      'LDAP for directory integration',
-      'Social login (Google, GitHub, and more)',
-      'RS256 JWT validation against JWKS endpoint',
-      'Passwords never touch VyXlo\'s servers',
-    ],
+    icon: FileText,
+    title: 'Immutable Log',
+    desc: 'Every action creates an append-only audit record',
   },
   {
-    icon: Shield,
-    title: 'Authorization — Fine-Grained',
-    body: '8 permission levels per document and per folder: NONE, READ, DOWNLOAD, COMMENT, CONTRIBUTOR, WRITE, EDITOR, ADMIN. Apply to individual users or entire departments. Set expiration dates. Permissions stack — effective access is the maximum of all applicable grants.',
-    bullets: [
-      '8 levels: NONE · READ · DOWNLOAD · COMMENT · CONTRIBUTOR · WRITE · EDITOR · ADMIN',
-      'Per-document and per-folder grants',
-      'Apply to individual users or departments',
-      'Permission expiration dates',
-      'Effective permission = max across all applicable grants',
-      'Document owner always has ADMIN access',
-    ],
+    icon: ShieldCheck,
+    title: 'SHA-256 Checksums',
+    desc: 'Each record includes a tamper-evident hash',
+  },
+  {
+    icon: Database,
+    title: 'Before/After State',
+    desc: 'Full JSONB snapshots of what changed',
+  },
+  {
+    icon: ArrowRight,
+    title: 'CSV Export',
+    desc: 'Export audit records for compliance reporting',
+  },
+];
+
+const AUTH_FEATURES = [
+  {
+    icon: Key,
+    title: 'JWT Sessions',
+    desc: 'Secure tokens with configurable expiry',
   },
   {
     icon: Lock,
-    title: 'Transport Security',
-    body: 'All communication happens over HTTPS. WebSocket connections use WSS. Share link tokens use cryptographically random bytes from secrets.token_urlsafe(32). Share link passwords are bcrypt-hashed with cost factor ≥ 12.',
-    bullets: [
-      'All API communication over HTTPS',
-      'WebSocket connections use WSS (encrypted)',
-      'Share link tokens: secrets.token_urlsafe(32) — ≥32 bytes entropy',
-      'Share link passwords: bcrypt, cost factor ≥ 12',
-    ],
+    title: 'TOTP 2FA',
+    desc: 'Time-based one-time passwords with any authenticator app',
   },
   {
-    icon: AlertTriangle,
-    title: 'Input Validation',
-    body: 'Every API input is validated by Pydantic schemas before reaching any business logic. SQLAlchemy ORM with parameterized queries — no raw string interpolation, ever. MIME type validation on file uploads; executables are rejected.',
-    bullets: [
-      'Pydantic v2 schema validation on every endpoint',
-      'SQLAlchemy ORM — parameterized queries, no raw SQL string interpolation',
-      'MIME type validation on all file uploads',
-      'Executable files rejected at upload time',
-    ],
-  },
-  {
-    icon: Server,
-    title: 'Data Isolation',
-    body: 'Every database query is scoped to the caller\'s organization at the service layer. There is no code path that returns data across organization boundaries. Multi-tenancy is enforced in code, not just in routing.',
-    bullets: [
-      'Organization ID scoped on every database query',
-      'No code path crosses organization boundaries',
-      'Enforced at service layer, not just routing',
-      'Fully isolated: storage quotas, tags, audit logs, user rosters',
-    ],
-  },
-  {
-    icon: FileText,
-    title: 'Audit Trail',
-    body: 'Immutable. Every create, update, delete, login, logout, access, download, permission change, workflow action, and export produces a log entry. Before/after JSONB. SHA-256 tamper-evident checksums. No updates, no deletes — ever.',
-    bullets: [
-      'Every action produces an audit log entry',
-      'Before/after state stored as JSONB',
-      'SHA-256 tamper-evident checksums',
-      'No updates, no deletes — ever',
-      'CSV export (async, returns download URL)',
-      'Configurable retention periods',
-    ],
+    icon: AlertCircle,
+    title: 'Recovery Codes',
+    desc: '10 single-use recovery codes generated at 2FA enrollment',
   },
   {
     icon: Eye,
-    title: 'Two-Factor Authentication',
-    body: 'TOTP-based 2FA using any authenticator app — Google Authenticator, Authy, or 1Password. QR code setup flow. Recovery codes generated at setup. Users can view all active sessions and revoke individual devices remotely.',
-    bullets: [
-      'TOTP-based 2FA (RFC 6238)',
-      'QR code setup via any authenticator app',
-      'Recovery codes generated at enrollment',
-      'Active sessions visible to the user',
-      'Remote session revocation',
-    ],
+    title: 'Remote Session Revoke',
+    desc: 'Admins can revoke any active session instantly',
+  },
+];
+
+const DATA_PROTECTION = [
+  {
+    icon: Shield,
+    title: 'Encryption in Transit',
+    desc: 'TLS 1.2+ for all connections',
+  },
+  {
+    icon: Database,
+    title: 'Object Storage',
+    desc: 'Files stored in isolated object storage (S3-compatible)',
+  },
+  {
+    icon: Lock,
+    title: 'Database Isolation',
+    desc: 'Dedicated PostgreSQL per deployment',
+  },
+];
+
+const SHARING_CONTROLS = [
+  {
+    icon: AlertCircle,
+    title: 'Link Expiry',
+    desc: 'Share links expire on the date you set',
+  },
+  {
+    icon: Lock,
+    title: 'Password Protection',
+    desc: 'Require a password to access shared documents',
   },
   {
     icon: Users,
-    title: 'Secure Share Links',
-    body: 'Share links are designed for controlled external access without giving external parties system accounts. Every link is independently configurable and every access is tracked.',
-    bullets: [
-      'Cryptographically random tokens (≥32 bytes entropy)',
-      'Optional expiry date',
-      'Optional access count limit',
-      'Optional bcrypt-hashed password',
-      'Optional email allowlist',
-      'Per-link access analytics',
-      'One-click revoke',
-    ],
+    title: 'Email Allowlist',
+    desc: 'Restrict access to approved email addresses',
+  },
+  {
+    icon: Eye,
+    title: 'Access Analytics',
+    desc: 'Track every time a share link is accessed',
   },
 ];
 
 const Security = () => {
   return (
-    <>
+    <div className="pt-20">
       <SEO
         title="Security — VyXlo DMS"
-        description="VyXlo is built on ZITADEL identity, 8-level fine-grained permissions, immutable SHA-256 audit logs, bcrypt share passwords, and Pydantic-validated API inputs. Security is not a checkbox."
+        description="Enterprise-grade security: 8-level access control, immutable audit log with SHA-256 checksums, TOTP 2FA, and encrypted storage."
         canonical="/security"
       />
-      <div className="pt-20">
 
-        {/* HERO */}
-        <section className="bg-charcoal-900 text-white py-24 relative overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: 'radial-gradient(circle, #EBBB4A 1px, transparent 1px)',
-              backgroundSize: '32px 32px',
-            }}
-          />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 rounded-full px-4 py-1.5 mb-6">
-                <Shield className="h-4 w-4 text-gold" />
-                <span className="text-gold text-sm font-medium">Security Architecture</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-5">
-                Security is not a checkbox. It's the foundation.
-              </h1>
-              <p className="text-xl text-white/70 leading-relaxed">
-                VyXlo is built for organizations where document security isn't optional — legal, finance, HR, compliance. Every layer of the stack reflects that.
-              </p>
-            </div>
+      {/* SECTION 1 — Hero */}
+      <section className="bg-charcoal-900 text-white py-24 relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, #EBBB4A 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 rounded-full px-4 py-1.5 mb-6">
+            <Shield className="h-4 w-4 text-gold" />
+            <span className="text-gold text-sm font-medium">Security</span>
           </div>
-        </section>
-
-        {/* SECURITY OVERVIEW STATS */}
-        <section className="py-12 bg-white border-b border-charcoal-border">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { value: '8', label: 'Permission levels', sub: 'per document and folder' },
-                { value: 'RS256', label: 'JWT validation', sub: 'via ZITADEL JWKS' },
-                { value: 'SHA-256', label: 'Audit checksums', sub: 'tamper-evident' },
-                { value: 'bcrypt ≥12', label: 'Share link passwords', sub: 'cost factor' },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center p-4">
-                  <p className="text-2xl font-bold text-gold mb-1">{stat.value}</p>
-                  <p className="text-sm font-semibold text-charcoal">{stat.label}</p>
-                  <p className="text-xs text-charcoal-muted mt-0.5">{stat.sub}</p>
-                </div>
-              ))}
-            </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-5 max-w-3xl mx-auto">
+            Enterprise-Grade Security, No Compromises
+          </h1>
+          <p className="text-lg text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed">
+            VyXlo is built security-first {"—"} from data in transit to audit trails that can hold up in court.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {['AES-256 Encryption', 'Immutable Audit Log', 'TOTP + Recovery Codes'].map((pill) => (
+              <span
+                key={pill}
+                className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2 text-sm font-medium text-white/80"
+              >
+                <CheckCircle className="h-4 w-4 text-gold flex-shrink-0" />
+                {pill}
+              </span>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* SECURITY SECTIONS */}
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="space-y-10">
-              {SECURITY_SECTIONS.map((sec, i) => (
-                <div
-                  key={sec.title}
-                  className={`grid grid-cols-1 lg:grid-cols-2 gap-10 items-start pb-10 ${
-                    i < SECURITY_SECTIONS.length - 1 ? 'border-b border-charcoal-border' : ''
-                  }`}
-                >
-                  <div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gold-100 text-gold">
-                        <sec.icon className="h-5 w-5" />
-                      </div>
-                      <h2 className="text-xl font-bold text-charcoal">{sec.title}</h2>
-                    </div>
-                    <p className="text-charcoal-muted leading-relaxed">{sec.body}</p>
-                  </div>
-                  <div className="bg-charcoal-50 rounded-xl p-5 border border-charcoal-border">
-                    <ul className="space-y-2.5">
-                      {sec.bullets.map((b) => (
-                        <li key={b} className="flex items-start gap-2.5">
-                          <CheckCircle className="h-4 w-4 text-gold mt-0.5 flex-shrink-0" />
-                          <span className="text-sm text-charcoal leading-relaxed">{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* COMPLIANCE NOTE */}
-        <section className="py-16 bg-charcoal-50">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <Shield className="h-10 w-10 text-gold mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-charcoal mb-3">Built for regulated environments</h2>
-            <p className="text-charcoal-muted leading-relaxed max-w-2xl mx-auto">
-              VyXlo's audit trail, fine-grained permissions, and immutable logging are designed to satisfy audit requirements in legal, financial, healthcare, and government contexts. The immutable log means you can answer "who did what, to which document, and when" in seconds — not hours.
+      {/* SECTION 2 — Access Control */}
+      <section className="bg-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <p className="text-xs font-semibold tracking-widest text-gold uppercase mb-3">
+              Access Control
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              Eight Permission Levels. Granular to the Document.
+            </h2>
+            <p className="text-charcoal-muted leading-relaxed">
+              Every document has an effective permission calculated as the maximum of all applicable grants {"—"} by user, by department, or by organization.
             </p>
           </div>
-        </section>
-
-        {/* CTA */}
-        <section className="py-20 bg-charcoal-900 text-white">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">Questions about our security model?</h2>
-            <p className="text-white/70 mb-8">Talk to us. We can walk you through the specifics for your compliance requirements.</p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                to="/request-access"
-                className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 font-semibold rounded-md hover:bg-gold-dark transition-colors"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {PERMISSION_LEVELS.map((p) => (
+              <div
+                key={p.level}
+                className="bg-charcoal-50 border border-charcoal-border rounded-xl p-5"
               >
-                Request Early Access <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
-              >
-                Contact Us
-              </Link>
-            </div>
+                <span className="inline-block text-xs font-bold tracking-wider text-gold bg-gold-100 rounded-md px-2.5 py-1 mb-3 font-mono">
+                  {p.level}
+                </span>
+                <p className="text-sm text-charcoal leading-relaxed">{p.desc}</p>
+              </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-      </div>
-    </>
+      {/* SECTION 3 — Audit & Compliance */}
+      <section className="bg-charcoal-50 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <p className="text-xs font-semibold tracking-widest text-gold uppercase mb-3">
+              Audit &amp; Compliance
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              Every Action. Logged. Tamper-Proof.
+            </h2>
+            <p className="text-charcoal-muted leading-relaxed">
+              {"VyXlo's"} audit log records every action with before/after state and a SHA-256 checksum. You can prove what happened.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {AUDIT_FEATURES.map((f) => (
+              <div
+                key={f.title}
+                className="bg-white border border-charcoal-border rounded-xl p-6"
+              >
+                <div className="inline-flex items-center justify-center w-10 h-10 bg-gold-100 rounded-lg mb-4">
+                  <f.icon className="h-5 w-5 text-gold" />
+                </div>
+                <h3 className="font-semibold text-charcoal mb-2">{f.title}</h3>
+                <p className="text-sm text-charcoal-muted leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4 — Authentication */}
+      <section className="bg-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <p className="text-xs font-semibold tracking-widest text-gold uppercase mb-3">
+              Authentication
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              Strong Auth, Out of the Box
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {AUTH_FEATURES.map((f) => (
+              <div
+                key={f.title}
+                className="bg-charcoal-50 border border-charcoal-border rounded-xl p-6"
+              >
+                <div className="inline-flex items-center justify-center w-10 h-10 bg-gold-100 rounded-lg mb-4">
+                  <f.icon className="h-5 w-5 text-gold" />
+                </div>
+                <h3 className="font-semibold text-charcoal mb-2">{f.title}</h3>
+                <p className="text-sm text-charcoal-muted leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5 — Data Protection */}
+      <section className="bg-charcoal-50 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <p className="text-xs font-semibold tracking-widest text-gold uppercase mb-3">
+              Data Protection
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              Your Data, Protected at Rest and in Transit
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {DATA_PROTECTION.map((f) => (
+              <div
+                key={f.title}
+                className="bg-white border border-charcoal-border rounded-xl p-6"
+              >
+                <div className="inline-flex items-center justify-center w-10 h-10 bg-gold-100 rounded-lg mb-4">
+                  <f.icon className="h-5 w-5 text-gold" />
+                </div>
+                <h3 className="font-semibold text-charcoal mb-2">{f.title}</h3>
+                <p className="text-sm text-charcoal-muted leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 6 — Sharing Controls */}
+      <section className="bg-charcoal-900 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <p className="text-xs font-semibold tracking-widest text-gold uppercase mb-3">
+              Sharing Controls
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Share Without Losing Control
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {SHARING_CONTROLS.map((f) => (
+              <div
+                key={f.title}
+                className="bg-white/5 border border-white/10 rounded-xl p-6"
+              >
+                <div className="inline-flex items-center justify-center w-10 h-10 bg-gold/10 rounded-lg mb-4">
+                  <f.icon className="h-5 w-5 text-gold" />
+                </div>
+                <h3 className="font-semibold text-white mb-2">{f.title}</h3>
+                <p className="text-sm text-white/60 leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 7 — CTA */}
+      <section className="bg-charcoal-900 py-20 border-t border-white/10">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <ShieldCheck className="h-10 w-10 text-gold mx-auto mb-6" />
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Ready to Put Security First?
+          </h2>
+          <p className="text-white/60 mb-8 leading-relaxed">
+            Talk to us about your compliance requirements. We can walk you through every layer.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link
+              to="/request-access"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-gold text-charcoal-900 font-semibold rounded-md hover:bg-gold-dark transition-colors"
+            >
+              Request Access
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      </section>
+
+    </div>
   );
 };
 
