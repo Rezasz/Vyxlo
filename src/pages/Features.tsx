@@ -10,7 +10,6 @@ type FeatureGroup = {
   id: string;
   label: string;
   icon: React.ElementType;
-  count: number;
   items: string[];
   deepDive?: string;
 };
@@ -20,7 +19,6 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     id: 'document-management',
     label: 'Document Management',
     icon: FileText,
-    count: 9,
     items: [
       'Unlimited file types (PDF, DOCX, XLSX, PPTX, images, and more)',
       'Configurable max file size per organization',
@@ -37,7 +35,6 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     id: 'search',
     label: 'Search & Organization',
     icon: Search,
-    count: 8,
     items: [
       'Unlimited folder hierarchy',
       'Materialized path for efficient tree queries',
@@ -53,7 +50,6 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     id: 'ai',
     label: 'AI Processing',
     icon: Brain,
-    count: 7,
     deepDive: '/features/ai-automation',
     items: [
       'Automatic classification into 10 categories',
@@ -69,7 +65,6 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     id: 'access-control',
     label: 'Access Control',
     icon: Shield,
-    count: 6,
     items: [
       '8-level permission system: NONE \u00b7 READ \u00b7 DOWNLOAD \u00b7 COMMENT \u00b7 CONTRIBUTOR \u00b7 WRITE \u00b7 EDITOR \u00b7 ADMIN',
       'Target individual users or entire departments',
@@ -83,7 +78,6 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     id: 'workflows',
     label: 'Workflow Engine',
     icon: GitBranch,
-    count: 5,
     items: [
       'Multi-step approval chains with configurable step order',
       'Sequential and parallel step execution',
@@ -96,7 +90,6 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     id: 'sharing',
     label: 'Secure Sharing',
     icon: Share2,
-    count: 4,
     items: [
       'Secure share links (cryptographically random tokens, \u226532 bytes entropy)',
       'Optional expiry date, access count limit, password protection, email allowlist',
@@ -108,7 +101,6 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     id: 'collaboration',
     label: 'Collaboration',
     icon: Users,
-    count: 8,
     deepDive: '/features/collaboration',
     items: [
       'Live presence indicators (who is viewing right now)',
@@ -125,7 +117,6 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     id: 'notifications',
     label: 'Notifications',
     icon: Bell,
-    count: 6,
     items: [
       'In-app notifications with real-time WebSocket delivery',
       'Email notifications (async, within 2 minutes)',
@@ -139,7 +130,6 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     id: 'audit',
     label: 'Audit & Compliance',
     icon: ShieldCheck,
-    count: 7,
     items: [
       'Immutable audit log for every action type',
       'Before/after state stored as JSONB',
@@ -154,7 +144,6 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     id: 'admin',
     label: 'Administration',
     icon: Settings,
-    count: 5,
     items: [
       'Organization settings (name, logo, timezone, storage quota, feature flags)',
       'User invitation and role management',
@@ -197,11 +186,13 @@ const Features = () => {
               {FEATURE_GROUPS.map((g) => (
                 <button
                   key={g.id}
+                  type="button"
+                  aria-pressed={g.id === activeId}
                   onClick={() => setActiveId(g.id)}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-white/20 text-white/70 hover:border-gold hover:text-gold transition-colors"
                 >
                   {g.label}
-                  <span className="text-white/40">{g.count}</span>
+                  <span className="text-white/40">{g.items.length}</span>
                 </button>
               ))}
             </div>
@@ -225,6 +216,8 @@ const Features = () => {
                     return (
                       <button
                         key={g.id}
+                        type="button"
+                        aria-pressed={g.id === activeId}
                         onClick={() => setActiveId(g.id)}
                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left ${
                           isActive
@@ -241,7 +234,7 @@ const Features = () => {
                               : 'bg-charcoal-50 text-charcoal-muted'
                           }`}
                         >
-                          {g.count}
+                          {g.items.length}
                         </span>
                       </button>
                     );
@@ -260,7 +253,7 @@ const Features = () => {
                     <div>
                       <h2 className="text-xl font-bold text-charcoal">{current.label}</h2>
                       <p className="text-sm text-charcoal-muted mt-0.5">
-                        {current.count} features included
+                        {current.items.length} features included
                       </p>
                     </div>
                   </div>
@@ -307,6 +300,7 @@ const Features = () => {
                 return (
                   <button
                     key={g.id}
+                    type="button"
                     onClick={() => {
                       setActiveId(g.id);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -317,7 +311,7 @@ const Features = () => {
                       <Icon className="h-5 w-5" />
                     </div>
                     <p className="text-sm font-semibold text-charcoal leading-snug">{g.label}</p>
-                    <p className="text-xs text-charcoal-muted mt-1">{g.count} features</p>
+                    <p className="text-xs text-charcoal-muted mt-1">{g.items.length} features</p>
                   </button>
                 );
               })}
