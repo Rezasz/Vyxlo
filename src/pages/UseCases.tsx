@@ -1,187 +1,255 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Scale, BarChart3, Users, Code2, Briefcase, ArrowRight, CheckCircle } from 'lucide-react';
+import {
+  Scale,
+  ShieldCheck,
+  DollarSign,
+  Users,
+  Code,
+  Brain,
+  Shield,
+  FileText,
+  ArrowRight,
+  Check,
+} from 'lucide-react';
 import SEO from '../components/SEO';
 
-const CASES = [
+const USE_CASES = [
   {
-    id: 'legal-compliance',
+    id: 'legal',
     icon: Scale,
-    title: 'Legal & Compliance Teams',
-    description: 'Manage contracts, NDAs, and policies with full version history and immutable audit trails. Route documents through multi-step legal review workflows. Generate share links for external parties without giving them system access. Export audit logs for regulators in one click.',
-    benefits: [
-      'Full version history — any version restorable',
-      'Multi-step legal review with sequential and parallel approvers',
-      'Password-protected share links for external counsel',
-      'Immutable audit log: SHA-256 checksums, CSV export on demand',
-      'Document status lifecycle: DRAFT → IN_REVIEW → APPROVED → PUBLISHED',
+    title: 'Legal Teams',
+    tagline: 'Contracts that sign themselves off. Almost.',
+    description:
+      'Track contract versions, route approvals through the right partners, and maintain an immutable record for every amendment.',
+    highlights: [
+      'Version-controlled contracts',
+      'Parallel approval chains',
+      'Tamper-proof audit trail',
     ],
   },
   {
-    id: 'finance-operations',
-    icon: BarChart3,
-    title: 'Finance & Operations',
-    description: 'Organize invoices, purchase orders, and financial reports with AI-powered classification. Approve documents with parallel sign-off from multiple stakeholders. Configure retention policies and let VyXlo purge automatically when the window closes.',
-    benefits: [
-      'AI classifies every upload as INVOICE, REPORT, CONTRACT, or 7 other categories',
-      'Parallel approval workflows for multi-stakeholder sign-off',
-      'Retention policies with automatic purge at window close',
-      'Entity extraction: amounts, dates, counterparty names extracted automatically',
-      'Search across all documents by amount, date range, or counterparty',
+    id: 'compliance',
+    icon: ShieldCheck,
+    title: 'Compliance & Audit',
+    tagline: 'Prove everything. Explain nothing twice.',
+    description:
+      'Maintain audit-ready documentation with SHA-256-verified records, CSV export, and configurable retention policies.',
+    highlights: [
+      'SHA-256 audit log',
+      'CSV export for regulators',
+      'Configurable retention',
     ],
   },
   {
-    id: 'hr-people',
+    id: 'finance',
+    icon: DollarSign,
+    title: 'Finance & Accounting',
+    tagline: 'Every invoice, accounted for.',
+    description:
+      'Auto-classify invoices and financial reports on upload. Route payment approvals without manual handoffs.',
+    highlights: [
+      'AI invoice classification',
+      'Automated approval routing',
+      'Full version history',
+    ],
+  },
+  {
+    id: 'hr',
     icon: Users,
-    title: 'HR & People Teams',
-    description: 'Manage employee documents with fine-grained permissions — visible only to the right people. Onboarding workflows that route documents for acknowledgment. Retention policies that comply with employment law.',
-    benefits: [
-      '8-level permissions: employee docs visible only to authorized people',
-      'Onboarding workflows with sequential acknowledgment steps',
-      'Department-level permissions for HR team access',
-      'Configurable retention periods aligned to employment law',
-      'Complete audit trail of who viewed each employee document',
+    title: 'HR & People Ops',
+    tagline: 'Employee records that stay current.',
+    description:
+      'Manage employment agreements, performance reviews, and onboarding packets with role-based access and lifecycle tracking.',
+    highlights: [
+      'Role-based document access',
+      'Status lifecycle tracking',
+      'Secure employee file sharing',
     ],
   },
   {
-    id: 'product-engineering',
-    icon: Code2,
-    title: 'Product & Engineering Teams',
-    description: 'Store specs, RFCs, runbooks, and design docs alongside code. Search semantically — "our incident response procedure" returns the right doc even if it\'s titled "On-Call Handbook." Tag and filter by project.',
-    benefits: [
-      'Semantic search: find docs by meaning, not just keyword match',
-      'Tag system with project-scoped namespaces and color coding',
-      'REST API for automated doc ingestion from CI/CD pipelines',
-      'Threaded comments and @mentions on technical documents',
-      'Version history — compare any two versions of a spec',
+    id: 'engineering',
+    icon: Code,
+    title: 'IT & Engineering',
+    tagline: 'Technical docs your team will actually use.',
+    description:
+      'Keep runbooks, architecture docs, and incident reports discoverable and current with semantic search and automatic versioning.',
+    highlights: [
+      'Semantic search',
+      'Auto-versioning on re-upload',
+      'Department-scoped access control',
     ],
   },
+];
+
+const CAPABILITIES = [
   {
-    id: 'agencies',
-    icon: Briefcase,
-    title: 'Agencies & Consultancies',
-    description: 'Manage client deliverables with per-client folder isolation. Share final versions via password-protected links with download tracking. No client ever sees another client\'s work.',
-    benefits: [
-      'Per-client folder isolation enforced at the database query level',
-      'Password-protected share links with optional email allowlist',
-      'Per-link download analytics (access count, last accessed)',
-      'One-click link revocation when the engagement ends',
-      'Multiple organizations with complete data separation',
-    ],
+    icon: Brain,
+    title: 'AI Processing',
+    description: 'Every document is classified and summarized on upload',
+  },
+  {
+    icon: Shield,
+    title: 'Role-Based Access',
+    description: 'Eight permission levels for precise access control',
+  },
+  {
+    icon: FileText,
+    title: 'Audit Trail',
+    description: 'Every action logged with before/after state',
+  },
+  {
+    icon: Users,
+    title: 'Real-Time Collaboration',
+    description: 'Live presence, comments, and @mentions',
   },
 ];
 
 const UseCases = () => {
   return (
-    <>
+    <div className="pt-20">
       <SEO
         title="Use Cases — VyXlo DMS"
-        description="VyXlo DMS for Legal & Compliance, Finance & Operations, HR & People, Product & Engineering, and Agencies. Team-specific document intelligence."
+        description="See how legal teams, compliance officers, finance, HR, and engineering teams use VyXlo DMS to manage documents with AI and precision access control."
         canonical="/use-cases"
       />
-      <div className="pt-20">
 
-        {/* HERO */}
-        <section className="bg-charcoal text-white py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-5">
-                Built for the teams that can't afford to lose control.
-              </h1>
-              <p className="text-lg text-white/70 leading-relaxed">
-                VyXlo isn't a generic file storage tool. Each team type has specific needs — approval chains, retention rules, permission granularity, search patterns. Here's how VyXlo addresses each one.
-              </p>
-            </div>
+      {/* HERO */}
+      <section className="bg-charcoal-900 text-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center">
+            <span className="inline-block mb-4 px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-semibold uppercase tracking-widest border border-gold/20">
+              Use Cases
+            </span>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+              The Teams That Rely on VyXlo
+            </h1>
+            <p className="text-lg text-white/70 leading-relaxed">
+              {"Whether you handle contracts, run audits, or manage compliance \u2014 VyXlo fits the way your team actually works."}
+            </p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* USE CASE CARDS */}
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="space-y-8">
-              {CASES.map((uc, i) => (
-                <div
-                  key={uc.id}
-                  className={`grid grid-cols-1 lg:grid-cols-2 gap-10 items-start p-8 rounded-xl border border-charcoal-border hover:border-gold/40 hover:shadow-md transition-all ${
-                    i % 2 === 0 ? 'bg-white' : 'bg-charcoal-50'
-                  }`}
-                >
-                  <div>
+      {/* USE CASE CARDS */}
+      <section className="bg-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-3">
+              WHO USES VYXLO
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal">
+              Built for Teams With High Document Stakes
+            </h2>
+          </div>
+
+          <div className="space-y-6">
+            {USE_CASES.map((uc) => (
+              <div
+                key={uc.id}
+                className="rounded-2xl border border-charcoal-border bg-white hover:border-gold/40 hover:shadow-lg transition-all duration-200 overflow-hidden"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                  {/* Left: Content */}
+                  <div className="p-8 lg:p-10">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-gold-100 text-gold">
+                      <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-gold-100 text-gold flex-shrink-0">
                         <uc.icon className="h-5 w-5" />
                       </div>
-                      <h2 className="text-xl font-bold text-charcoal">{uc.title}</h2>
+                      <h3 className="text-xl font-bold text-charcoal">{uc.title}</h3>
                     </div>
-                    <p className="text-charcoal-muted leading-relaxed">{uc.description}</p>
+                    <p className="text-gold font-medium text-sm mb-3">{uc.tagline}</p>
+                    <p className="text-charcoal-muted leading-relaxed mb-6">
+                      {uc.description}
+                    </p>
                     <Link
                       to={`/use-cases/${uc.id}`}
-                      className="inline-flex items-center mt-5 text-gold font-semibold hover:text-gold-dark transition-colors text-sm"
+                      className="inline-flex items-center gap-1.5 text-gold font-semibold text-sm hover:text-gold-dark transition-colors"
                     >
-                      Learn more <ArrowRight className="ml-1.5 h-4 w-4" />
+                      Learn more <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-charcoal-muted mb-3">Key capabilities</p>
-                    <ul className="space-y-2.5">
-                      {uc.benefits.map((b) => (
-                        <li key={b} className="flex items-start gap-2.5">
-                          <CheckCircle className="h-4 w-4 text-gold mt-0.5 flex-shrink-0" />
-                          <span className="text-sm text-charcoal leading-relaxed">{b}</span>
+
+                  {/* Right: Highlights */}
+                  <div className="bg-charcoal-50 p-8 lg:p-10 flex flex-col justify-center">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-charcoal-muted mb-5">
+                      Key Highlights
+                    </p>
+                    <ul className="space-y-3">
+                      {uc.highlights.map((h) => (
+                        <li key={h} className="flex items-center gap-3">
+                          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gold/10 flex-shrink-0">
+                            <Check className="h-3 w-3 text-gold" />
+                          </span>
+                          <span className="text-sm font-medium text-charcoal">{h}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* QUICK NAV */}
-        <section className="py-12 bg-charcoal-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-charcoal-muted text-sm mb-6">Jump to a team type</p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {CASES.map((uc) => (
-                <a
-                  key={uc.id}
-                  href={`#`}
-                  onClick={(e) => { e.preventDefault(); document.getElementById(uc.id)?.scrollIntoView({ behavior: 'smooth' }); }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-charcoal-border bg-white text-sm font-medium text-charcoal-muted hover:border-gold hover:text-gold transition-colors"
-                >
-                  <uc.icon className="h-3.5 w-3.5" />
-                  {uc.title}
-                </a>
-              ))}
-            </div>
+      {/* SHARED CAPABILITIES */}
+      <section className="bg-charcoal-50 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-3">
+              ACROSS ALL USE CASES
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal">
+              The Same Powerful Platform, Configured for Your Team
+            </h2>
           </div>
-        </section>
 
-        {/* CTA */}
-        <section className="py-20 bg-charcoal-900 text-white">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">Not sure if VyXlo fits your team?</h2>
-            <p className="text-white/70 mb-8">Talk to us. We can walk through your specific document workflows and show you exactly how VyXlo handles them.</p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                to="/request-access"
-                className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 font-semibold rounded-md hover:bg-gold-dark transition-colors"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {CAPABILITIES.map((cap) => (
+              <div
+                key={cap.title}
+                className="bg-white rounded-xl border border-charcoal-border p-6 hover:border-gold/40 hover:shadow-md transition-all duration-200"
               >
-                Request Early Access <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
-              >
-                Contact Us
-              </Link>
-            </div>
+                <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-gold-100 text-gold mb-4">
+                  <cap.icon className="h-5 w-5" />
+                </div>
+                <h3 className="text-base font-bold text-charcoal mb-2">{cap.title}</h3>
+                <p className="text-sm text-charcoal-muted leading-relaxed">
+                  {cap.description}
+                </p>
+              </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-      </div>
-    </>
+      {/* CTA */}
+      <section className="bg-charcoal-900 py-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            {"Not Sure Which Use Case Fits?"}
+          </h2>
+          <p className="text-white/70 text-lg mb-10 leading-relaxed">
+            {"Talk to our team \u2014 we\u2019ll help you map VyXlo to your workflow in 30 minutes."}
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center px-7 py-3.5 bg-gold text-charcoal-900 font-semibold rounded-md hover:bg-gold-dark transition-colors"
+            >
+              Talk to Our Team <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+            <Link
+              to="/request-access"
+              className="inline-flex items-center justify-center px-7 py-3.5 border border-white/30 text-white font-semibold rounded-md hover:bg-white/10 transition-colors"
+            >
+              Request Early Access
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
