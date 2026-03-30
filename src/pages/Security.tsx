@@ -12,7 +12,6 @@ import {
   AlertCircle,
   CheckCircle,
   ArrowRight,
-  Share2,
 } from 'lucide-react';
 import SEO from '../components/SEO';
 
@@ -125,14 +124,6 @@ const Security = () => {
 
       {/* SECTION 1 — Hero */}
       <section className="bg-charcoal-900 text-white py-24 relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle, #EBBB4A 1px, transparent 1px)',
-            backgroundSize: '28px 28px',
-          }}
-        />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 rounded-full px-4 py-1.5 mb-6">
             <Shield className="h-4 w-4 text-gold" />
