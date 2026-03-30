@@ -28,8 +28,8 @@ const Navbar = () => {
   const navItems = [
     { name: 'Features', path: '/features' },
     { name: 'How It Works', path: '/how-it-works' },
-    { name: 'Security', path: '/security' },
     { name: 'Use Cases', path: '/use-cases' },
+    { name: 'Security', path: '/security' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];

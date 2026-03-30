@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="bg-charcoal-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
 
           {/* Brand */}
           <div className="space-y-4">
@@ -32,8 +32,8 @@ const Footer = () => {
                 { label: 'Features', to: '/features' },
                 { label: 'How It Works', to: '/how-it-works' },
                 { label: 'Security', to: '/security' },
-                { label: 'Use Cases', to: '/use-cases' },
-                { label: 'Request Early Access', to: '/request-access' },
+                { label: 'Technical Specs', to: '/technical-specs' },
+                { label: 'Request Access', to: '/request-access' },
               ].map((link) => (
                 <li key={link.to}>
                   <Link to={link.to} className="text-charcoal-border text-sm hover:text-gold transition-colors">
@@ -52,6 +52,23 @@ const Footer = () => {
                 { label: 'About', to: '/about' },
                 { label: 'Contact', to: '/contact' },
                 { label: 'Knowledge Base', to: '/knowledge-base' },
+              ].map((link) => (
+                <li key={link.to}>
+                  <Link to={link.to} className="text-charcoal-border text-sm hover:text-gold transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Solutions */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-charcoal-border mb-4">Solutions</h3>
+            <ul className="space-y-2.5">
+              {[
+                { label: 'Use Cases', to: '/use-cases' },
+                { label: 'Industry Verticals', to: '/verticals' },
               ].map((link) => (
                 <li key={link.to}>
                   <Link to={link.to} className="text-charcoal-border text-sm hover:text-gold transition-colors">

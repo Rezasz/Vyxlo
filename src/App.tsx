@@ -34,9 +34,9 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/features" element={<Features />} />
-                <Route path="/features/:featureId" element={<FeatureDetails />} />
                 <Route path="/features/ai-automation" element={<AIAutomation />} />
                 <Route path="/features/collaboration" element={<Collaboration />} />
+                <Route path="/features/:featureId" element={<FeatureDetails />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/use-cases" element={<UseCases />} />
                 <Route path="/use-cases/:useCaseId" element={<UseCaseDetails />} />
