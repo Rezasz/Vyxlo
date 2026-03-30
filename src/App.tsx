@@ -20,6 +20,7 @@ import Contact from './pages/Contact';
 import RequestAccess from './pages/RequestAccess';
 import AIAutomation from './pages/features/AIAutomation';
 import Collaboration from './pages/features/Collaboration';
+import TechnicalSpecs from './pages/TechnicalSpecs';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
                 <Route path="/knowledge-base" element={<KnowledgeBase />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/request-access" element={<RequestAccess />} />
+                <Route path="/technical-specs" element={<TechnicalSpecs />} />
               </Routes>
             </main>
             <Footer />
