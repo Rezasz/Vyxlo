@@ -18,7 +18,7 @@ const LoginPrompt = () => {
               </p>
             </div>
 
-            <div className="mt-8 bg-gray-50 p-4 rounded-lg border border-charcoal-border">
+            <div className="mt-8 bg-charcoal-50 p-4 rounded-lg border border-charcoal-border">
               <div className="flex items-center">
                 <Lock className="h-5 w-5 text-charcoal-muted" />
                 <p className="ml-2 text-sm text-charcoal-muted">
@@ -43,7 +43,7 @@ const LoginPrompt = () => {
             </div>
           </div>
 
-          <div className="px-6 py-4 bg-gray-50 border-t border-charcoal-border">
+          <div className="px-6 py-4 bg-charcoal-50 border-t border-charcoal-border">
             <div className="text-center text-sm text-charcoal-muted">
               <p>Protected documents include:</p>
               <ul className="mt-2 space-y-1">

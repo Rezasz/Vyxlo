@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BookOpen, FileText, Code, HelpCircle, ArrowRight, Lock } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import LoginPrompt from '../components/knowledge-base/LoginPrompt';
+import SEO from '../components/SEO';
 
 const docCategories = [
   {
@@ -63,6 +64,11 @@ const KnowledgeBase = () => {
 
   return (
     <div className="pt-20">
+      <SEO
+        title="Knowledge Base — VyXlo DMS"
+        description="Complete documentation for VyXlo DMS — getting started guides, feature deep dives, API reference, and troubleshooting."
+        canonical="/knowledge-base"
+      />
       {/* Section 1 — Header */}
       <section className="bg-charcoal-900 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -87,7 +93,7 @@ const KnowledgeBase = () => {
               return (
                 <div
                   key={category.title}
-                  className="border border-charcoal-border rounded-xl p-8 hover:shadow-lg transition-shadow duration-200"
+                  className="bg-white border border-charcoal-border rounded-xl p-8 hover:shadow-lg transition-shadow duration-200"
                 >
                   <div className="flex items-center gap-4 mb-4">
                     <div className="p-3 bg-gold-50 rounded-lg">
