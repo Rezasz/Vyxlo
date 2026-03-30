@@ -1,254 +1,325 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Users, ArrowLeft, ArrowRight, MessageSquare, History,
-  Layers, Share2, Lock, ChevronRight, UserPlus, GitBranch,
-  Bell, Clock, FileText, Edit, Eye, Activity
+  Users,
+  MessageSquare,
+  Lock,
+  Share2,
+  Eye,
+  Bell,
+  Check,
+  ChevronLeft,
+  ArrowRight,
+  Zap,
+  Shield,
+  RefreshCw,
 } from 'lucide-react';
 import SEO from '../../components/SEO';
 
 const Collaboration = () => {
-  const features = [
+  const presenceCards = [
     {
-      icon: Edit,
-      title: 'Real-time Co-editing',
-      description: 'Multiple users can work on the same document simultaneously with live updates.',
-      metrics: 'Zero latency editing'
+      icon: Users,
+      title: 'Real-Time Viewers',
+      description: 'Live list of all users currently viewing the document',
     },
     {
-      icon: History,
-      title: 'Version Control',
-      description: 'Track changes, compare versions, and restore previous document states.',
-      metrics: 'Unlimited version history'
+      icon: Zap,
+      title: 'WebSocket Delivery',
+      description: 'Presence updates pushed instantly, no page refresh required',
     },
     {
-      icon: MessageSquare,
-      title: 'Contextual Comments',
-      description: 'Add comments and annotations directly within documents.',
-      metrics: 'Threaded discussions'
-    }
+      icon: RefreshCw,
+      title: 'Automatic Cleanup',
+      description: 'Presence removed immediately when a user closes the tab',
+    },
   ];
 
-  const collaborationTools = [
-    {
-      title: 'Team Workspaces',
-      features: [
-        'Dedicated spaces for teams and projects',
-        'Custom workspace permissions',
-        'Resource sharing and organization',
-        'Team activity dashboard'
-      ]
-    },
-    {
-      title: 'Document Sharing',
-      features: [
-        'Granular access controls',
-        'Secure external sharing',
-        'Link expiration settings',
-        'Access tracking and revocation'
-      ]
-    },
-    {
-      title: 'Activity Tracking',
-      features: [
-        'Real-time activity feed',
-        'User action history',
-        'Document audit trails',
-        'Usage analytics'
-      ]
-    }
+  const commentFeatures = [
+    'Unlimited nesting depth — thread as deep as the conversation goes',
+    '@mentions — tag any team member for instant notification',
+    'Edit within 15 minutes of posting — fix typos before anyone notices',
+    'Comment resolution — owner or ADMIN marks threads as resolved',
+    'Emoji reactions — quick feedback without a full reply',
+    'Inline annotations — link comments to specific page and position coordinates',
   ];
 
-  const securityFeatures = [
+  const lockingCards = [
+    {
+      icon: RefreshCw,
+      title: 'Auto-Expiry',
+      description: 'Lock releases after 1 hour even if the editor forgets',
+    },
+    {
+      icon: Shield,
+      title: 'Manual Release',
+      description: 'Any ADMIN can release a lock immediately',
+    },
+  ];
+
+  const sharingCards = [
+    {
+      icon: Bell,
+      title: 'Expiry Dates',
+      description: 'Share links expire on a date you set',
+    },
     {
       icon: Lock,
-      title: 'Access Control',
-      description: 'Granular permissions and role-based access management'
+      title: 'Password Protection',
+      description: 'Require a password to access the shared document',
     },
     {
       icon: Eye,
-      title: 'Audit Logging',
-      description: 'Comprehensive tracking of all document activities'
+      title: 'Email Allowlist',
+      description: 'Restrict access to specific email addresses',
     },
     {
-      icon: Bell,
-      title: 'Smart Notifications',
-      description: 'Customizable alerts for important document events'
+      icon: Share2,
+      title: 'Access Analytics',
+      description: 'See how many times and when a link was accessed',
+    },
+  ];
+
+  const reliabilityCards = [
+    {
+      icon: Zap,
+      stat: 'Auto',
+      title: 'Automatic Reconnection',
+      description: 'Reconnects instantly on connection drop',
     },
     {
-      icon: Activity,
-      title: 'Activity Monitoring',
-      description: 'Real-time tracking of user interactions'
-    }
+      icon: RefreshCw,
+      stat: 'Smart',
+      title: 'Exponential Backoff',
+      description: 'Retry intervals increase to avoid thundering herd',
+    },
+    {
+      icon: Shield,
+      stat: 'Sync',
+      title: 'State Sync on Reconnect',
+      description: 'Catches up on missed events after reconnect',
+    },
   ];
 
   return (
-    <>
+    <div className="pt-20">
       <SEO
-        title="Enhanced Collaboration"
-        description="Foster teamwork with Vyxlo's powerful collaboration features designed for modern enterprises."
+        title="Collaboration — VyXlo DMS"
+        description="Live presence indicators, threaded comments, document locking, and secure sharing — all delivered in real time over WebSocket."
         canonical="/features/collaboration"
       />
 
-      {/* Hero Section */}
-      <section className="relative bg-charcoal text-white py-24">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOGM5Ljk0MSAwIDE4LTguMDU5IDE4LTE4cy04LjA1OS0xOC0xOC0xOHptMCAyNGMtMy4zMTQgMC02LTIuNjg2LTYtNnMyLjY4Ni02IDYtNiA2IDIuNjg2IDYgNi0yLjY4NiA2LTYgNnoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvZz48L3N2Zz4=')] bg-repeat"></div>
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center text-center">
-            <div className="p-4 bg-gold/20 rounded-2xl backdrop-blur-sm mb-8">
-              <Users className="h-16 w-16 text-gold" />
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Enhanced Collaboration</h1>
-            <p className="text-xl opacity-90 max-w-3xl">
-              Transform how your team works together with powerful real-time collaboration features designed for modern enterprises.
+      {/* Section 1 — Hero */}
+      <section className="bg-charcoal-900 text-white py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link
+            to="/features/collaboration"
+            className="inline-flex items-center text-gold hover:text-gold-dark font-medium mb-10 transition-colors"
+          >
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Back to Collaboration
+          </Link>
+
+          <div className="max-w-3xl">
+            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-gold bg-gold/10 border border-gold/20 rounded-full px-4 py-1.5 mb-6">
+              Real-Time Collaboration
+            </span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              {"See Who's There. Say What You Mean."}
+            </h1>
+            <p className="text-lg text-charcoal-muted mb-10 leading-relaxed">
+              VyXlo brings your whole team together on every document — live presence, threaded
+              discussions, and instant notifications, all delivered over WebSocket.
             </p>
-          </div>
-        </div>
-      </section>
 
-      {/* Core Features */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-charcoal">Core Collaboration Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="flex items-center space-x-4 mb-6">
-                  <div className="p-3 bg-gold-50 rounded-lg">
-                    <feature.icon className="h-8 w-8 text-gold" />
-                  </div>
-                  <h3 className="text-xl font-bold text-charcoal">{feature.title}</h3>
-                </div>
-                <p className="text-charcoal-muted mb-4">{feature.description}</p>
-                <div className="text-sm font-medium text-gold">{feature.metrics}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Collaboration Tools */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-charcoal">Collaboration Tools</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {collaborationTools.map((tool, index) => (
-              <div
-                key={index}
-                className="bg-gray-50 p-8 rounded-xl border-t-4 border-gold"
-              >
-                <h3 className="text-xl font-bold mb-6 text-charcoal">{tool.title}</h3>
-                <div className="space-y-4">
-                  {tool.features.map((feature, featureIndex) => (
-                    <div
-                      key={featureIndex}
-                      className="flex items-start"
-                    >
-                      <ChevronRight className="h-5 w-5 text-gold mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Security Features */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-charcoal">Security & Control</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {securityFeatures.map((feature, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-              >
-                <div className="flex items-center space-x-3 mb-4">
-                  <feature.icon className="h-6 w-6 text-gold" />
-                  <h3 className="font-semibold text-charcoal">{feature.title}</h3>
-                </div>
-                <p className="text-charcoal-muted text-sm">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-charcoal">Collaboration Use Cases</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-lg border-l-4 border-gold">
-              <FileText className="h-12 w-12 text-gold mb-6" />
-              <h3 className="text-xl font-bold mb-4 text-charcoal">Document Review</h3>
-              <p className="text-charcoal-muted">
-                Streamline document review processes with real-time collaboration, comments, and version tracking.
-              </p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg border-l-4 border-gold">
-              <UserPlus className="h-12 w-12 text-gold mb-6" />
-              <h3 className="text-xl font-bold mb-4 text-charcoal">Team Projects</h3>
-              <p className="text-charcoal-muted">
-                Enable teams to work together seamlessly on shared documents and projects.
-              </p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg border-l-4 border-gold">
-              <GitBranch className="h-12 w-12 text-gold mb-6" />
-              <h3 className="text-xl font-bold mb-4 text-charcoal">Content Management</h3>
-              <p className="text-charcoal-muted">
-                Manage content creation and approval workflows with advanced versioning.
-              </p>
+            <div className="flex flex-wrap gap-3">
+              {['Live WebSocket', 'Unlimited threads', '<2 min email delivery', 'Auto-reconnect'].map(
+                (pill) => (
+                  <span
+                    key={pill}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium bg-white/10 border border-white/15 rounded-full px-4 py-1.5 text-white"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-gold inline-block" />
+                    {pill}
+                  </span>
+                )
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-charcoal text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Transform Your Team Collaboration</h2>
-          <p className="text-xl opacity-90 mb-8">
-            Experience the power of real-time collaboration and streamlined document management.
+      {/* Section 2 — Live Presence */}
+      <section className="bg-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-3">
+            Live Presence
           </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+            Always Know Who Is Working on What
+          </h2>
+          <p className="text-charcoal-muted text-lg mb-12 max-w-2xl">
+            Presence indicators show every user currently viewing a document in real time. No
+            polling, no guessing.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {presenceCards.map((card) => (
+              <div
+                key={card.title}
+                className="bg-charcoal-50 rounded-xl p-8 border border-charcoal-border hover:shadow-md transition-shadow"
+              >
+                <div className="h-12 w-12 rounded-lg bg-gold/10 flex items-center justify-center mb-5">
+                  <card.icon className="h-6 w-6 text-gold" />
+                </div>
+                <h3 className="text-lg font-bold text-charcoal mb-2">{card.title}</h3>
+                <p className="text-charcoal-muted">{card.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section 3 — Threaded Comments */}
+      <section className="bg-charcoal-50 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-3">
+                Threaded Comments
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+                Conversations That Stay With the Document
+              </h2>
+            </div>
+
+            <div className="space-y-4">
+              {commentFeatures.map((feature) => (
+                <div key={feature} className="flex items-start gap-3">
+                  <span className="h-5 w-5 rounded-full bg-gold/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="h-3 w-3 text-gold" />
+                  </span>
+                  <span className="text-charcoal leading-snug">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 4 — Document Locking */}
+      <section className="bg-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-3">
+            Document Locking
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+            One Editor at a Time
+          </h2>
+          <p className="text-charcoal-muted text-lg mb-12 max-w-2xl">
+            Prevent conflicting edits by locking a document while editing. Locks expire automatically
+            after 1 hour — no stuck locks, no manual cleanup.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl">
+            {lockingCards.map((card) => (
+              <div
+                key={card.title}
+                className="bg-charcoal-50 rounded-xl p-8 border border-charcoal-border hover:shadow-md transition-shadow"
+              >
+                <div className="h-12 w-12 rounded-lg bg-gold/10 flex items-center justify-center mb-5">
+                  <card.icon className="h-6 w-6 text-gold" />
+                </div>
+                <h3 className="text-lg font-bold text-charcoal mb-2">{card.title}</h3>
+                <p className="text-charcoal-muted">{card.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section 5 — Secure Sharing */}
+      <section className="bg-charcoal-50 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-3">
+            Secure Sharing
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-12">
+            Share Outside Your Organization Safely
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {sharingCards.map((card) => (
+              <div
+                key={card.title}
+                className="bg-white rounded-xl p-6 border border-charcoal-border hover:shadow-md transition-shadow"
+              >
+                <div className="h-10 w-10 rounded-lg bg-gold/10 flex items-center justify-center mb-4">
+                  <card.icon className="h-5 w-5 text-gold" />
+                </div>
+                <h3 className="text-base font-bold text-charcoal mb-1.5">{card.title}</h3>
+                <p className="text-charcoal-muted text-sm">{card.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section 6 — WebSocket Reliability */}
+      <section className="bg-charcoal-900 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-3">
+            Real-Time Delivery
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Built for Unreliable Networks
+          </h2>
+          <p className="text-charcoal-muted text-lg mb-12 max-w-2xl">
+            {"VyXlo's WebSocket layer handles dropped connections gracefully so your team never misses a message."}
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {reliabilityCards.map((card) => (
+              <div
+                key={card.title}
+                className="bg-white/5 border border-white/10 rounded-xl p-8 hover:bg-white/8 transition-colors"
+              >
+                <div className="h-12 w-12 rounded-lg bg-gold/15 flex items-center justify-center mb-5">
+                  <card.icon className="h-6 w-6 text-gold" />
+                </div>
+                <div className="text-2xl font-bold text-gold mb-1">{card.stat}</div>
+                <h3 className="text-lg font-bold text-white mb-2">{card.title}</h3>
+                <p className="text-charcoal-muted text-sm">{card.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section 7 — CTA */}
+      <section className="bg-charcoal-900 py-20 border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
+            Ready to Collaborate in Real Time?
+          </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/request-access"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gold text-charcoal-900 hover:bg-gold-dark transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-md bg-gold text-charcoal-900 font-semibold hover:bg-gold-dark transition-colors"
             >
-              Get Started
-              <ArrowRight className="ml-2 h-5 w-5" />
+              Request Access
+              <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white/10 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-md border border-white/30 text-white font-semibold hover:bg-white/10 transition-colors"
             >
-              Contact Sales
+              Contact Us
             </Link>
           </div>
         </div>
       </section>
-
-      {/* Navigation */}
-      <div className="bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Link
-            to="/features"
-            className="inline-flex items-center text-gold hover:text-gold-dark font-medium"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Features
-          </Link>
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 
